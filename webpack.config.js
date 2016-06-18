@@ -4,7 +4,6 @@ const path = require('path');
 
 module.exports = {
   context: path.join(__dirname),
-  devtool: isDev ? 'inline-sourcemap' : null,
   entry: './client/app.js',
   module: {
     loaders: [
@@ -23,20 +22,6 @@ module.exports = {
       },
     ],
   },
-  output: {
-    path: path.join(__dirname, `/${isDev ? 'dev' : 'dist'}/client/`),
-    filename: 'bundle.js',
-  },
-  plugins: isDev ? [] : [
-    new webpack.EnvironmentPlugin(['NODE_ENV', 'PROTOCOL', 'HOST', 'PORT']),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      mangle: false,
-      sourcemap: false,
-    }),
-  ],
+  output: { path: __dirname, filename: '/client/bundle.js' },
+  plugins: [],
 };
