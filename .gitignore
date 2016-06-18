@@ -1,0 +1,21 @@
+# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+# node_modules/
+
+node_modules/
+client/bundle.js
+client/bundle.js.map
+
+
+# Logs
+logs
+*.log
+
+# webpack
+*/.DS_Store
+.DS_Store
+
+#Testing
+.travis.yml
+
+#Env
+.env
