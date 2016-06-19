@@ -9,6 +9,12 @@ app.get('/', (req, res) => {
   res.send('serving up static files!');
 });
 
+// test routes for DB
+const Results = require('../controllers/Results');
+
+app.get('/api/results', Results.getAll);
+// end test route for DB
+
 app.listen(port, (err) => {
   if (err) {
     return process.stdout

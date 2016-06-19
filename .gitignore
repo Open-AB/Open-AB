@@ -19,3 +19,6 @@ logs
 
 #Env
 .env
+
+#Dev Testing
+test.js
