@@ -6,7 +6,9 @@
     "build": "webpack --watch",
     "api-server": "nodemon server/api/index.js",
     "listener": "nodemon server/listening/index.js",
-    "lint": "eslint --fix client server"
+    "lint": "eslint --fix client server",
+    "test:client": "karma start",
+    "test:server": "node server/api/index.js & mocha --bail --reporter nyan test/ApiServerSpec.js; pkill -n node;"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -24,12 +26,24 @@
     "eslint-plugin-react": "^5.1.1",
     "nodemon": "^1.9.2",
     "webpack": "^1.13.1",
-    "webpack-stream": "^3.2.0"
+    "webpack-stream": "^3.2.0",
+    "enzyme": "^2.3.0",
+    "expect": "^1.20.1",
+    "json-loader": "^0.5.4",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.26",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.5.3"
   },
   "dependencies": {
     "babel-cli": "^6.9.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "chai": "^3.5.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
@@ -37,9 +51,14 @@
     "express-session": "^1.13.0",
     "lodash": "^4.13.1",
     "pg": "^5.1.0",
+    "mocha": "^2.5.3",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "react": "^15.1.0",
-    "react-dom": "^15.0.2"
+    "react-addons": "^0.9.1-deprecated",
+    "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.1",
+    "supertest": "^1.2.0"
   }
 }

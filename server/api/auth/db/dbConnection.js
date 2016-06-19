@@ -1,4 +1,4 @@
-const cfg = require('../config');
+const cfg = require('./dbConfig');
 const pg = require('pg');
 
 const clientLink = `postgres://${cfg.db.host}:${cfg.db.port}/${cfg.db.dbName}`;

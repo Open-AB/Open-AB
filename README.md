@@ -10,3 +10,11 @@ In terminal run the following command to create database with schema:
 Seed the database with test data by running the following command in your terminal from the root directory of repo:
   node server/db/seed/dbSeed.js
 
+## Git workflow
+To start working on a new feature:
+-git checkout develop, git pull --rebase develop
+-git checkout -b [yourFeatureName]
+
+When a PR is merged and you want those 
+
+
