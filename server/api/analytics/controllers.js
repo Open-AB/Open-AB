@@ -1,7 +1,7 @@
-const tests = require('../db/queries/Tests');
+const dbQry = require('./db/dbQueries');
 
 const getAll = (req, res) => {
-  tests.getAllResults((result) => {
+  dbQry.getAllResults((result) => {
     res.status(200).send(result.rows);
   });
 };

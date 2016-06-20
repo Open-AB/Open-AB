@@ -1,6 +1,4 @@
-const clients = require('./queries/Clients');
-const pages = require('./queries/Pages');
-const tests = require('./queries/Tests');
+const dbQry = require('./db/dbQueries');
 
 const data = [
   {
@@ -69,14 +67,14 @@ const data = [
 
 data.forEach(datum => {
   // add client
-  clients.insertClient(datum.email, datum.password, () => {
+  dbQry.insertClient(datum.email, datum.password, () => {
     // add pages
     datum.pages.forEach(pageName => {
-      pages.insertPage(pageName, datum.email, () => {
+      dbQry.insertPage(pageName, datum.email, () => {
         // add test for page
         datum.tests.forEach(test => {
           if (test.page === pageName) {
-            tests.addFilledTest(test.name, test.result_a, test.result_b, pageName, datum.email, () => {
+            dbQry.addFilledTest(test.name, test.result_a, test.result_b, pageName, datum.email, () => {
               console.log('DONE WITH ', datum.email);
             });
           }

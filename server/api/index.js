@@ -10,9 +10,9 @@ app.get('/', (req, res) => {
 });
 
 // test routes for DB
-const Results = require('../controllers/Results');
+const controllers = require('./analytics/controllers');
 
-app.get('/api/results', Results.getAll);
+app.get('/api/results', controllers.getAll);
 // end test route for DB
 
 app.listen(port, (err) => {
