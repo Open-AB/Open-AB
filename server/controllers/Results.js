@@ -1,12 +1,7 @@
-const db = require('../db/connection');
 const tests = require('../db/queries/Tests');
 
 const getAll = (req, res) => {
-  db.query(tests.getAllResults(), (err, result) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  tests.getAllResults((result) => {
     res.status(200).send(result.rows);
   });
 };

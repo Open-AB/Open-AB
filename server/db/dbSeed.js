@@ -1,4 +1,3 @@
-const db = require('../db/connection');
 const clients = require('./queries/Clients');
 const pages = require('./queries/Pages');
 const tests = require('./queries/Tests');
@@ -70,26 +69,14 @@ const data = [
 
 data.forEach(datum => {
   // add client
-  db.query(clients.insertClient(datum.email, datum.password), errClient => {
-    if (errClient) {
-      console.error(errClient, 'COULD NOT INSERT CLIENT');
-      return;
-    }
+  clients.insertClient(datum.email, datum.password, () => {
     // add pages
     datum.pages.forEach(pageName => {
-      db.query(pages.insertPage(pageName, datum.email), errPage => {
-        if (errPage) {
-          console.error(errPage, 'COULD NOT INSERT PAGES');
-          return;
-        }
+      pages.insertPage(pageName, datum.email, () => {
         // add test for page
         datum.tests.forEach(test => {
           if (test.page === pageName) {
-            db.query(tests.addFilledTest(test.name, test.result_a, test.result_b, pageName, datum.email), errTest => {
-              if (errTest) {
-                console.error(errTest, 'COULD NOT INSERT TEST');
-                return;
-              }
+            tests.addFilledTest(test.name, test.result_a, test.result_b, pageName, datum.email, () => {
               console.log('DONE WITH ', datum.email);
             });
           }
