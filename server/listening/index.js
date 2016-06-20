@@ -13,6 +13,11 @@ app.use(cors({
   maxAge: 10,
 }));
 
+// test routes for DB
+const controllers = require('./events/controllers');
+app.post('/listening/clicks', controllers.hearClick);
+// end test route for DB
+
 app.listen(port, (err) => {
   if (err) {
     return process.stdout

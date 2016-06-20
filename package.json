@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --watch",
     "api-server": "nodemon server/api/index.js",
+    "listener": "nodemon server/listening/index.js",
     "lint": "eslint --fix client server"
   },
   "devDependencies": {

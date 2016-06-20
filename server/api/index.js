@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
 
 // test routes for DB
 const controllers = require('./analytics/controllers');
-
 app.get('/api/results', controllers.getAll);
+app.post('/api/createTest', controllers.createTest);
 // end test route for DB
 
 app.listen(port, (err) => {

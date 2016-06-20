@@ -1,14 +1,22 @@
 const dbQry = require('./db/dbQueries');
 
-const getAll = (req, res) => {
+exports.getAll = (req, res) => {
   dbQry.getAllResults((result) => {
     res.status(200).send(result.rows);
   });
 };
 
-const getForUser = (req, res) => {
-  res.send('getForUser');
-  return;
-};
+exports.createTest = (req, res) => {
+  // hardcoded test vars
+  const testName = 'testname';
+  const pageName = 'page1';
+  const clientEmail = 'abcd@abcd.com';
+  // end hardcoded test vars
 
-module.exports = { getAll, getForUser };
+  dbQry.createTest(testName, pageName, clientEmail, (result) => {
+    const toSend = {
+      testId: (result.rows[0].id).toString(),
+    };
+    res.status(201).send(toSend);
+  });
+};
