@@ -13,7 +13,7 @@ exports.checkEmail = (clientEmail, cb) => {
 exports.createClient = (clientEmail, password, cb) => {
   exports.checkEmail(clientEmail, (emailExists) => {
     if (emailExists) {
-      cb(false);
+      cb(null, false);
     } else {
       // insert expensive operation to salt + hash password
       db.query({
