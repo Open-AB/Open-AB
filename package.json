@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --watch",
     "api-server": "nodemon server/api/index.js",
-    "lint": "eslint client server"
+    "listener": "nodemon server/listening/index.js",
+    "lint": "eslint --fix client server"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -31,6 +32,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "lodash": "^4.13.1",
+    "pg": "^5.1.0",
     "react": "^15.1.0",
     "react-dom": "^15.0.2"
   }
