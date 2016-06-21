@@ -28,11 +28,17 @@
   },
   "dependencies": {
     "babel-cli": "^6.9.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "lodash": "^4.13.1",
     "pg": "^5.1.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.0.2"
   }
