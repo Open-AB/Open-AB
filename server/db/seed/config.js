@@ -2,6 +2,6 @@ module.exports = {
   db: {
     host: 'localhost',
     port: 5432,
-    dbName: 'openab',
+    dbName: process.env.NODE_ENV === 'test' ? 'test' : 'openab',
   },
 };
