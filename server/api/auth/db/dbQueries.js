@@ -6,16 +6,7 @@ exports.checkEmail = (clientEmail, cb) => {
   db.query({
     text: qry.checkEmail,
     values: [clientEmail],
-  },
-  (error, result) => {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    if (cb) {
-      cb(result.rows[0].exists);
-    }
-  });
+  }, cb);
 };
 
 // get all results in DB
@@ -28,40 +19,22 @@ exports.createClient = (clientEmail, password, cb) => {
       db.query({
         text: qry.createClient,
         values: [clientEmail, password],
-      },
-      (error, result) => {
-        if (error) {
-          console.error(error);
-          return;
-        }
-        if (cb) {
-          cb(result.rows[0].id.toString());
-        }
-      });
+      }, cb);
     }
   });
 };
 
 // check if attempted password matches DB password
 exports.signIn = (clientEmail, password, cb) => {
-  exports.checkEmail(clientEmail, (emailExists) => {
-    if (!emailExists) {
-      cb(false);
+  exports.checkEmail(clientEmail, (error, emailExists) => {
+    if (!emailExists.rows[0].exists) {
+      cb(null, false);
     } else {
       db.query({
         text: qry.getClientPass,
         values: [clientEmail],
       },
-      (error, result) => {
-        if (error) {
-          console.error(error);
-          return;
-        }
-        if (cb) {
-          // insert expensive operation to check attempted password and  db password
-          cb(password === result.rows[0].password);
-        }
-      });
+     cb);
     }
   });
 };

@@ -8,15 +8,7 @@ module.exports = {
       text: qry.insertClient,
       values: [email, password],
     },
-    (error, result) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      if (cb) {
-        cb(result);
-      }
-    });
+    cb);
   },
 
   // insert a new page for a client
@@ -25,15 +17,7 @@ module.exports = {
       text: qry.insertPage,
       values: [pageName, clientEmail],
     },
-    (error, result) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      if (cb) {
-        cb(result);
-      }
-    });
+    cb);
   },
 
   // increment result_a of a test
@@ -41,14 +25,6 @@ module.exports = {
     db.query({
       text: qry.addFilledTest,
       values: [testName, a, b, pageName, clientEmail],
-    }, (error, result) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      if (cb) {
-        cb(result);
-      }
-    });
+    }, cb);
   },
 };

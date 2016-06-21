@@ -9,5 +9,7 @@ exports.hearClick = (req, res) => {
   const clientEmail = 'abcd@abcd.com';
   // end hardcoded test vars
 
-  dbQry.hearClick(testName, pageName, clientEmail);
+  dbQry.hearClick(testName, pageName, clientEmail, (error, result) => {
+    return;
+  });
 };

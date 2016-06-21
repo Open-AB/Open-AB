@@ -8,13 +8,5 @@ exports.hearClick = (testName, pageName, clientEmail, cb) => {
     text: qry.incrementTest,
     values: [testName, pageName, clientEmail],
   },
-  (error, result) => {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    if (cb) {
-      cb(result);
-    }
-  });
+  cb);
 };
