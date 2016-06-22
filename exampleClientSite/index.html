@@ -15,12 +15,12 @@
     <script>
     $(document).ready(function(){
       $('.openab-1, .openab-2, .openab-3').on('click', function(e){
-        var classId = parseInt(this.className.match(/openab-\d+/)[0].match(/\d+/)[0]);
+        var testId = parseInt(this.className.match(/openab-\d+/)[0].match(/\d+/)[0]);
         $.ajax({
           url: 'http://localhost:3939/listening/clicks',
           type: 'POST',
           contentType: 'application/json',
-          data: JSON.stringify({testId: classId})
+          data: JSON.stringify({testId: testId})
         });
       });
     });
