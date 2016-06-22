@@ -34,7 +34,7 @@ exports.signIn = (clientEmail, password, cb) => {
       cb(null, false);
     } else {
       db.query({
-        text: qry.getClientPass,
+        text: qry.getClient,
         values: [clientEmail],
       },
      cb);
