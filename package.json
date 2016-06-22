@@ -8,7 +8,10 @@
     "listener": "nodemon server/listening/index.js",
     "lint": "eslint --fix client server test",
     "test:client": "karma start",
-    "test:server": "node server/api/index.js & mocha --bail --reporter nyan test/server/api/integrationSpec.js; pkill -n node;"
+    "test:server": "node server/api/index.js & mocha --bail --reporter nyan test/ApiServerSpec.js; pkill -n node;",
+    "seed-test": "NODE_ENV=test node server/db/seed/dbSeed.js; pkill -n node;",
+    "test:api-db": "mocha --bail test/server/api/dbQueriesSpec.js",
+    "test:lstn-db": "mocha --bail test/server/listening/dbQueriesSpec.js"
   },
   "devDependencies": {
     "babel": "^6.5.2",
