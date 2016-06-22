@@ -5,7 +5,7 @@ import SignUp from './SignUp.js';
 function App() {
   return (
     <div>
-      <SignUp />
+      <SignIn />
     </div>
   );
 }
