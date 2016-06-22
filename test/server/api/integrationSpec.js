@@ -64,19 +64,19 @@ describe('Signin:', () => {
       .expect('Location', '/dashboard', done);
   });
 
-  it('rejects user with invalid username and redirects them to failure route', done => {
+  it('rejects user with invalid username', done => {
     const body = { email: 'wrong@gmail.com', password: 'abcd123' };
     request
       .post('/api/signin')
       .send(body)
-      .expect('Location', '/failure', done);
+      .expect(401, done);
   });
 
-  it('rejects user with invalid password and redirects them to failure route', done => {
+  it('rejects user with invalid password', done => {
     const body = { email: 'test2@gmail.com', password: 'wrong' };
     request
       .post('/api/signin')
       .send(body)
-      .expect('Location', '/failure', done);
+      .expect(401, done);
   });
 });
