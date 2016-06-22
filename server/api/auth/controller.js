@@ -1,44 +1,24 @@
 const passport = require('passport');
-const bcrypt = require('bcrypt-nodejs');
 const dbQry = require('./db/dbQueries');
 
-// const dummyCreateUser = (email, hashedPassword, cb) => {
-//   console.log('user created!');
-//   console.log(cb);
-//   cb(null, { "email": "ben@gmail.com", "password": "abc123" }); // {error: 'dummyCreateUser error'}
-// };
+exports.signin = passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/failure', failureFlash: true }); // TODO: finish implementing flash here
 
-const generateHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
-exports.signin = passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/failure', failureFlash: true }); // could simply put in the function to deal w/ errors here, I think 
-
-exports.signup = (req, res, next) => {  // maybe refactor so that I'm only peeling things off of rec here
+exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const hashedPassword = generateHash(password);
-  // console.log('hashedPassword:', hashedPassword);
-  dbQry.createClient(email, hashedPassword, (err, clientId) => {  // ought to validate email and password here
-    if (err) { return next(err); } // errors with a 500, which seems good; may want to redirect
-    return req.login(clientId, (error) => {  // I expect this to error properly
+  dbQry.createClient(email, password, (err, response) => {  // TODO: validate email and password here
+    if (err) {
+      return next(err); // error code 500
+    }
+    if (response === false) {
+      return res.status(400).json({ message: 'User with this email address already exists' });
+    }
+    return req.login(response, (error) => {
       if (error) { return next(error); }
-      // console.log('user to login with after signup:', user);
-      // console.log('logged in and redirecting');
-      return res.redirect('/success');
+      return res.redirect('/dashboard');
     });
   });
 };
-
-// exports.checkEmail = (req, res) => {
-//   // hardcoded test vars
-//   const clientEmail = 'abcd@abcd.com';
-//   // end hardcoded test vars
-
-//   dbQry.checkEmail(clientEmail, (error, result) => {
-//     // result is postgres db row result
-//     // result.rows[0].exists is boolean true if exists, false if not
-//     res.status(201).send(result);
-//   });
-// };
 
 exports.checkAuthServer = (req, res, next) => {
   if (req.user) {

@@ -6,9 +6,9 @@
     "build": "webpack --watch",
     "api-server": "nodemon server/api/index.js",
     "listener": "nodemon server/listening/index.js",
-    "lint": "eslint --fix client server",
+    "lint": "eslint --fix client server test",
     "test:client": "karma start",
-    "test:server": "node server/api/index.js & mocha --bail --reporter nyan test/ApiServerSpec.js; pkill -n node;"
+    "test:server": "node server/api/index.js & mocha --bail --reporter nyan test/server/api/integrationSpec.js; pkill -n node;"
   },
   "devDependencies": {
     "babel": "^6.5.2",

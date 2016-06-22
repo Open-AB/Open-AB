@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
 const authConfig = require('./auth/config.js');
 const authRoutes = require('./auth/routes.js');
@@ -12,6 +13,7 @@ const port = process.env.PORT || 8080;
 app.use(express.static(`${__dirname}/../../client`));
 app.use(bodyParser.urlencoded({ extended: true })); // make sure this is necessary
 app.use(bodyParser.json());
+app.use(flash());
 app.use(cookieParser('cheese'));
 authConfig(app);
 authRoutes(app);
