@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>OpenAB Example Client Site</title>
+    <!-- jQuery is required -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+    <!-- Script snippet to give client -->
+
+    <!-- only the list of classes needs to change on different pages -->
+    <!-- classes are given as openab-x, where x is the id of the test in database -->
+    <script>
+    $(document).ready(function(){
+      $('.openab-1, .openab-2, .openab-3').on('click', function(e){
+        var classId = parseInt(this.className.match(/openab-\d+/)[0].match(/\d+/)[0]);
+        $.ajax({
+          url: 'http://localhost:3939/listening/clicks',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({testId: classId})
+        });
+      });
+    });
+    </script>
+
+  </head>
+
+  <body>
+    <h1>OpenAB Example Client Site</h1>
+    <h3>This site demonstrates OpenAB's conversion tracking.</h3>
+    <p>Certain elements have been given html classes that let OpenAB know to keep track of when users click on them.</p>
+    <p>Add more elements to track</p>
+    <div><button class="otherclasses lots of them openab-1">Click Me (test 1)</button></div>
+    <a href="anotherPage.html" class="openab-2">Click Me (test 2)</a>
+    <form action="anotherPage.html">
+      <input type="text"/>
+      <input class="formButton openab-3" value="submit (test 3)" type="submit"/>
+    </form>
+    <button class="noTracking">This button is not being tested.</button>
+  </body>
+</html>
