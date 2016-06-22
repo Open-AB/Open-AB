@@ -38,7 +38,7 @@ describe('Signup:', () => {
       .send(body)
       .expect(400, done);
   });
-  // add email validation/password validation and test it
+  // TODO: add email validation/password validation and test it
 });
 
 describe('Signin:', () => {

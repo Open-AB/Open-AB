@@ -15,6 +15,11 @@ To start working on a new feature:
 -git checkout develop, git pull --rebase develop
 -git checkout -b [yourFeatureName]
 
-When a PR is merged and you want those 
+To submit a PR:
+-git checkout [yourFeatureName]Squash
+-git rebase -i
+  -squash your changes into ~3 commits with strong commit messages
+-git push origin [yourFeatureName]Squash
+-submit a pull request to the "develop" branch
 
 
