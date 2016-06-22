@@ -3,10 +3,10 @@ const qry = require('./dbQryStrs');
 
 
 // get all results in DB
-exports.hearClick = (testName, pageName, clientEmail, cb) => {
+exports.hearClick = (testId, cb) => {
   db.query({
     text: qry.incrementTest,
-    values: [testName, pageName, clientEmail],
+    values: [testId],
   },
   cb);
 };
