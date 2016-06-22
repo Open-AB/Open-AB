@@ -13,7 +13,7 @@ const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('DB Queries for API Server', () => {
-  
+
   before( done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
@@ -70,13 +70,13 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should fail to create new client if email exists', done => {
+    it('Should return false if email exists when creating new client', done => {
       const email = 'newUser@CoolPeople.com';
       const password = 'zzzzzzz';
 
       authQry.createClient(email, password, (err, result) => {
         expect(result).to.exist;
-        expect(result.rows.length).to.equal(0);
+        expect(result).to.equal(false);
         done();
       });
     });
@@ -92,13 +92,14 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should return stored db password if sign in with exisiting client', done => {
+    it('Should return client email and stored db password if sign in with exisiting client', done => {
       const email = 'newUser@CoolPeople.com';
       const password = 'zzzzzzzz';
 
       authQry.signIn(email, password, (err, result) => {
         expect(result).to.exist;
-        expect(result.rows[0].password).to.equal('abcd1234FDSA');
+        expect(result.rows[0].email).to.equal(email);
+        expect(result.rows[0].password).to.exist;
         expect(result.rows[0].password).to.not.equal(password);
         done();
       });
@@ -152,8 +153,15 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    xit('Should get results given unique test ID', done => {
-      done();
+    it('Should get results given unique test ID', done => {
+      const testID = 5;
+
+      analyticQry.getResultForTestID(testID, (err, result) => {
+        expect(result).to.exist;
+        expect(result.rows[0].id).to.equal(testID);
+        expect(result.rows[0].result_a).to.equal(0);
+        done();
+      });
     });
 
     xit('Should get results given page name and client email', done => {

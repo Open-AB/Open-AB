@@ -45,7 +45,17 @@ describe('DB Queries for Listening Server', () => {
       });
     });
 
-    xit('Should up date JUST result_a for given test', () => {
+    it('Should increment JUST result_a for given testId', done => {
+      const testId = 1;
+      // increment result_a of testId
+      eventQry.hearClick(testId, () => {
+        // check if result_a of testId did increment
+        analyticQry.getResultForTestID(testId, (error, result) => {
+          expect(result.rows[0].result_a).to.exist;
+          expect(result.rows[0].result_a).to.equal(1);
+          done();
+        });
+      });
     });
 
   });

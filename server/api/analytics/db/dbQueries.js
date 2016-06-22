@@ -12,3 +12,10 @@ exports.createTest = (testName, pageName, clientEmail, cb) => {
     values: [testName, pageName, clientEmail],
   }, cb);
 };
+
+exports.getResultForTestID = (testID, cb) => {
+  db.query({
+    text: qry.getResultForTestID,
+    values: [testID],
+  }, cb);
+};
