@@ -42,7 +42,7 @@ describe('Signup:', () => {
 });
 
 describe('Signin:', () => {
-  before((done) => {
+  before(done => {
     db.query('DELETE FROM clients', (err) => {
       if (err) {
         console.error(err);

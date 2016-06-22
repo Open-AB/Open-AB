@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
-const authConfig = require('./auth/config.js');
+const authConfig = require('./auth/passportConfig.js');
 const authRoutes = require('./auth/routes.js');
 
 const app = express();
@@ -11,7 +11,7 @@ const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 8080;
 
 app.use(express.static(`${__dirname}/../../client`));
-app.use(bodyParser.urlencoded({ extended: true })); // make sure this is necessary
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(flash());
 app.use(cookieParser('cheese'));

@@ -16,7 +16,7 @@ To start working on a new feature:
 -git checkout -b [yourFeatureName]
 
 To submit a PR:
--git checkout [yourFeatureName]Squash
+-git checkout -b [yourFeatureName]Squash
 -git rebase -i
   -squash your changes into ~3 commits with strong commit messages
 -git push origin [yourFeatureName]Squash

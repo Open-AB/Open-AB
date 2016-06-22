@@ -1,8 +1,7 @@
 const passport = require('passport');
 const dbQry = require('./db/dbQueries');
 
-exports.signin = passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/failure', failureFlash: true }); // TODO: finish implementing flash here
-
+exports.signin = passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/failure', failureFlash: true }); // TODO: implement flash
 exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
