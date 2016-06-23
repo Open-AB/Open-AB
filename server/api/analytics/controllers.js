@@ -8,7 +8,7 @@ exports.getAll = (req, res) => {
 
 exports.createTest = (req, res) => {
   // hardcoded test vars
-  const testName = 'testname';
+  const testName = req.body.testName || 'testname';
   const pageName = 'page1';
   const clientEmail = 'abcd@abcd.com';
   // end hardcoded test vars
