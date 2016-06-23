@@ -8,7 +8,7 @@ class TestDisplay extends React.Component {
 
   componentDidMount() {
     //load all test data when page loads
-    fetch('/api/getall')
+    fetch('/api/results')
     .then((res) => {
       return res.json();
     })
@@ -21,7 +21,6 @@ class TestDisplay extends React.Component {
       })
       this.setState({classNames:classNames});
       console.log(this.state.classNames);
-      this.render();
       this.makeSnippet();
     });
   }
@@ -51,7 +50,7 @@ class TestDisplay extends React.Component {
 
   addTest() {
     console.log('is it happening?', this)
-    fetch('/api/createtest', {
+    fetch('/api/createTest', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -87,7 +86,7 @@ class TestDisplay extends React.Component {
         }).sort((a,b) => {
           return a.key - b.key;
         })}</ul>
-        <p>Copy this code snippet into the &lt;head&gt; of your website's html</p>
+        <p>Copy this code snippet into the &lt;head&gt; of your website&#39;s html</p>
         <textarea style = {snippetStyle} value = {this.state.snippet} readonly/>
         <p>If your website does not already use jQuery, copy this snippet above the previous one</p>
         <textarea style = {jqueryStyle} defaultValue = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>' readonly/>
