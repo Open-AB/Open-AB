@@ -112,15 +112,20 @@ describe('DB Queries for API Server', () => {
       const testNames = ['test1', 'test2'];
       const pageNames = ['page1', 'page2'];
       const clientEmail = 'userWithTests@asdf.com';
+      const password = 'asdfqwerfdsaqwertrewsdfg';
       let testCount = 0;
       // populates userWithTests@asdf.com with 2 pages, 2 tests per page, total 4 tests
-      pageNames.forEach( page => {
-        testNames.forEach( test => {
-          analyticQry.createTest(test, page, clientEmail, () => {
-            testCount++;
-            if (testCount >= 4) {
-              done();
-            }
+      authQry.createClient(clientEmail, password, () => {
+        pageNames.forEach(page => {
+          analyticQry.createPage(page, clientEmail, () => {
+            testNames.forEach(test => {
+              analyticQry.createTest(`${page}_${test}`, page, clientEmail, () => {
+                testCount++;
+                if (testCount >= 4) {
+                  done();
+                }
+              });
+            });
           });
         });
       });
@@ -129,16 +134,23 @@ describe('DB Queries for API Server', () => {
     it('Should get all tests, regardless of client email', done => {
       analyticQry.getAllResults((err, result) => {
         expect(result).to.exist;
-        expect(result.rows.length).to.equal(4);
+        expect(result.rows.length).to.equal(4 );
         done();
       });
     });
 
-    xit('Should create a new page for a client', done => {
+    it('Should create a new page for a client', done => {
       const pageName = 'aTestPage';
       const clientEmail = 'userWithTests@asdf.com';
 
-      done();
+      analyticQry.createPage(pageName, clientEmail, (err, result) => {
+        expect(result).to.exist;
+        expect(result.rows[0].name).to.equal(pageName);
+        // only checks existance
+        expect(result.rows[0].id).to.exist;
+        expect(result.rows[0].client_id).to.exist;
+        done();
+      });
     });
 
     it('Should create a test for a page and return unique test ID', done => {
@@ -164,20 +176,46 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    xit('Should get results given page name and client email', done => {
-      done();
+    it('Should get results given page name and client email', done => {
+      const pageName = 'page2';
+      const clientEmail = 'userWithTests@asdf.com';
+
+      analyticQry.getPageTests(pageName, clientEmail, (err, result) => {
+        expect(result).to.exist;
+        expect(result.rows.length).to.equal(2);
+
+        // .be.oneOf() is used because order of test insertion not guaranteed
+        expect(result.rows[0].name).to.be.oneOf([`${pageName}_test1`, `${pageName}_test2`]);
+        expect(result.rows[1].name).to.be.oneOf([`${pageName}_test1`, `${pageName}_test2`]);
+
+        done();
+      });
     });
 
-    xit('Should get all results for given page and client email', done => {
-      done();
+    it('Should get all results for a client', done => {
+      const clientEmail = 'userWithTests@asdf.com';
+
+      analyticQry.getClientTests(clientEmail, (err, result) => {
+        expect(result).to.exist;
+        // 4 tests made before tests + 1 test created from unit-test = 5 total
+        expect(result.rows.length).to.equal(5);
+        done();
+      });
     });
 
-    xit('Should get all results for a client', done => {
-      done();
-    });
+    it('Should get all pages for a client', done => {
+      const clientEmail = 'userWithTests@asdf.com';
+      const pageNames = ['page1', 'page2', 'aTestPage'];
 
-    xit('Should get all pages for a client', done => {
-      done();
+      analyticQry.getClientPages(clientEmail, (err, result) => {
+        expect(result).to.exist;
+        // 2 pages made before tests + 1 page created from unit-test = 3 total
+        expect(result.rows.length).to.equal(3);
+        expect(result.rows[0].name).to.be.oneOf(pageNames);
+        expect(result.rows[1].name).to.be.oneOf(pageNames);
+        expect(result.rows[2].name).to.be.oneOf(pageNames);
+        done();
+      });
     });
 
   });

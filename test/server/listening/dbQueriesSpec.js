@@ -39,8 +39,10 @@ describe('DB Queries for Listening Server', () => {
       const seedPageName = 'testPage';
       const seedTestName = 'eventTest';
       authQry.createClient(seedEmail, seedPassword, () => {
-        analyticQry.createTest(seedTestName, seedPageName, seedEmail, () => {
-          done();
+        analyticQry.createPage(seedPageName, seedEmail, () => {
+          analyticQry.createTest(seedTestName, seedPageName, seedEmail, () => {
+            done();
+          });
         });
       });
     });
@@ -58,6 +60,7 @@ describe('DB Queries for Listening Server', () => {
       });
     });
 
+    xit('Should increment JUST result_b for given testId');
   });
 });
 
