@@ -14,7 +14,7 @@ const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('DB Queries for API Server', () => {
 
-  before( done => {
+  before(done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
     const testSQL = fs.readFileSync(path.resolve(__dirname, '../testSchema.sql')).toString();
@@ -30,7 +30,7 @@ describe('DB Queries for API Server', () => {
 
   describe('Client Queries from Auth Service for API Server', () => {
 
-    before( done => {
+    before(done => {
       const seedEmail = 'seedEmail@email.com';
       const seedPassword = 'asdfQWERTY4321';
       authQry.createClient(seedEmail, seedPassword, () => {
@@ -108,7 +108,7 @@ describe('DB Queries for API Server', () => {
 
   describe('Test Queries from Analytics Service for API Server', () => {
 
-    before( (done) => {
+    before(done => {
       const testNames = ['test1', 'test2'];
       const pageNames = ['page1', 'page2'];
       const clientEmail = 'userWithTests@asdf.com';

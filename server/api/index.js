@@ -21,6 +21,8 @@ authConfig(app);
 authRoutes(app);
 analyticsRoutes(app);
 
+analyticsRoutes(app);
+
 app.get('/', (req, res) => {
   res.send('serving up static files!');
 });
