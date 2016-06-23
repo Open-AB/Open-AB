@@ -1,6 +1,6 @@
 const analyticsController = require('./controllers');
 
 module.exports = (app) => {
-  app.get('/api/getall', analyticsController.getAll);
-  app.post('/api/createtest', analyticsController.createTest);
+  app.get('/api/results', analyticsController.getAll);
+  app.post('/api/createTest', analyticsController.createTest);
 };
