@@ -17,7 +17,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // test routes for DB
-const controllers = require('./events/controllers');
+const controllers = require('./events/controller');
 app.post('/listening/clicks', controllers.hearClick);
 // end test route for DB
 
