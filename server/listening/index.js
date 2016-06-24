@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
 const host = process.env.HOST || 'localhost';
@@ -12,6 +13,13 @@ app.use(cors({
   credentials: true,
   maxAge: 10,
 }));
+
+app.use(bodyParser.json());
+
+// test routes for DB
+const controllers = require('./events/controller');
+app.post('/listening/clicks', controllers.hearClick);
+// end test route for DB
 
 app.listen(port, (err) => {
   if (err) {

@@ -2,4 +2,7 @@
 
 client/bundle.js
 client/bundle.js.map
+test/
 
+# Dev testing files
+server/db/queries/

@@ -1,9 +1,12 @@
 import React from 'react';
+import SignIn from './SignIn.js';
+import TestDisplay from './TestDisplay.js';
 
 function App() {
   return (
     <div>
-      <h1>The road to greatness</h1>
+      <TestDisplay />
+      <SignIn />
     </div>
   );
 }

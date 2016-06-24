@@ -19,3 +19,8 @@ logs
 
 #Env
 .env
+
+#Dev Testing
+test.js
+server/db/queries/
+server/db/queryStrs/
