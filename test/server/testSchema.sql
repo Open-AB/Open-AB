@@ -1,9 +1,4 @@
-DROP DATABASE IF EXISTS openab;
-
-CREATE DATABASE openab;
-CREATE DATABASE test;
-
-\c openab
+DROP TABLE IF EXISTS clients, pages, tests;
 
 CREATE TABLE clients (
  id SERIAL PRIMARY KEY,

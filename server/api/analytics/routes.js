@@ -1,4 +1,4 @@
-const analyticsController = require('./controllers');
+const analyticsController = require('./controller');
 
 module.exports = (app) => {
   app.get('/api/results', analyticsController.getAll);
