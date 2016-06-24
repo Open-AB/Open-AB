@@ -13,7 +13,6 @@ const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('DB Queries for API Server', () => {
-
   before(done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
@@ -29,7 +28,6 @@ describe('DB Queries for API Server', () => {
   });
 
   describe('Client Queries from Auth Service for API Server', () => {
-
     before(done => {
       const seedEmail = 'seedEmail@email.com';
       const seedPassword = 'asdfQWERTY4321';
@@ -107,7 +105,6 @@ describe('DB Queries for API Server', () => {
   });
 
   describe('Test Queries from Analytics Service for API Server', () => {
-
     before(done => {
       const testNames = ['test1', 'test2'];
       const pageNames = ['page1', 'page2'];
@@ -134,7 +131,7 @@ describe('DB Queries for API Server', () => {
     it('Should get all tests, regardless of client email', done => {
       analyticQry.getAllResults((err, result) => {
         expect(result).to.exist;
-        expect(result.rows.length).to.equal(4 );
+        expect(result.rows.length).to.equal(4);
         done();
       });
     });
@@ -217,8 +214,6 @@ describe('DB Queries for API Server', () => {
         done();
       });
     });
-
   });
-
 });
 

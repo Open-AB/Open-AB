@@ -5,7 +5,5 @@ exports.hearClick = (req, res) => {
 
   const testId = req.body.testId;
 
-  dbQry.hearClick(testId, (error, result) => {
-    return;
-  });
+  dbQry.hearClick(testId, () => {});
 };

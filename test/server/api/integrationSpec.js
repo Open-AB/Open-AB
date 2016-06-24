@@ -13,7 +13,6 @@ const authQry = require('../../../server/api/auth/db/dbQueries');
 // const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('API Server: End point Testing', () => {
-  
   before(done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
@@ -29,7 +28,6 @@ describe('API Server: End point Testing', () => {
   });
 
   describe('Signup:', () => {
-
     it('signs up user and redirects them to the dashboard', done => {
       const body = { email: 'test@gmail.com', password: 'abc123' };
       request

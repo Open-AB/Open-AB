@@ -13,7 +13,6 @@ const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('Listening Server: End point Testing', () => {
-  
   before(done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
@@ -31,7 +30,7 @@ describe('Listening Server: End point Testing', () => {
   describe('Event listening:', () => {
     // populate database with a client, page, and test
     before(done => {
-      const clientEmail ='testUser@test.com';
+      const clientEmail = 'testUser@test.com';
       const password = 'password';
       const pageName = 'page1';
       const testName = 'noticeablyLongTestName';
