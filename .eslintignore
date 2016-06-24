@@ -3,6 +3,10 @@
 client/bundle.js
 client/bundle.js.map
 test/
+dist/*
 
 # Dev testing files
 server/db/queries/
+
+client/containers/Root*
+clinent/store/configure*

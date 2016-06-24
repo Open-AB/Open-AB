@@ -1,27 +1,30 @@
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== 'production'; //is this for db tests?
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  context: path.join(__dirname),
-  entry: './client/app.js',
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+    'webpack-hot-middleware/client',
+    './client/index',
+  ],
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/',
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
   module: {
     loaders: [
       {
-        test: /.js?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel',
-      },
-      {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'sass'],
-      },
-      {
-        test: /\.json$/,
-        loader: 'json',
+        test: /\.js$/,
+        loaders: ['babel'],
+        exclude: /node_modules/,
+        include: __dirname,
       },
     ],
   },
-  output: { path: __dirname, filename: '/client/bundle.js' },
-  plugins: [],
 };
