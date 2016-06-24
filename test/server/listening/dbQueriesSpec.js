@@ -14,8 +14,7 @@ const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
 describe('DB Queries for Listening Server', () => {
-
-  before( done => {
+  before(done => {
     // connect to test database
     const connectionString = 'postgres://localhost:5432/test';
     const testSQL = fs.readFileSync(path.resolve(__dirname, '../testSchema.sql')).toString();
@@ -30,8 +29,7 @@ describe('DB Queries for Listening Server', () => {
   });
 
   describe('Event Queries from Events Service for Listening Server', () => {
-
-    before( done => {
+    before(done => {
       // seed db with client
       const seedEmail = 'seedEmail@email.com';
       const seedPassword = 'asdfQWERTY4321';
