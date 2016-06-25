@@ -9,4 +9,4 @@ dist/*
 server/db/queries/
 
 client/containers/Root*
-clinent/store/configure*
+client/store/configure*
