@@ -1,4 +1,3 @@
-const isDev = process.env.NODE_ENV !== 'production'; //is this for db tests?
 const webpack = require('webpack');
 const path = require('path');
 
