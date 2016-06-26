@@ -8,7 +8,8 @@
     "listener": "nodemon server/listening/index.js",
     "lint": "eslint --fix client server test",
     "test:client": "karma start",
-    "test:backend": "npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server",
+    "test:backend": "npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server && npm run test:stats",
+    "test:stats": "mocha --bail test/server/api/statsSpec.js",
     "test:api-db": "mocha --bail test/server/api/dbQueriesSpec.js",
     "test:lstn-db": "mocha --bail test/server/listening/dbQueriesSpec.js",
     "test:listening": "NODE_ENV=test PORT=9999 node server/listening/index.js & mocha --bail test/server/listening/integrationSpec.js; pkill -n node;",
@@ -57,7 +58,8 @@
     "webpack": "^1.13.1",
     "webpack-stream": "^3.2.0",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.9.1"
+    "webpack-hot-middleware": "^2.9.1",
+    "redux-logger": "^2.4.0"
   },
   "dependencies": {
     "babel-cli": "^6.9.0",
@@ -80,7 +82,6 @@
     "react-router": "2.0.0",
     "react-router-redux": "^4.0.0-rc.1",
     "redux": "^3.2.1",
-    "redux-logger": "^2.4.0",
     "redux-thunk": "^1.0.3"
   }
 }

@@ -10,3 +10,4 @@ server/db/queries/
 
 client/containers/Root*
 client/store/configure*
+server/api/analytics/stats/chiSquareTest.js
