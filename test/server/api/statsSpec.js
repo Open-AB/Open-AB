@@ -2,7 +2,10 @@
 
 const expect = require('chai').expect;
 
+// api server config
+process.env.PORT = 8888;
 process.env.NODE_ENV = 'test';
+const request = require('supertest')(`http://localhost:${process.env.PORT}`);
 
 const generateEvents = require('../../../server/api/analytics/stats/generateEvents.js');
 const chiSquareAnalysis = require('../../../server/api/analytics/stats/chiSquareAnalysis.js');
@@ -84,6 +87,15 @@ describe('Chi Square Significance Analysis', () => {
     expect(results[3].stats.sufficientVisits).to.be.false;
   });
 
+  it('should probably consider a reasonable number of visits', () => {
+    expect(results[0].stats.testResults.aVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+    expect(results[0].stats.testResults.bVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+    expect(results[1].stats.testResults.aVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+    expect(results[1].stats.testResults.bVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+    expect(results[2].stats.testResults.aVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+    expect(results[2].stats.testResults.bVisitsConsidered).to.be.within(sampleSize, sampleSize * 1.2);
+  });
+
   it('should probably consider a reasonable number of clicks', () => {
     expect(results[0].stats.testResults.aClicksConsidered).to.be.within(((aClickRate - 0.30) * approxEvents), ((aClickRate + 0.30) * approxEvents));
     expect(results[0].stats.testResults.bClicksConsidered).to.be.within(((bClickRate - 0.30) * approxEvents), ((bClickRate + 0.30) * approxEvents));
@@ -93,5 +105,13 @@ describe('Chi Square Significance Analysis', () => {
     expect(results[0].stats.testResults.p).to.be.within(0, 0.05);
     expect(results[2].stats.testResults.p).to.be.within(0, 1);
   });
+});
 
+describe('Send stats to client', () => {
+
+  it('sends all stats to client', done => {
+    request
+      .get('/api/stats')
+      .expect(200, done());  // TODO: add test to make sure that the contents of the response body are accurate
+  });
 });

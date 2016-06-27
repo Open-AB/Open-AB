@@ -1,4 +1,6 @@
 const dbQry = require('./db/dbQueries');
+const generateEvents = require('./stats/generateEvents.js');
+const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
 
 exports.getAll = (req, res, next) => {
   dbQry.getAllResults((error, result) => {
@@ -24,5 +26,25 @@ exports.createTest = (req, res, next) => {
       testId: (result.rows[0].id).toString(),
     };
     return res.status(201).send(toSend);
+  });
+};
+
+dbQry.getAllResults = (cb) => {   // dummy version
+  const tests = generateEvents.generateTimesForMultipleTests();
+  const result = {};
+  result.rows = tests;
+  cb(null, result);
+};
+
+exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
+  dbQry.getAllResults((error, result) => {
+    if (error) {
+      return next(error);
+    }
+    const testResults = result.rows;
+    console.log(testResults);
+    const testStats = chiSquareAnalysis.computeStatsForTests(testResults);
+    console.log(testStats);
+    res.status(200).json(testStats);
   });
 };

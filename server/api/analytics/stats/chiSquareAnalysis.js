@@ -27,7 +27,7 @@ const countEventsToConsider = (data, cutoffTime) => {
 };
 
 const computeStatsForCompleteTest = (data) => {
-  const visitsCutoffTime = Math.max(data.aVisits[sampleSize - 1], data.aVisits[sampleSize - 1]);
+  const visitsCutoffTime = Math.max(data.aVisits[sampleSize - 1], data.bVisits[sampleSize - 1]);
   const cutoffTime = visitsCutoffTime + extraClickTime;
   const stats = countEventsToConsider(data, cutoffTime);
   stats.p = chiSquareTest(stats.aVisitsConsidered, stats.aClicksConsidered, stats.bVisitsConsidered, stats.bClicksConsidered);
@@ -70,23 +70,3 @@ exports.computeStatsForTest = computeStatsForTest = test => {
 // ]
 
 exports.computeStatsForTests = tests => tests.map(test => computeStatsForTest(test));
-
-// const dbQry = {};
-
-// dbQry.getAllResults = (cb) => {   // dummy version
-//   const tests = generateEvents.generateTimesForMultipleTests();
-//   const result = {};
-//   result.rows = tests;
-//   cb(null, result);
-// };
-
-// exports.computeStatsOnQuery = computeStats = (req, res, next) => { //use dbQry as an arg for testing purposes?
-//   dbQry.getAllResults((error, result) => {
-//     if (error) {
-//       return next(error);
-//     }
-//     const testResults = result.rows;
-//     const testStats = testResults.map(test => computeStatsForTest(test));
-//     console.log(testStats);
-//   });
-// };

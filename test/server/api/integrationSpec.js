@@ -6,7 +6,7 @@ const path = require('path');
 // api server config
 process.env.PORT = 8888;
 process.env.NODE_ENV = 'test';
-const request = require('supertest')(`http://localhost:${process.env.PORT}`); // can and probably should factor out app.js and use that instead
+const request = require('supertest')(`http://localhost:${process.env.PORT}`); // TODO: factor out app.js and use that instead
 
 // dbQueries to populate test DB
 const authQry = require('../../../server/api/auth/db/dbQueries');
