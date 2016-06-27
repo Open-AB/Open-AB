@@ -7,7 +7,8 @@
     "react/prefer-stateless-function": "off",
     "react/jsx-first-prop-new-line": "off",
     "global-require": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "no-param-reassign": "off"
   },
   "parserOptions":{
     "ecmaFeatures": {
