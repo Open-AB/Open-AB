@@ -18,9 +18,9 @@ describe('Events generator', () => {
 
     const tests = generateEvents.generateMultipleTestsWithDefaultParams();
     const test = tests[0];
-    const testData = test.testData;
+    const testData = test.data;
     const test1 = tests[1];
-    const test1Data = test1.testData;
+    const test1Data = test1.data;
 
     it('should produce tests with the correct name and id', () => {
       expect(test.testName).to.equal('buyNowButtonTest');
@@ -40,26 +40,26 @@ describe('Events generator', () => {
 
     it('should generate visits of the correct format', () => {
       expect(typeof testData.aVisits[0].time).to.equal('number');
-      expect(testData.aVisits[0].IPAdress.split('.')[0]).to.be.within(100, 999);
+      expect(testData.aVisits[0].IPAddress.split('.')[0]).to.be.within(100, 999);
     });
 
     it('should generate clicks of the correct format', () => {
       expect(typeof testData.aClicks[0].time).to.equal('number');
-      expect(testData.aClicks[0].IPAdress.split('.')[0]).to.be.within(100, 999);
+      expect(testData.aClicks[0].IPAddress.split('.')[0]).to.be.within(100, 999);
     });
   });
 
   describe('Generate click and visit times arrays', () => {
 
     const tests = generateEvents.generateTimesForMultipleTests();
-    const test = tests[0];
+    const testData = tests[0].data;
 
     it('should generate visits in the correct format', () => {
-      expect(typeof test.aVisits[0]).to.equal('number');
+      expect(typeof testData.aVisits[0]).to.equal('number');
     });
 
     it('should generate clicks in the correct format', () => {
-      expect(typeof test.aClicks[0]).to.equal('number');
+      expect(typeof testData.aClicks[0]).to.equal('number');
     });
   });
 });
@@ -68,27 +68,30 @@ describe('Chi Square Significance Analysis', () => {
 
   // Note that if the test data is changed, some of these tests will break.
   // This is intentional and ensures that appropriate test data is used.
+  const sampleSize = 2587;
+  const approxEvents = 2587 * 1.01;
+
   const tests = generateEvents.generateTimesForMultipleTests();
   const results = chiSquareAnalysis.computeStatsForTests(tests);
 
   it('should determine whether sufficient time has elapsed', () => {
-    expect(results[0].sufficientTime).to.be.true;
-    expect(results[4].sufficientTime).to.be.false;
+    expect(results[0].stats.sufficientTime).to.be.true;
+    expect(results[4].stats.sufficientTime).to.be.false;
   });
 
   it('should determine whether enough users have visited', () => {
-    expect(results[0].sufficientVisits).to.be.true;
-    expect(results[3].sufficientVisits).to.be.false;
+    expect(results[0].stats.sufficientVisits).to.be.true;
+    expect(results[3].stats.sufficientVisits).to.be.false;
   });
 
   it('should probably consider a reasonable number of clicks', () => {
-    expect(results[0].stats.aClicksConsidered).to.be.within(((aClickRate - 0.30) * 2600), ((aClickRate + 0.30) * 2600));
-    expect(results[0].stats.bClicksConsidered).to.be.within(((bClickRate - 0.30) * 2600), ((bClickRate + 0.30) * 2600));
+    expect(results[0].stats.testResults.aClicksConsidered).to.be.within(((aClickRate - 0.30) * approxEvents), ((aClickRate + 0.30) * approxEvents));
+    expect(results[0].stats.testResults.bClicksConsidered).to.be.within(((bClickRate - 0.30) * approxEvents), ((bClickRate + 0.30) * approxEvents));
   });
 
-  it('should probably find a reasonable p value (note: this test will fail about 1% of the time due to randomness!)', () => {
-    expect(results[0].stats.p).to.be.within(0, 0.05);
-    expect(results[2].stats.p).to.be.within(0.01, 1);
+  it('should probably find a reasonable p value', () => {
+    expect(results[0].stats.testResults.p).to.be.within(0, 0.05);
+    expect(results[2].stats.testResults.p).to.be.within(0, 1);
   });
 
 });

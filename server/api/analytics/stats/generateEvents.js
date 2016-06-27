@@ -1,3 +1,5 @@
+const maxClickDelay = 10000; // maximum of time after visit to wait to make a click
+
 exports.testsInfo = testsInfo = [
   {
     testName: 'buyNowButtonTest', // B wins
@@ -74,10 +76,11 @@ const generateVersionData = (startTime, clickRate, totalVisits, timeframe) => {
   let clicks = [];
   for (let i = 0; i < totalVisits; i++) {
     const time = startTime + Math.floor((Math.random() * timeframe));
-    const IPAdress = `${numString(3)}.${numString(3)}.${numString(3)}.${numString(2)}`;
-    visits.push({ time, IPAdress });
+    const IPAddress = `${numString(3)}.${numString(3)}.${numString(3)}.${numString(2)}`;
+    visits.push({ time, IPAddress });
     if (Math.random() < clickRate) {
-      clicks.push({ time, IPAdress });
+      const clickTime = time + Math.floor((Math.random() * maxClickDelay));
+      clicks.push({ time: clickTime, IPAddress });
     }
   }
   visits = sortEvents(visits);
@@ -99,11 +102,11 @@ const generateTestData = (startTime, aClickRate, aTotalVisits, bClickRate, bTota
 const generateDataForMultipleTests = (testsInfo) => {
   return testsInfo.map(testInfo => {
     const { startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe } = testInfo.testParams;
-    const testData = generateTestData(startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe);
+    const data = generateTestData(startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe);
     return {
       testName: testInfo.testName,
       testId: testInfo.testId,
-      testData,
+      data,
     };
   });
 };
@@ -113,7 +116,7 @@ const generateDataForMultipleTests = (testsInfo) => {
 //   {
 //     testName: 'buyNowButtonTest',
 //     testId: '3874E76',
-//     testData: {
+//     data: {
 //       aVisits: [~, ~, ...],
 //       aClicks: [~, ~, ...],
 //       bVisits: [~, ~, ...],
@@ -126,7 +129,7 @@ const generateDataForMultipleTests = (testsInfo) => {
 // ]
 
 // where ~ = {
-//   IPAdress: 173.247.199.46
+//   IPAddress: 173.247.199.46
 //   time: 1466896596001
 // }
 
@@ -139,10 +142,12 @@ exports.generateMultipleTestsWithDefaultParams = generateMultipleTestsWithDefaul
 //   {
 //     testName: 'buyNowButtonTest',
 //     testId: '3874E76',
-//     aVisits: [1466896596001, ..., ...],
-//     aClicks: [1466896544352, ..., ...],
-//     bVisits: [1466896435522, ..., ...],
-//     bClicks: [1466896435233, ..., ...],
+//     data: {
+//       aVisits: [1466896596001, ..., ...],
+//       aClicks: [1466896544352, ..., ...],
+//       bVisits: [1466896435522, ..., ...],
+//       bClicks: [1466896435233, ..., ...],
+//     },
 //   },
 //   {...},
 //   {...},
@@ -153,18 +158,15 @@ exports.generateTimesForMultipleTests = () => {
   const tests = generateMultipleTestsWithDefaultParams();
   return tests.map(test => {
     const timesByVersionAndType = {};
-    const testData = test.testData;
-    for (const versionAndType in testData) {
-      const mappedTestData = testData[versionAndType].map(event => event.time);
+    const data = test.data;
+    for (const versionAndType in data) {
+      const mappedTestData = data[versionAndType].map(event => event.time);
       timesByVersionAndType[versionAndType] = mappedTestData;
     }
     return {
       testName: test.testName,
       testId: test.testId,
-      aVisits: timesByVersionAndType.aVisits,
-      aClicks: timesByVersionAndType.aClicks,
-      bVisits: timesByVersionAndType.bVisits,
-      bClicks: timesByVersionAndType.bClicks,
+      data: timesByVersionAndType,
     };
   });
 };
