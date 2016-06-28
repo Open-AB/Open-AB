@@ -9,7 +9,7 @@
     "lint": "eslint --fix client server test",
     "test": "npm run test:backend && npm run test:client",
     "test:client": "karma start",
-    "test:backend": "npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server && npm run test:stats",
+    "test:backend": "npm run test:stats && npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server",
     "test:stats": "mocha --bail test/server/api/statsSpec.js",
     "test:api-db": "mocha --bail test/server/api/dbQueriesSpec.js",
     "test:lstn-db": "mocha --bail test/server/listening/dbQueriesSpec.js",

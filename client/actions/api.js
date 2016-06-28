@@ -38,7 +38,7 @@ function receiveData(apiEndpoint, json) {
 function fetchData(apiEndpoint) {
   return dispatch => {
     dispatch(requestData(apiEndpoint));
-    return fetch(`http://localhost:8888${apiEndpoint}`) // probably needs to grab the IP address programatically
+    return fetch(`http://localhost:8888${apiEndpoint}`) // TODO: grab the IP address programatically
       .then(response => response.json())
       .then(json => dispatch(receiveData(apiEndpoint, json)));
   };
