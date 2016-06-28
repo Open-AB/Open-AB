@@ -12,6 +12,8 @@ const authRoutes = require('./auth/routes.js');
 
 const analyticsRoutes = require('./analytics/routes.js');
 
+const selectionRoutes = require('./selection/routes.js');
+
 const app = express();
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 8080;
@@ -27,6 +29,7 @@ app.use(cookieParser('cheese'));
 authConfig(app);
 authRoutes(app);
 analyticsRoutes(app);
+selectionRoutes(app);
 
 app.get('/', (req, res) => {
   res.send('serving up static files!');
