@@ -2,12 +2,11 @@ const dummy = require('./generateEvents');
 
 const dummyData = dummy.generateTimesForMultipleTests();
 
-exports.countOccurences = (arr) => {
-  return arr.reduce((acc, curr) => {
-      acc[curr] = acc[curr] ? ++acc[curr] : 1;
-      return acc;
-    }, {});
-};
+exports.countOccurences = (arr) => arr.reduce(
+  (acc, curr) => {
+    acc[curr] = acc[curr] ? ++acc[curr] : 1;
+    return acc;
+  }, {});
 
 exports.createBuckets = (bucketWidth, totalArr) => {
   const start = totalArr[0];
@@ -38,10 +37,10 @@ exports.countIntoBuckets = (upperLimitOfBuckets, arr) => {
   }, []);
 };
 
-exports.processDataIntoResults = (aClicks, bClicks, aVisits, bVisits) => {
+exports.processDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
   const TotalVisits = aVisits.concat(bVisits).sort((a, b) => a - b);
 
-  const buckets = exports.createBuckets(1 * 24 * 60 * 60 * 1000, TotalVisits);
+  const buckets = exports.createBuckets(bucketWidth * 24 * 60 * 60 * 1000, TotalVisits);
 
   const aBucketCount = exports.countIntoBuckets(buckets, aClicks);
   const bBucketCount = exports.countIntoBuckets(buckets, bClicks);

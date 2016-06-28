@@ -18,6 +18,7 @@
     "test:listening": "NODE_ENV=test PORT=9999 node server/listening/index.js & mocha --bail test/server/listening/integrationSpec.js; pkill -n node;",
     "test:server": "mocha --bail test/server/api/integrationSpec.js;",
     "api:test-server": "NODE_ENV=test PORT=8888 node server/api/index.js",
+    "test:count": "mocha --bail test/server/api/countSpec.js",
     "seed-test": "NODE_ENV=test node server/db/seed/dbSeed.js; pkill -n node;",
     "seed-db": "node server/db/seed/dbSeed.js"
   },

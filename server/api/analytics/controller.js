@@ -51,4 +51,4 @@ exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing p
 const count = require('./stats/count');
 exports.getChartData = (req, res, next) => {
   res.status(200).send(count.results);
-}
+};
