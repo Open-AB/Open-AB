@@ -1,3 +1,18 @@
+/*CSS reset adapted from*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+.openab {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
 .openab-header {
   font-family: sans-serif;
   border-radius: 10px;
@@ -12,7 +27,7 @@
 }
 
 .openab-domTree {
-  top:100px;
+  top: 100px;
 }
 
 .openab-select {
