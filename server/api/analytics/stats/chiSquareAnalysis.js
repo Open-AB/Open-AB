@@ -13,60 +13,61 @@ const extraClickTime = 10000; // number of milliseconds after visit to wait for 
 // According to this calculator (http://biomath.info/power/chsq.htm), that means we need 2587 people to visit each version of the page
 
 const countEventsToConsider = (data, cutoffTime) => {
-  return Object.keys(data).reduce((statsAccumulator, eventName) => {
+  return Object.keys(data).reduce((eventsConsidered, eventName) => {
     const eventTimes = data[eventName];
     for (let i = 0; i < eventTimes.length; i++) {
       if (eventTimes[i] > cutoffTime) {
-        statsAccumulator[`${eventName}Considered`] = i;
-        return statsAccumulator;
+        eventsConsidered[`${eventName}Considered`] = i;
+        return eventsConsidered;
       }
     }
-    statsAccumulator[`${eventName}Considered`] = data[eventName].length;
-    return statsAccumulator;
+    eventsConsidered[`${eventName}Considered`] = data[eventName].length;
+    return eventsConsidered;
   }, {});
 };
 
-const computeStatsForCompleteTest = (data) => {
+const getEventsConsideredForCompletedTest = (data) => {
   const visitsCutoffTime = Math.max(data.aVisits[sampleSize - 1], data.bVisits[sampleSize - 1]);
   const cutoffTime = visitsCutoffTime + extraClickTime;
-  const stats = countEventsToConsider(data, cutoffTime);
-  stats.p = chiSquareTest(stats.aVisitsConsidered, stats.aClicksConsidered, stats.bVisitsConsidered, stats.bClicksConsidered);
-  return stats;
+  const eventsConsidered = countEventsToConsider(data, cutoffTime);
+  return eventsConsidered;
 };
 
-exports.computeStatsForTest = computeStatsForTest = test => {
+exports.computeStatsForSingleTest = computeStatsForSingleTest = test => {
   const { testName, testId, data } = test;
   const sufficientTime = (data.aVisits[data.aVisits.length - 1] - data.aVisits[0]) > 604800000; // is there data across a span of at least 7 days?
   const sufficientVisits = (data.aVisits.length >= sampleSize) && (data.bVisits.length >= sampleSize);
-  let testResults;
+  let eventsConsidered;
+  let p;
   if (sufficientVisits) {
-    testResults = computeStatsForCompleteTest(data);
+    eventsConsidered = getEventsConsideredForCompletedTest(data);
+    p = chiSquareTest(eventsConsidered.aVisitsConsidered, eventsConsidered.aClicksConsidered, eventsConsidered.bVisitsConsidered, eventsConsidered.bClicksConsidered);
   } else {
-    testResults = Object.keys(data).reduce((statsAccumulator, eventName) => {
+    eventsConsidered = Object.keys(data).reduce((statsAccumulator, eventName) => {
       statsAccumulator[`${eventName}Considered`] = data[eventName].length;
       return statsAccumulator;
     }, {});
   }
-  const stats = { sufficientTime, sufficientVisits, testResults };
-  return { testName, testId, stats };
+  const analysisResults = { sufficientTime, sufficientVisits, eventsConsidered, p };
+  return { testName, testId, analysisResults };
 };
 
-// computeStatsForTests returns data of the form: [{
+// computeStatsForAllTests returns data of the form: [{
 //     testName: ‘buyNowButtonTest’,
 //     testId: ‘a3D5L97’,
-//     stats: {
+//     analysisResults: {
 //       sufficientTime: true,
 //       sufficientVisits: true,
-//       testResults: {
+//       p: 0.04,
+//       eventsConsidered: {
 //         aVisitsConsidered: 2587,
 //         aClicksConsidered: 400,
 //         bVisitsConsidered: 2600,
 //         bClicksConsidered: 300,
-//         p: 0.04,
 //       },
 //     }
 //   },
 //   {...},
 // ]
 
-exports.computeStatsForTests = tests => tests.map(test => computeStatsForTest(test));
+exports.computeStatsForAllTests = tests => tests.map(test => computeStatsForSingleTest(test));

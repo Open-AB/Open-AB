@@ -30,7 +30,7 @@ exports.createTest = (req, res, next) => {
 };
 
 dbQry.getAllResults = (cb) => {   // dummy version
-  const tests = generateEvents.generateTimesForMultipleTests();
+  const tests = generateEvents.generateTimesForMultipleTestsWithDefaultParams();
   const result = {};
   result.rows = tests;
   cb(null, result);
@@ -42,9 +42,7 @@ exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing p
       return next(error);
     }
     const testResults = result.rows;
-    console.log(testResults);
-    const testStats = chiSquareAnalysis.computeStatsForTests(testResults);
-    console.log(testStats);
+    const testStats = chiSquareAnalysis.computeStatsForAllTests(testResults);
     res.status(200).json(testStats);
   });
 };

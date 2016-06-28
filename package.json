@@ -7,6 +7,7 @@
     "api-server": "nodemon server/api/index.js",
     "listener": "nodemon server/listening/index.js",
     "lint": "eslint --fix client server test",
+    "test": "npm run test:backend && npm run test:client",
     "test:client": "karma start",
     "test:backend": "npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server && npm run test:stats",
     "test:stats": "mocha --bail test/server/api/statsSpec.js",
