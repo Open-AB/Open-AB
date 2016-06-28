@@ -24,3 +24,25 @@ CREATE TABLE tests (
   result_a integer,
   result_b integer
 );
+
+CREATE TABLE versions (
+  id SERIAL PRIMARY KEY,
+  test_id integer REFERENCES tests (id),
+  ab VARCHAR(50),
+  url VARCHAR(250),
+  domlocation VARCHAR(50)
+);
+
+CREATE TABLE visits (
+  id SERIAL PRIMARY KEY,
+  version_id integer REFERENCES versions (id),
+  ipaddress VARCHAR(50),
+  time VARCHAR(50)
+);
+
+CREATE TABLE clicks (
+  id SERIAL PRIMARY KEY,
+  version_id integer REFERENCES versions (id),
+  ipaddress VARCHAR(50),
+  time VARCHAR(50)
+);
