@@ -29,7 +29,7 @@ CREATE TABLE versions (
   id SERIAL PRIMARY KEY,
   test_id integer REFERENCES tests (id),
   ab VARCHAR(50),
-  url VARCHAR(50),
+  url VARCHAR(250),
   domlocation VARCHAR(50)
 );
 
