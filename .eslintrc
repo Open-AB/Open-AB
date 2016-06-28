@@ -1,14 +1,14 @@
 {
   "extends": "airbnb",
   "rules": {
-    "no-multi-spaces": [0],
-    "no-underscore-dangle": [0],
-    "max-len": [0],
-    "react/prefer-stateless-function": "off",
-    "react/jsx-first-prop-new-line": "off",
-    "global-require": "off",
-    "consistent-return": "off",
-    "no-param-reassign": "off"
+// "no-multi-spaces": [0],
+// "no-underscore-dangle": [0],
+// "max-len": [0],
+// "react/prefer-stateless-function": "off",
+// "react/jsx-first-prop-new-line": "off",
+// "global-require": "off",
+// "consistent-return": "off",
+// "no-param-reassign": "off"
   },
   "parserOptions":{
     "ecmaFeatures": {
