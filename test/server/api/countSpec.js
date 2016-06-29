@@ -16,13 +16,13 @@ describe('Click Count Functions', () => {
   const bVisits = data.data.bVisits;
 
     it('Bucket counts should sum correctly', () => {
-      const countResults = count.processDataIntoResults(aClicks, bClicks, aVisits, bVisits);
+      const countResults = count.processSingleTestDataIntoResults(aClicks, bClicks, aVisits, bVisits);
 
-      const countClicksA = countResults.A.reduce((acc, curr) => acc + curr, 0);
-      const countClicksB = countResults.B.reduce((acc, curr) => acc + curr, 0);
+      const countClicksA = countResults.aClicks.reduce((acc, curr) => acc + curr, 0);
+      const countClicksB = countResults.bClicks.reduce((acc, curr) => acc + curr, 0);
 
-      const countVisitsA = countResults.visitsA.reduce((acc, curr) => acc + curr, 0);
-      const countVisitsB = countResults.visitsB.reduce((acc, curr) => acc + curr, 0);
+      const countVisitsA = countResults.aVisits.reduce((acc, curr) => acc + curr, 0);
+      const countVisitsB = countResults.bVisits.reduce((acc, curr) => acc + curr, 0);
 
       expect(countClicksA).to.equal(aClicks.length);
       expect(countVisitsA).to.equal(aVisits.length);

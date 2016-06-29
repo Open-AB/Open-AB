@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Chart from 'chart.js';
 
 class LineChart extends React.Component {
@@ -17,7 +17,7 @@ class LineChart extends React.Component {
         responsive: false,
         title: {
           display: true,
-          text: 'Open-AB ChartJS Line Graph',
+          text: this.props.dataset.testName,
         },
         legend: {
           display: true,
@@ -137,5 +137,10 @@ class LineChart extends React.Component {
     );
   }
 }
+
+LineChart.propTypes = {
+  dataset: PropTypes.object.isRequired,
+  key: PropTypes.number,
+};
 
 export default LineChart;
