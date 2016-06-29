@@ -15,6 +15,3 @@ client/containers/Root*
 client/store/configure*
 server/api/analytics/stats/chiSquareTest.js
 server/api/selection/assets/script.js
-
-server/db/queries/
-server/db/queryStrs/
