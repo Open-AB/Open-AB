@@ -2,11 +2,7 @@ const _ = require('lodash');
 const geoip = require('geoip-lite');
 const countries = require('country-list')();
 
-var faker = require('faker');
-
-console.log(faker.Internet.ip())
-
-const ipMockDatabaseData = 
+const ipMockDatabaseData =
   [
     {
       testName: 'buyNowButtonTest',
@@ -56,24 +52,18 @@ const getAllIpData = (ipArray) => {
 const list = getClickDataArray(ipMockDatabaseData);
 const allIpData = getAllIpData(list);
 
-const countCountries = (allIpData) => {
-  let countryCount = {};
-  let countryCountArray = [];
-  _.forEach(allIpData, (ipObject) => {
+const countCountries = (ipData) => {
+  const countryCount = {};
+  const countryCountArray = [];
+  _.forEach(ipData, (ipObject) => {
     if (ipObject !== null) {
-      let countryName = countries.getName(ipObject.country);
+      const countryName = countries.getName(ipObject.country);
       countryCount[countryName] = countryCount[countryName] + 1 || 1;
     }
   });
 
   _.forEach(countryCount, (count, country) => {
     countryCountArray.push([country, count]);
-  })
+  });
   return countryCountArray;
 };
-
-console.log(countCountries(allIpData));
-
-console.log(countries.getName('US'));
-
-

@@ -52,3 +52,14 @@ const count = require('./stats/count');
 exports.getChartData = (req, res, next) => {
   res.status(200).send(count.results);
 };
+
+exports.getMapClicks = (req, res, next) => {
+  //TO DO: write query
+  // dbQry.getMapClicks((error, result) => {
+  //   if (error) {
+  //     return next(error);
+  //   }
+  //   const mapClicks = result;
+  //   res.status(200).json(mapClicks);
+  // });
+};

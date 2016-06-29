@@ -6,8 +6,8 @@ class ClicksMap extends Component {
         ['United States', 300],
         ['Brazil', 400],
         ['Canada', 500],
-        ['CN', 600],
-        ['FR', 700]];
+        ['France', 600],
+        ['Switzerland', 700]];
 
     google.charts.load('current', {'packages':['geomap']});
     google.charts.setOnLoadCallback(drawMap);

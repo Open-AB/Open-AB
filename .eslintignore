@@ -3,7 +3,6 @@
 #map module
 client/components/ClicksMap.js
 
-
 client/bundle.js
 client/bundle.js.map
 test/
