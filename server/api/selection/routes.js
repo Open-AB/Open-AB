@@ -41,7 +41,11 @@ module.exports = (app) => {
           </script>`);
         }
         $('body').append(scriptTag);
-        res.send(window.document.documentElement.innerHTML);
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(window.document.documentElement.innerHTML);
+        }
       }
     );
   });
