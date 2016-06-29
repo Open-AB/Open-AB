@@ -11,22 +11,25 @@ process.env.NODE_ENV = 'test';
 const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
+//Note: tests further down in the file often depend on features tested earlier in the file
+
 describe('DB Queries for API Server', () => {
-  before(done => {
-    // connect to test database
-    const connectionString = 'postgres://localhost:5432/test';
-    const testSQL = fs.readFileSync(path.resolve(__dirname, '../testSchema.sql')).toString();
-    // drop tables in test database, create new tables in database
-    const client = new pg.Client(connectionString);
-    client.connect();
-    const query = client.query(testSQL);
-    query.on('end', () => {
-      client.end();
-      done();
-    });
-  });
 
   describe('Client Queries from Auth Service for API Server', () => {
+    before(done => {
+      // connect to test database
+      const connectionString = 'postgres://localhost:5432/test';
+      const testSQL = fs.readFileSync(path.resolve(__dirname, '../testSchema.sql')).toString();
+      // drop tables in test database, create new tables in database
+      const client = new pg.Client(connectionString);
+      client.connect();
+      const query = client.query(testSQL);
+      query.on('end', () => {
+        client.end();
+        done();
+      });
+    });
+
     before(done => {
       const seedEmail = 'seedEmail@email.com';
       const seedPassword = 'asdfQWERTY4321';
@@ -103,7 +106,61 @@ describe('DB Queries for API Server', () => {
     });
   });
 
-  describe('Test Queries from Analytics Service for API Server', () => {
+  describe('Queries to add info to db for Analytics Service for API Server', () => {
+
+    const testNames = ['test1', 'test2'];
+    // const pageNames = ['page1', 'page2'];
+    const clientEmail = 'userWithTests@asdf.com';
+    const password = 'asdfqwerfdsaqwertrewsdfg';
+    let testCount = 0;
+    before(done => {
+      authQry.createClient(clientEmail, password, () => {
+        done();
+      });
+    });
+
+    it('Should create a new page for a client', done => {
+      const pageName = 'aTestPage';
+
+      analyticQry.createPage(pageName, clientEmail, (err, result) => {
+        expect(result).to.exist;
+        expect(result.rows[0].name).to.equal(pageName);
+        // only checks existance
+        expect(result.rows[0].id).to.exist;
+        expect(result.rows[0].client_id).to.exist;
+        done();
+      });
+    });
+
+    it('Should create a test for a page and return unique test ID', done => {
+      const testName = 'testname';
+      const pageId = '1'; // changed to pageId: 1
+      const clientEmail = 'userWithTests@asdf.com';  // TODO: perhaps refactor to use clientId instead
+
+      analyticQry.createTest(testName, pageId, clientEmail, (err, result) => {
+        expect(result).to.exist;
+        expect(result.rows[0].id).to.equal(1);
+        done();
+      });
+    });
+  });
+
+  describe('Queries to get info from DB for Analytics Service for API Server', () => {
+    
+    before(done => {
+      // connect to test database
+      const connectionString = 'postgres://localhost:5432/test';
+      const testSQL = fs.readFileSync(path.resolve(__dirname, '../testSchema.sql')).toString();
+      // drop tables in test database, create new tables in database
+      const client = new pg.Client(connectionString);
+      client.connect();
+      const query = client.query(testSQL);
+      query.on('end', () => {
+        client.end();
+        done();
+      });
+    });
+
     before(done => {
       const testNames = ['test1', 'test2'];
       const pageNames = ['page1', 'page2'];
@@ -112,10 +169,10 @@ describe('DB Queries for API Server', () => {
       let testCount = 0;
       // populates userWithTests@asdf.com with 2 pages, 2 tests per page, total 4 tests
       authQry.createClient(clientEmail, password, () => {
-        pageNames.forEach(page => {
-          analyticQry.createPage(page, clientEmail, () => {
+        pageNames.forEach((pageName, pageIdZeroIndex) => {
+          analyticQry.createPage(pageName, clientEmail, () => {
             testNames.forEach(test => {
-              analyticQry.createTest(`${page}_${test}`, page, clientEmail, () => {
+              analyticQry.createTest(`${pageName}_${test}`, pageIdZeroIndex + 1, clientEmail, () => {
                 testCount++;
                 if (testCount >= 4) {
                   done();
@@ -135,34 +192,9 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should create a new page for a client', done => {
-      const pageName = 'aTestPage';
-      const clientEmail = 'userWithTests@asdf.com';
-
-      analyticQry.createPage(pageName, clientEmail, (err, result) => {
-        expect(result).to.exist;
-        expect(result.rows[0].name).to.equal(pageName);
-        // only checks existance
-        expect(result.rows[0].id).to.exist;
-        expect(result.rows[0].client_id).to.exist;
-        done();
-      });
-    });
-
-    it('Should create a test for a page and return unique test ID', done => {
-      const testName = 'testname';
-      const pageName = 'page1';
-      const clientEmail = 'userWithTests@asdf.com';
-
-      analyticQry.createTest(testName, pageName, clientEmail, (err, result) => {
-        expect(result).to.exist;
-        expect(result.rows[0].id).to.equal(5);
-        done();
-      });
-    });
 
     it('Should get results given unique test ID', done => {
-      const testID = 5;
+      const testID = 4;
 
       analyticQry.getResultForTestID(testID, (err, result) => {
         expect(result).to.exist;
@@ -172,17 +204,17 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should get results given page name and client email', done => {
-      const pageName = 'page2';
+    it('Should get results given page id and client email', done => {
+      const pageId = 2;
       const clientEmail = 'userWithTests@asdf.com';
 
-      analyticQry.getPageTests(pageName, clientEmail, (err, result) => {
+      analyticQry.getPageTests(pageId, clientEmail, (err, result) => {
         expect(result).to.exist;
         expect(result.rows.length).to.equal(2);
 
         // .be.oneOf() is used because order of test insertion not guaranteed
-        expect(result.rows[0].name).to.be.oneOf([`${pageName}_test1`, `${pageName}_test2`]);
-        expect(result.rows[1].name).to.be.oneOf([`${pageName}_test1`, `${pageName}_test2`]);
+        expect(result.rows[0].name).to.be.oneOf(['page2_test1', 'page2_test2']);
+        expect(result.rows[1].name).to.be.oneOf(['page2_test1', 'page2_test2']);
 
         done();
       });
@@ -193,8 +225,8 @@ describe('DB Queries for API Server', () => {
 
       analyticQry.getClientTests(clientEmail, (err, result) => {
         expect(result).to.exist;
-        // 4 tests made before tests + 1 test created from unit-test = 5 total
-        expect(result.rows.length).to.equal(5);
+        // 4 tests made before tests
+        expect(result.rows.length).to.equal(4);
         done();
       });
     });
@@ -205,11 +237,10 @@ describe('DB Queries for API Server', () => {
 
       analyticQry.getClientPages(clientEmail, (err, result) => {
         expect(result).to.exist;
-        // 2 pages made before tests + 1 page created from unit-test = 3 total
-        expect(result.rows.length).to.equal(3);
+        // 2 pages made before tests
+        expect(result.rows.length).to.equal(2);
         expect(result.rows[0].name).to.be.oneOf(pageNames);
         expect(result.rows[1].name).to.be.oneOf(pageNames);
-        expect(result.rows[2].name).to.be.oneOf(pageNames);
         done();
       });
     });
