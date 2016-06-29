@@ -1,10 +1,10 @@
-const maxClickDelay = 10000; // maximum of time after visit to wait to make a click
+const maxClickDelay = 10000; // maximum amount of time after visit to wait to make a click
 
-exports.testsInfo = testsInfo = [
+exports.defaultParamsForAllTests = defaultParamsForAllTests = [
   {
-    testName: 'buyNowButtonTest', // B wins
+    testName: 'Buy Now Button Test', // B wins
     testId: '3874E76',
-    testParams: {
+    testDetails: {
       startTime: 1450896596001, // Wed Dec 23 2015 10:49:56 GMT-0800 (PST). To convert milliseconds to human-readable date: const date = new Date (1459996596001);
       aClickRate: 0.1,
       aTotalVisits: 4567,
@@ -14,9 +14,9 @@ exports.testsInfo = testsInfo = [
     },
   },
   {
-    testName: 'tryNowButtonTest', // A wins
+    testName: 'Try Now Button Test', // A wins
     testId: 'hgU9084K',
-    testParams: {
+    testDetails: {
       startTime: 1455896596001, // Fri Feb 19 2016 07:43:16 GMT-0800 (PST)
       aClickRate: 0.5,
       aTotalVisits: 2890,
@@ -26,9 +26,9 @@ exports.testsInfo = testsInfo = [
     },
   },
   {
-    testName: 'subscribeNowButtonTest', // Usually inconclusive (with the occasional false positive either way)
+    testName: 'Subscribe Now Button Test', // Usually inconclusive (with the occasional false positive either way)
     testId: 'sd37489',
-    testParams: {
+    testDetails: {
       startTime: 1457896596001, // Sun Mar 13 2016 12:16:36 GMT-0700 (PDT)
       aClickRate: 0.2,
       aTotalVisits: 3876,
@@ -38,9 +38,9 @@ exports.testsInfo = testsInfo = [
     },
   },
   {
-    testName: 'actNowButtonTest', // Not yet enough visits to declare a winner
+    testName: 'Act Now Button Test', // Not yet enough visits to declare a winner
     testId: 'asdas5489',
-    testParams: {
+    testDetails: {
       startTime: 1458896596001, // Fri Mar 25 2016 02:03:16 GMT-0700 (PDT)
       aClickRate: 0.1,
       aTotalVisits: 2590,
@@ -50,9 +50,9 @@ exports.testsInfo = testsInfo = [
     },
   },
   {
-    testName: 'signupNowButtonTest', // Hasn't run long enough to declare a winner
+    testName: 'Signup Now Button Test', // Hasn't run long enough to declare a winner
     testId: 'kjhghj876H',
-    testParams: {
+    testDetails: {
       startTime: 1459996596001, // Wed Apr 06 2016 19:36:36 GMT-0700 (PDT)
       aClickRate: 0.2,
       aTotalVisits: 3876,
@@ -63,7 +63,7 @@ exports.testsInfo = testsInfo = [
   },
 ];
 
-const numString = length => {
+const generateNumString = length => {
   const range = Math.pow(10, length);
   const num = Math.floor((range / 10) + Math.random() * (range - range / 10));
   return String(num);
@@ -72,55 +72,55 @@ const numString = length => {
 const sortEvents = events => events.sort((eventA, eventB) => (eventA.time - eventB.time));
 
 const generateVersionData = (startTime, clickRate, totalVisits, timeframe) => {
-  let visits = [];
-  let clicks = [];
+  let visitsData = [];
+  let clicksData = [];
   for (let i = 0; i < totalVisits; i++) {
     const time = startTime + Math.floor((Math.random() * timeframe));
-    const IPAddress = `${numString(3)}.${numString(3)}.${numString(3)}.${numString(2)}`;
-    visits.push({ time, IPAddress });
+    const IPAddress = `${generateNumString(3)}.${generateNumString(3)}.${generateNumString(3)}.${generateNumString(2)}`;
+    visitsData.push({ time, IPAddress });
     if (Math.random() < clickRate) {
       const clickTime = time + Math.floor((Math.random() * maxClickDelay));
-      clicks.push({ time: clickTime, IPAddress });
+      clicksData.push({ time: clickTime, IPAddress });
     }
   }
-  visits = sortEvents(visits);
-  clicks = sortEvents(clicks);
-  return { visits, clicks };
+  visitsData = sortEvents(visitsData);
+  clicksData = sortEvents(clicksData);
+  return { visitsData, clicksData };
 };
 
 const generateTestData = (startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe) => {
   const aData = generateVersionData(startTime, aClickRate, aTotalVisits, timeframe);
   const bData = generateVersionData(startTime, bClickRate, bTotalVisits, timeframe);
   return {
-    aVisits: aData.visits,
-    aClicks: aData.clicks,
-    bVisits: bData.visits,
-    bClicks: bData.clicks,
+    aVisitsData: aData.visitsData,
+    aClicksData: aData.clicksData,
+    bVisitsData: bData.visitsData,
+    bClicksData: bData.clicksData,
   };
 };
 
-const generateDataForMultipleTests = (testsInfo) => {
-  return testsInfo.map(testInfo => {
-    const { startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe } = testInfo.testParams;
+const generateDataForMultipleTests = (paramsForAllTests) => {
+  return paramsForAllTests.map(paramsForSingleTest => {
+    const { startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe } = paramsForSingleTest.testDetails;
     const data = generateTestData(startTime, aClickRate, aTotalVisits, bClickRate, bTotalVisits, timeframe);
     return {
-      testName: testInfo.testName,
-      testId: testInfo.testId,
+      testName: paramsForSingleTest.testName,
+      testId: paramsForSingleTest.testId,
       data,
     };
   });
 };
 
-// generateMultipleTestsWithDefaultParams produces data of the form:
+// generateDataForMultipleTestsWithDefaultParams produces data of the form:
 // [
 //   {
 //     testName: 'buyNowButtonTest',
 //     testId: '3874E76',
 //     data: {
-//       aVisits: [~, ~, ...],
-//       aClicks: [~, ~, ...],
-//       bVisits: [~, ~, ...],
-//       bClicks: [~, ~, ...],
+//       aVisitsData: [~, ~, ...],
+//       aClicksData: [~, ~, ...],
+//       bVisitsData: [~, ~, ...],
+//       bClicksData: [~, ~, ...],
 //     },
 //   },
 //   {...},
@@ -133,11 +133,11 @@ const generateDataForMultipleTests = (testsInfo) => {
 //   time: 1466896596001
 // }
 
-exports.generateMultipleTestsWithDefaultParams = generateMultipleTestsWithDefaultParams = () => {
-  return generateDataForMultipleTests(testsInfo);
+exports.generateDataForMultipleTestsWithDefaultParams = generateDataForMultipleTestsWithDefaultParams = () => {
+  return generateDataForMultipleTests(defaultParamsForAllTests);
 };
 
-// generateTimesForMultipleTests produces data of the form:
+// generateTimesForMultipleTestsWithDefaultParams produces data of the form:
 // [
 //   {
 //     testName: 'buyNowButtonTest',
@@ -154,14 +154,14 @@ exports.generateMultipleTestsWithDefaultParams = generateMultipleTestsWithDefaul
 //   ...
 // ]
 
-exports.generateTimesForMultipleTests = () => {
-  const tests = generateMultipleTestsWithDefaultParams();
+exports.generateTimesForMultipleTestsWithDefaultParams = () => {
+  const tests = generateDataForMultipleTestsWithDefaultParams();
   return tests.map(test => {
     const timesByVersionAndType = {};
     const data = test.data;
     for (const versionAndType in data) {
       const mappedTestData = data[versionAndType].map(event => event.time);
-      timesByVersionAndType[versionAndType] = mappedTestData;
+      timesByVersionAndType[versionAndType.slice(0, -4)] = mappedTestData;
     }
     return {
       testName: test.testName,
