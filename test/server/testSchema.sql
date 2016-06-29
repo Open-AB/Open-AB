@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS clients, pages, tests;
+DROP TABLE IF EXISTS clients, pages, tests, versions, visits, clicks;
 
 CREATE TABLE clients (
  id SERIAL PRIMARY KEY,
@@ -18,4 +18,26 @@ CREATE TABLE tests (
   name VARCHAR(50),
   result_a integer,
   result_b integer
+);
+
+CREATE TABLE versions (
+  id SERIAL PRIMARY KEY,
+  test_id integer REFERENCES tests (id),
+  ab VARCHAR(50),
+  url VARCHAR(250),
+  domlocation VARCHAR(50)
+);
+
+CREATE TABLE visits (
+  id SERIAL PRIMARY KEY,
+  version_id integer REFERENCES versions (id),
+  ipaddress VARCHAR(50),
+  time VARCHAR(50)
+);
+
+CREATE TABLE clicks (
+  id SERIAL PRIMARY KEY,
+  version_id integer REFERENCES versions (id),
+  ipaddress VARCHAR(50),
+  time VARCHAR(50)
 );
