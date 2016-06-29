@@ -9,7 +9,7 @@ const generateEvents = require('../../../server/api/analytics/stats/generateEven
 const count = require('../../../server/api/analytics/stats/count.js');
 
 describe('Click Count Functions', () => {
-  const data = generateEvents.generateTimesForMultipleTests()[0];
+  const data = generateEvents.generateTimesForMultipleTestsWithDefaultParams()[0];
   const aClicks = data.data.aClicks;
   const bClicks = data.data.bClicks;
   const aVisits = data.data.aVisits;

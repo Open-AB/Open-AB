@@ -1,6 +1,6 @@
 const dummy = require('./generateEvents');
 
-const dummyData = dummy.generateTimesForMultipleTests();
+const dummyData = dummy.generateTimesForMultipleTestsWithDefaultParams();
 
 exports.countOccurences = (arr) => arr.reduce(
   (acc, curr) => {

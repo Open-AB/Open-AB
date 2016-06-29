@@ -4,7 +4,7 @@ import { fetchDataIfNeeded } from '../actions/api';
 import uuid from 'uuid';
 
 import formatStats from '../formatStats.js';
-import StatsForTest from '../components/StatsForTest.js';
+import StatsForTest from '../components/statsForTest.js';
 
 
 const statsEndpoint = '/api/stats';

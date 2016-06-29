@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line as LineGraph } from 'react-chartjs';
+import Chart from 'chart.js';
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -9,16 +9,63 @@ class LineChart extends React.Component {
       B: [],
       visitsA: [],
       visitsB: [],
-      Total: [],
       data: {
         labels: [],
         datasets: [],
       },
       options: {
-        bezierCurveTension: 0.1,
-        datasetFill: false,
-        scaleShowVerticalLines: false,
-        pointDotRadius: 2,
+        responsive: false,
+        title: {
+          display: true,
+          text: 'Open-AB ChartJS Line Graph',
+        },
+        legend: {
+          display: true,
+          labels: {
+            fontColor: 'rgb(0, 0, 0)',
+          },
+        },
+        tooltips: {
+          enabled: true,
+          mode: 'label',
+          callbacks: {
+            // parse ms time into date for tooltip
+            title: arr => new Date(parseInt(arr[0].xLabel, 10)).toDateString(),
+          },
+        },
+        hover: {
+          mode: 'label',
+        },
+        elements: {
+          // Line graph options
+          line: {
+            fill: false,
+            borderJoinStyle: 'round',
+            tension: 0,
+          },
+          // Data point options
+          point: {
+            radius: 3,
+            hitRadius: 4,
+          },
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: false,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'HAMMERTIME',
+            },
+            type: 'time',
+            ticks: {
+              displayFormats: {
+                quarter: 'MMM YYYY',
+              },
+            },
+          }],
+        },
       },
     };
   }
@@ -29,41 +76,33 @@ class LineChart extends React.Component {
       .then(res => {
         const A = res.A;
         const B = res.B;
-        const Total = res.Total;
         const buckets = res.buckets;
+
         const visitsA = res.visitsA;
         const visitsB = res.visitsB;
 
         const data = {
-          labels: buckets.map(n => new Date(n).toDateString()).map((n, ind) => ind % 4 === 0 ? n : ''),
+          labels: buckets,
 
           datasets: [{
-          //   label: 'Total Visits',
-          //   data: Total,
-          //   fillColor: 'rgba(222, 68, 68, 0.05)',
-          // }, {
             label: 'A Visits',
-            fill: false,
-            strokeColor: 'rgba(20, 178, 99, 0.7)',
-            pointColor: 'rgba(20, 178, 99, 0.7)',
+            backgroundColor: 'rgba(20, 178, 99, 0.5)',
+            borderColor: 'rgba(20, 178, 99, 0.5)',
             data: visitsA,
           }, {
             label: 'A Clicks',
-            fill: false,
-            strokeColor: 'rgba(20, 178, 20, 1)',
-            pointColor: 'rgba(20, 178, 20, 1)',
+            backgroundColor: 'rgba(20, 178, 20, 1)',
+            borderColor: 'rgba(20, 178, 20, 1)',
             data: A,
           }, {
             label: 'B Visits',
-            fill: false,
-            strokeColor: 'rgba(10, 107, 203, 0.7)',
-            pointColor: 'rgba(10, 107, 203, 0.7)',
+            backgroundColor: 'rgba(10, 107, 203, 0.5)',
+            borderColor: 'rgba(10, 107, 203, 0.5)',
             data: visitsB,
           }, {
             label: 'B Clicks',
-            fill: false,
-            strokeColor: 'rgba(10, 10, 203, 1)',
-            pointColor: 'rgba(10, 10, 203, 1)',
+            backgroundColor: 'rgba(10, 10, 203, 1)',
+            borderColor: 'rgba(10, 10, 203, 1)',
             data: B,
           }],
         };
@@ -72,7 +111,6 @@ class LineChart extends React.Component {
           data,
           A,
           B,
-          // Total,
           buckets,
           visitsA,
           visitsB,
@@ -80,10 +118,21 @@ class LineChart extends React.Component {
       });
   }
 
+
+  componentDidUpdate() {
+    const chartCanvas = this.refs.chart;
+    const myChart = new Chart(chartCanvas, {
+      type: 'line',
+      data: this.state.data,
+      options: this.state.options,
+    });
+    myChart.update();
+  }
+
   render() {
     return (
-      <div>
-        <LineGraph data={this.state.data} options={this.state.options} width="600"  height="600" redraw />
+      <div width="500" height="500">
+        <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
       </div>
     );
   }
