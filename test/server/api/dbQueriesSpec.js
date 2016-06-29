@@ -11,11 +11,63 @@ process.env.NODE_ENV = 'test';
 const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
 
-//Note: tests further down in the file often depend on features tested earlier in the file
+// Note: tests further down in the file often depend on features tested earlier in the file
 
 describe('DB Queries for API Server', () => {
 
+  const testData = [
+    {
+      testName: 'test1',
+      pageId: 1,
+      a: {
+        url: 'http://mysite.com/a',
+        DOMLocation: '0-1-3-0-1-0',
+      },
+      b: {
+        url: 'http://mysite.com/b',
+        DOMLocation: '0-1-3-3-6-5',
+      },
+    },
+    {
+      testName: 'test2',
+      pageId: 1,
+      a: {
+        url: 'http://yoursite.com/a',
+        DOMLocation: '24-7-365',
+      },
+      b: {
+        url: 'http://yoursite.com/b',
+        DOMLocation: '1-2-3-4-5',
+      },
+    },
+    {
+      testName: 'test3',
+      pageId: 2,
+      a: {
+        url: 'http://theirsite.com/a',
+        DOMLocation: '1-1-1-1-1-1',
+      },
+      b: {
+        url: 'http://theirsite.com/b',
+        DOMLocation: '2-2-2-2-2-2',
+      },
+    },
+    {
+      testName: 'test4',
+      pageId: 2,
+      a: {
+        url: 'http://oursite.com/a',
+        DOMLocation: '3-3-3-3-3',
+      },
+      b: {
+        url: 'http://oursite.com/b',
+        DOMLocation: '4-4-4-4-4',
+      },
+    },
+  ];
+
   describe('Client Queries from Auth Service for API Server', () => {
+
     before(done => {
       // connect to test database
       const connectionString = 'postgres://localhost:5432/test';
@@ -106,7 +158,7 @@ describe('DB Queries for API Server', () => {
     });
   });
 
-  describe('Queries to add info to db for Analytics Service for API Server', () => {
+  describe('Queries to add data to db for Analytics Service for API Server', () => {
 
     const testNames = ['test1', 'test2'];
     // const pageNames = ['page1', 'page2'];
@@ -119,8 +171,9 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should create a new page for a client', done => {
-      const pageName = 'aTestPage';
+    it('Should create a new page for client', done => {
+
+      const pageName = 'page1';
 
       analyticQry.createPage(pageName, clientEmail, (err, result) => {
         expect(result).to.exist;
@@ -132,21 +185,43 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should create a test for a page and return unique test ID', done => {
-      const testName = 'testname';
-      const pageId = '1'; // changed to pageId: 1
-      const clientEmail = 'userWithTests@asdf.com';  // TODO: perhaps refactor to use clientId instead
+    describe('Create tests', () => {
 
-      analyticQry.createTest(testName, pageId, clientEmail, (err, result) => {
-        expect(result).to.exist;
-        expect(result.rows[0].id).to.equal(1);
+      const testData1 = testData[0];
+      const testData2 = testData[1];
+
+      let test1Result, test2Result;
+
+      before(done => {
+        analyticQry.createTest(testData1, clientEmail, (err, result) => {
+          if (err) {
+            console.err(err);
+          } else {
+            test1Result = result;
+            analyticQry.createTest(testData2, clientEmail, (err, result) => {
+              if (err) {
+                console.err(err);
+              } else {
+                test2Result = result;
+                done();
+              }
+            });
+          }
+        });
+      });
+
+      it('Should create a test for a page with two versions and return unique test ID', done => {
+        expect(test1Result[1][0].test_id).to.equal(1);
+        expect(test2Result[0][0].page_id).to.equal(1);
+        expect(test2Result[1][0].test_id).to.equal(2);
+        expect(test2Result[2][0].url).to.equal('http://yoursite.com/b');
+        expect(test2Result[2][0].domlocation).to.equal('1-2-3-4-5');
         done();
       });
     });
   });
 
-  describe('Queries to get info from DB for Analytics Service for API Server', () => {
-    
+  describe('Queries to get info from DB for Analytics Service for API Server', () => {   
     before(done => {
       // connect to test database
       const connectionString = 'postgres://localhost:5432/test';
@@ -162,7 +237,6 @@ describe('DB Queries for API Server', () => {
     });
 
     before(done => {
-      const testNames = ['test1', 'test2'];
       const pageNames = ['page1', 'page2'];
       const clientEmail = 'userWithTests@asdf.com';
       const password = 'asdfqwerfdsaqwertrewsdfg';
@@ -170,14 +244,17 @@ describe('DB Queries for API Server', () => {
       // populates userWithTests@asdf.com with 2 pages, 2 tests per page, total 4 tests
       authQry.createClient(clientEmail, password, () => {
         pageNames.forEach((pageName, pageIdZeroIndex) => {
+          const pageId = pageIdZeroIndex + 1;
           analyticQry.createPage(pageName, clientEmail, () => {
-            testNames.forEach(test => {
-              analyticQry.createTest(`${pageName}_${test}`, pageIdZeroIndex + 1, clientEmail, () => {
-                testCount++;
-                if (testCount >= 4) {
-                  done();
-                }
-              });
+            testData.forEach(test => {
+              if (test.pageId === pageId) {
+                analyticQry.createTest(test, clientEmail, () => {
+                  testCount++;
+                  if (testCount >= 4) {
+                    done();
+                  }
+                });
+              }
             });
           });
         });
@@ -213,8 +290,8 @@ describe('DB Queries for API Server', () => {
         expect(result.rows.length).to.equal(2);
 
         // .be.oneOf() is used because order of test insertion not guaranteed
-        expect(result.rows[0].name).to.be.oneOf(['page2_test1', 'page2_test2']);
-        expect(result.rows[1].name).to.be.oneOf(['page2_test1', 'page2_test2']);
+        expect(result.rows[0].name).to.be.oneOf(['test3', 'test4']);
+        expect(result.rows[1].name).to.be.oneOf(['test3', 'test4']);
 
         done();
       });

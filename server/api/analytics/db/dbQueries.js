@@ -1,5 +1,7 @@
-const db = require('./dbConnection');
+const db = require('./dbConnection').pg;
+const dbpgp = require('./dbConnection').pgp;
 const qry = require('./dbQryStrs');
+const uuid = require('uuid');
 
 // get all results in DB
 exports.getAllResults = (cb) => {
@@ -13,11 +15,21 @@ exports.createPage = (pageName, clientEmail, cb) => {
   }, cb);
 };
 
-exports.createTest = (testName, pageName, clientEmail, cb) => {
-  db.query({
-    text: qry.createTest,
-    values: [testName, pageName, clientEmail],
-  }, cb);
+exports.createTest = (testData, clientEmail, cb) => {
+  const { testName, pageId, a, b } = testData;
+  const uniqueId = uuid.v4();
+  dbpgp.tx(t => {
+    const addTest = t.query(qry.createTest, [testName, pageId, clientEmail, uniqueId]);
+    const addVersionA = t.query(qry.insertVersion, ['a', a.url, a.DOMLocation, uniqueId]);
+    const addVersionB = t.query(qry.insertVersion, ['b', b.url, b.DOMLocation, uniqueId]);
+    return t.batch([addTest, addVersionA, addVersionB]);
+  })
+  .then(result => {
+    cb(null, result);
+  })
+  .catch(err => {
+    cb(err, null);
+  });
 };
 
 exports.getResultForTestID = (testID, cb) => {

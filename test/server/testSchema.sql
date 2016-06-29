@@ -17,7 +17,8 @@ CREATE TABLE tests (
   page_id integer REFERENCES pages (id),
   name VARCHAR(50),
   result_a integer,
-  result_b integer
+  result_b integer,
+  uniqueid VARCHAR(250)
 );
 
 CREATE TABLE versions (
