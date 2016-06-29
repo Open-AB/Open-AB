@@ -16,7 +16,7 @@ const scriptFile = fs.readFileSync(path.resolve(__dirname, './assets/script.js')
 const scriptTag = `<script>${scriptFile}</script>`;
 
 module.exports = (app) => {
-  app.post('/selection/addTest', (req, res) => {
+  app.post('/selection/addTest', (req, res, next) => {
     // on newTest initiated from dashboard
     console.log(req.body);
     jsdom.env(
@@ -42,10 +42,9 @@ module.exports = (app) => {
         }
         $('body').append(scriptTag);
         if (err) {
-          console.log(err);
+          next(err);
         } else {
           res.send(window.document.documentElement.innerHTML);
-        }
       }
     );
   });
