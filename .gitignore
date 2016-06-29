@@ -23,3 +23,6 @@ logs
 #Dev Testing
 test.js
 
+server/db/queries/
+server/db/queryStrs/
+
