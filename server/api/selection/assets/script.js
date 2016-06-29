@@ -131,7 +131,7 @@ $(document).ready(function(){
     console.log('ajax to submit version a');
     var data = {
       testName: openab.name,
-      page_id: openab.page_id,
+      pageId: openab.page_id,
       a: {
         url: openab.url_a,
         DOMLocation: openab.dom_a,
