@@ -24,6 +24,3 @@ logs
 test.js
 server/db/queries/
 server/db/queryStrs/
-
-#MapComponent
-components/ClicksMap
