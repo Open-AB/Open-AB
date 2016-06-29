@@ -1,4 +1,4 @@
-  {
+{
   "name": "open-ab",
   "version": "0.0.0",
   "description": "Get insight into your app",
@@ -64,9 +64,7 @@
     "redux-logger": "^2.4.0"
   },
   "dependencies": {
-    "country-list": "0.0.3",
-    "faker": "^3.1.0",
-    "geoip-lite": "^1.1.8",
+    "Faker": "^0.7.2",
     "babel-cli": "^6.9.0",
     "babel-polyfill": "^6.3.14",
     "bcrypt-nodejs": "0.0.3",
@@ -75,8 +73,11 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
+    "country-list": "0.0.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "faker": "^3.1.0",
+    "geoip-lite": "^1.1.8",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "node-uuid": "^1.4.7",
