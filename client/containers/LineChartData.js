@@ -21,13 +21,16 @@ class LineChartData extends Component {
 
   render() {
     const { data } = this.props;
-    console.log(data, '<<<<<<< DATA FOR LINE CHART DATA ENDPOINT');
+
     let display;
+    // check if there is data from response
     if (data.length === 0) {
       display = 'EMPTYNESS';
     } else if (data.length > 0) {
       display = (
-        data.map((dataObj, ind) => <LineChart key={ind} dataset={dataObj} />)
+        // conditional rendering of Line Chart
+        // if there are not two data points, do not render a Line Chart for dataset
+        data.map((dataObj, ind) => dataObj.data.buckets.length > 1 ? <LineChart key={ind} dataset={dataObj} /> : null)
       );
     }
 

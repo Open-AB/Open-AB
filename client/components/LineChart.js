@@ -5,10 +5,6 @@ class LineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      A: [],
-      B: [],
-      visitsA: [],
-      visitsB: [],
       data: {
         labels: [],
         datasets: [],
@@ -71,51 +67,40 @@ class LineChart extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/chartData')
-      .then(res => res.json())
-      .then(res => {
-        const A = res.A;
-        const B = res.B;
-        const buckets = res.buckets;
+    const A = this.props.dataset.data.aClicks;
+    const B = this.props.dataset.data.bClicks;
+    const buckets = this.props.dataset.data.buckets;
 
-        const visitsA = res.visitsA;
-        const visitsB = res.visitsB;
+    const visitsA = this.props.dataset.data.aVisits;
+    const visitsB = this.props.dataset.data.bVisits;
 
-        const data = {
-          labels: buckets,
+    const data = {
+      labels: buckets,
 
-          datasets: [{
-            label: 'A Visits',
-            backgroundColor: 'rgba(20, 178, 99, 0.5)',
-            borderColor: 'rgba(20, 178, 99, 0.5)',
-            data: visitsA,
-          }, {
-            label: 'A Clicks',
-            backgroundColor: 'rgba(20, 178, 20, 1)',
-            borderColor: 'rgba(20, 178, 20, 1)',
-            data: A,
-          }, {
-            label: 'B Visits',
-            backgroundColor: 'rgba(10, 107, 203, 0.5)',
-            borderColor: 'rgba(10, 107, 203, 0.5)',
-            data: visitsB,
-          }, {
-            label: 'B Clicks',
-            backgroundColor: 'rgba(10, 10, 203, 1)',
-            borderColor: 'rgba(10, 10, 203, 1)',
-            data: B,
-          }],
-        };
+      datasets: [{
+        label: 'A Visits',
+        backgroundColor: 'rgba(20, 178, 99, 0.5)',
+        borderColor: 'rgba(20, 178, 99, 0.5)',
+        data: visitsA,
+      }, {
+        label: 'A Clicks',
+        backgroundColor: 'rgba(20, 178, 20, 1)',
+        borderColor: 'rgba(20, 178, 20, 1)',
+        data: A,
+      }, {
+        label: 'B Visits',
+        backgroundColor: 'rgba(10, 107, 203, 0.5)',
+        borderColor: 'rgba(10, 107, 203, 0.5)',
+        data: visitsB,
+      }, {
+        label: 'B Clicks',
+        backgroundColor: 'rgba(10, 10, 203, 1)',
+        borderColor: 'rgba(10, 10, 203, 1)',
+        data: B,
+      }],
+    };
 
-        this.setState({
-          data,
-          A,
-          B,
-          buckets,
-          visitsA,
-          visitsB,
-        });
-      });
+    this.setState({ data });
   }
 
 
@@ -140,7 +125,6 @@ class LineChart extends React.Component {
 
 LineChart.propTypes = {
   dataset: PropTypes.object.isRequired,
-  key: PropTypes.number,
 };
 
 export default LineChart;
