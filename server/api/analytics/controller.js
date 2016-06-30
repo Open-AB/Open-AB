@@ -2,6 +2,22 @@ const dbQry = require('./db/dbQueries');
 const generateEvents = require('./stats/generateEvents.js');
 const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
 
+const convertDataFormatToTimeFormatForResults = (DataFormattedResults) => {
+  return DataFormattedResults.map(test => {
+    const timesByVersionAndType = {};
+    const data = test.data;
+    for (const versionAndType in data) {
+      const mappedTestData = data[versionAndType].map(event => event.time);
+      timesByVersionAndType[versionAndType.slice(0, -4)] = mappedTestData;
+    }
+    return {
+      testName: test.testName,
+      testId: test.testId,
+      data: timesByVersionAndType,
+    };
+  });
+};
+
 exports.getAll = (req, res, next) => {
   dbQry.getAllResults((error, result) => {
     if (error) {
@@ -29,21 +45,13 @@ exports.createTest = (req, res, next) => {
   });
 };
 
-// Uncomment below to see stats on client page, comment to pass npm test:errors
-// dbQry.getAllResults = (cb) => {   // dummy version
-//   const tests = generateEvents.generateTimesForMultipleTestsWithDefaultParams();
-//   const result = {};
-//   result.rows = tests;
-//   cb(null, result);
-// };
-
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  dbQry.getAllResults((error, result) => {
+  dbQry.getAllResults((error, results) => {
     if (error) {
       return next(error);
     }
-    const testResults = result.rows;
-    const testStats = chiSquareAnalysis.computeStatsForAllTests(testResults);
+    const formattedResults = convertDataFormatToTimeFormatForResults(results);
+    const testStats = chiSquareAnalysis.computeStatsForAllTests(formattedResults);
     res.status(200).json(testStats);
   });
 };

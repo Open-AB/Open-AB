@@ -4,8 +4,63 @@ const qry = require('./dbQryStrs');
 const uuid = require('uuid');
 
 // get all results in DB
+
+const formatEventArrays = eventArrays => {
+  return eventArrays.map(eventArray => {
+    const mappedArray =  eventArray.map(event => {
+      return {
+        IPAddress: event.ipaddress,
+        time: Number(event.time),
+      };
+    });
+    return mappedArray.sort((eventA, eventB) => eventA.time - eventB.time);
+  });
+};
+
 exports.getAllResults = (cb) => {
-  db.query(qry.getAllResults, cb);
+
+  dbpgp.query("select * from tests")
+    .then(tests => {
+      allResults = [];
+      counter = 0;
+      return tests.forEach(test => {
+        dbpgp.task(t1 => {
+          return t1.batch([
+            t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['a', test.id]),
+            t1.query('select * from clicks where version_id = (select id from versions where ab = $1 and test_id = $2)', ['a', test.id]),
+            t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
+            t1.query('select * from clicks where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
+          ]);
+        })
+        .then(testData => {
+
+          const data = formatEventArrays(testData);
+
+          allResults.push({
+            testName: test.name,
+            testId: test.id,
+            data,
+          });
+          counter++;
+          if (counter === tests.length) {
+            const allResultsFormatted = allResults.map(result => {
+              const dataArrays = result.data;
+              result.data = {};
+              result.data.aVisitsData = dataArrays[0];
+              result.data.aClicksData = dataArrays[1];
+              result.data.bVisitsData = dataArrays[2];
+              result.data.bClicksData = dataArrays[3];
+              return result;
+            });
+            cb(null, allResultsFormatted);
+          }
+        })
+        .catch(err => {
+          console.log('err', err);
+          return cb(err, null);
+        });
+      });
+    });
 };
 
 exports.createPage = (pageName, clientEmail, cb) => {

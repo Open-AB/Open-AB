@@ -1,10 +1,10 @@
 const maxClickDelay = 10000; // maximum amount of time after visit to wait to make a click
 const faker = require('faker');
 
-exports.defaultParamsForAllTests = defaultParamsForAllTests = [
+exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make this data depend on clientData.js
   {
     testName: 'Buy Now Button Test', // B wins
-    testId: '3874E76',
+    testId: 1,
     testDetails: {
       startTime: 1450896596001, // Wed Dec 23 2015 10:49:56 GMT-0800 (PST). To convert milliseconds to human-readable date: const date = new Date (1459996596001);
       aClickRate: 0.1,
@@ -16,7 +16,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [
   },
   {
     testName: 'Try Now Button Test', // A wins
-    testId: 'hgU9084K',
+    testId: 2,
     testDetails: {
       startTime: 1455896596001, // Fri Feb 19 2016 07:43:16 GMT-0800 (PST)
       aClickRate: 0.5,
@@ -28,7 +28,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [
   },
   {
     testName: 'Subscribe Now Button Test', // Usually inconclusive (with the occasional false positive either way)
-    testId: 'sd37489',
+    testId: 3,
     testDetails: {
       startTime: 1457896596001, // Sun Mar 13 2016 12:16:36 GMT-0700 (PDT)
       aClickRate: 0.2,
@@ -40,7 +40,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [
   },
   {
     testName: 'Act Now Button Test', // Not yet enough visits to declare a winner
-    testId: 'asdas5489',
+    testId: 4,
     testDetails: {
       startTime: 1458896596001, // Fri Mar 25 2016 02:03:16 GMT-0700 (PDT)
       aClickRate: 0.1,
@@ -52,7 +52,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [
   },
   {
     testName: 'Signup Now Button Test', // Hasn't run long enough to declare a winner
-    testId: 'kjhghj876H',
+    testId: 5,
     testDetails: {
       startTime: 1459996596001, // Wed Apr 06 2016 19:36:36 GMT-0700 (PDT)
       aClickRate: 0.2,
@@ -115,7 +115,7 @@ const generateDataForMultipleTests = (paramsForAllTests) => {
 // generateDataForMultipleTestsWithDefaultParams produces data of the form:
 // [
 //   {
-//     testName: 'buyNowButtonTest',
+//     testName: 'Buy Now Button Test',
 //     testId: '3874E76',
 //     data: {
 //       aVisitsData: [~, ~, ...],
@@ -155,7 +155,7 @@ exports.generateDataForMultipleTestsWithDefaultParams = generateDataForMultipleT
 //   ...
 // ]
 
-exports.generateTimesForMultipleTestsWithDefaultParams = () => {
+exports.generateTimesForMultipleTestsWithDefaultParams = () => {  //TODO: remove this once it is no longer necessary
   const tests = generateDataForMultipleTestsWithDefaultParams();
   return tests.map(test => {
     const timesByVersionAndType = {};

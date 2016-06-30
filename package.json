@@ -19,9 +19,10 @@
     "test:server": "mocha --bail test/server/api/integrationSpec.js;",
     "api:test-server": "NODE_ENV=test PORT=8888 node server/api/index.js",
     "test:count": "mocha --bail test/server/api/countSpec.js",
-    "seed-test": "NODE_ENV=test node server/db/seed/dbSeed.js; pkill -n node;",
     "seed-db": "node server/db/seed/dbSeed.js; pkill -n node;",
-    "test:error": "NODE_ENV=testError PORT_ELS=9999 PORT_API=8888 mocha --bail test/server/simpleErrorHandling.js"
+    "test:error": "NODE_ENV=testError PORT_ELS=9999 PORT_API=8888 mocha --bail test/server/simpleErrorHandling.js",
+    "test:seeddb": "mocha --bail test/server/api/dbSeedSpec.js",
+    "seed-test": "NODE_ENV=test node server/db/seed/seedTestDb.js; pkill -n node;",
   },
   "devDependencies": {
     "concurrently": "^0.1.1",
@@ -65,6 +66,7 @@
     "redux-logger": "^2.4.0"
   },
   "dependencies": {
+    "async": "^2.0.0-rc.6",
     "babel-cli": "^6.9.0",
     "babel-polyfill": "^6.3.14",
     "bcrypt-nodejs": "0.0.3",

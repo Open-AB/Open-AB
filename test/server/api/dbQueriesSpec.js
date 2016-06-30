@@ -10,6 +10,7 @@ process.env.NODE_ENV = 'test';
 // dbQueries.js file to test
 const authQry = require('../../../server/api/auth/db/dbQueries');
 const analyticQry = require('../../../server/api/analytics/db/dbQueries');
+const eventQry = require('../../../server/listening/events/db/dbQueries');
 
 // Note: tests further down in the file often depend on features tested earlier in the file
 
@@ -63,6 +64,42 @@ describe('DB Queries for API Server', () => {
         url: 'http://oursite.com/b',
         DOMLocation: '4-4-4-4-4',
       },
+    },
+  ];
+
+  const visitsData = [
+    {
+      versionId: 1,
+      IPAddress: '127.0.0.1',
+      time: 1467249322489,
+    },
+    {
+      versionId: 1,
+      IPAddress: '127.0.0.2',
+      time: 2467249322489,
+    },
+    {
+      versionId: 3,
+      IPAddress: '2.2.2.2',
+      time: 3467249322489,
+    },
+    {
+      versionId: 3,
+      IPAddress: '2.2.2.2',
+      time: 4467249322489,
+    },
+  ];
+
+  const clicksData = [
+    {
+      versionId: 1,
+      IPAddress: '127.0.0.3',
+      time: 3467249322489,
+    },
+    {
+      versionId: 1,
+      IPAddress: '127.0.0.4',
+      time: 4467249322489,
     },
   ];
 
@@ -261,10 +298,34 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    it('Should get all tests, regardless of client email', done => {
+    before(done => {
+      eventQry.hearVisit(visitsData[0], (err, result) => {
+        eventQry.hearVisit(visitsData[1], (err, result) => {
+          eventQry.hearClick(clicksData[0], (err, result) => {
+            eventQry.hearClick(clicksData[1], (err, result) => {
+              eventQry.hearVisit(visitsData[2], (err, result) => {
+                eventQry.hearVisit(visitsData[3], (err, result) => {
+                  done();
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+
+    it('Should get all tests, regardless of client email', done => {  //TODO: add more tests here
       analyticQry.getAllResults((err, result) => {
+        const bVisits = result[0].data.bVisitsData;
+
         expect(result).to.exist;
-        expect(result.rows.length).to.equal(4);
+        expect(result.length).to.equal(4);
+        expect(result[0].testName).to.be.oneOf(['test1', 'test2', 'test3', 'test4']);
+
+        for (let i = 0; i < bVisits.length - 1; i++) {
+          expect(bVisits[i + 1].time).to.be.above(bVisits[i].time); // only comes into play when testing against more realistic data
+        }
+        // expect(result[1].data.aVisitData[0].ipAddress).to.equal('127.0.0.1');
         done();
       });
     });
