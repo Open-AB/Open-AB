@@ -9,7 +9,6 @@ class NavBar extends Component {
   render() {
     return (
       <div className='navBar'>
-       <div className="container">
          <div className="jumbotron">
            <h1><i className="fa fa-bolt" aria-hidden="true"></i></h1> 
 
@@ -19,7 +18,6 @@ class NavBar extends Component {
          <p>This is some text.</p> 
          <p>This is another text.</p> 
        </div>
-      </div>
     );
   }
 }
