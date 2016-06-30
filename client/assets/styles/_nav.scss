@@ -1,0 +1,23 @@
+.navbar-default {
+  background-color: #3E4A61;
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid;
+  height: 7em;
+}
+
+.logo {
+  height: 5em;
+  width: 5em;
+}
+
+.nav-bar > * {
+  margin: 0;
+  padding: 5px 5px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 2px;
+}
