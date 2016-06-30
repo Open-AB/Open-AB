@@ -43,12 +43,10 @@ describe('Events generator', () => {
 
     it('should generate visits of the correct format', () => {
       expect(typeof testData.aVisitsData[0].time).to.equal('number');
-      expect(testData.aVisitsData[0].IPAddress.split('.')[0]).to.be.within(100, 999);
     });
 
     it('should generate clicks of the correct format', () => {
       expect(typeof testData.aClicksData[0].time).to.equal('number');
-      expect(testData.aClicksData[0].IPAddress.split('.')[0]).to.be.within(100, 999);
     });
   });
 

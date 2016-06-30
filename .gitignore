@@ -12,7 +12,6 @@ logs
 # webpack
 */.DS_Store
 .DS_Store
-
 /dist
 
 #Testing
@@ -23,5 +22,7 @@ logs
 
 #Dev Testing
 test.js
+
 server/db/queries/
 server/db/queryStrs/
+
