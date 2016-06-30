@@ -18,13 +18,6 @@ const scriptTag = `<script>${scriptFile}</script>`;
 module.exports = (app) => {
   app.post('/selection/addTest', (req, res, next) => {
     // on newTest initiated from dashboard
-    const ip = req.headers['x-forwarded-for'] ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress;
-    console.log(req.body, req.headers['x-forwarded-for'],
-     req.connection.remoteAddress,
-     req.socket.remoteAddress);
     jsdom.env(
       req.body.url,
       ['http://code.jquery.com/jquery.js'],
