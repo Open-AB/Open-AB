@@ -18,7 +18,6 @@ const scriptTag = `<script>${scriptFile}</script>`;
 module.exports = (app) => {
   app.post('/selection/addTest', (req, res, next) => {
     // on newTest initiated from dashboard
-    console.log(req.body);
     jsdom.env(
       req.body.url,
       ['http://code.jquery.com/jquery.js'],
