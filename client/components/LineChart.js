@@ -5,6 +5,10 @@ class LineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      A: [],
+      B: [],
+      visitsA: [],
+      visitsB: [],
       data: {
         labels: [],
         datasets: [],
@@ -63,7 +67,10 @@ class LineChart extends React.Component {
           }],
         },
       },
+      cumulative: false,
     };
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -100,24 +107,74 @@ class LineChart extends React.Component {
       }],
     };
 
-    this.setState({ data });
-  }
-
-
-  componentDidUpdate() {
     const chartCanvas = this.refs.chart;
+
     const myChart = new Chart(chartCanvas, {
       type: 'line',
-      data: this.state.data,
+      data,
       options: this.state.options,
     });
-    myChart.update();
+
+    this.setState({
+      myChart,
+      data,
+      A,
+      B,
+      buckets,
+      visitsA,
+      visitsB,
+    });
+  }
+
+  makeCumulativeData(arr) {
+    return arr.reduce((acc, curr, ind) => {
+      if (acc[ind - 1]) {
+        acc.push(curr + acc[ind - 1]);
+      } else {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+  }
+
+  makeTimeBucketData(arr) {
+    return arr.reduce((acc, curr, ind) => {
+      if (acc[ind - 1]) {
+        acc.push(curr - acc.reduce((sum, x) => sum + x, 0));
+      } else {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const newCumulative = !this.state.cumulative;
+    let makeCumulativeData;
+    if (newCumulative) {
+      makeCumulativeData = this.makeCumulativeData.bind(this);
+    } else {
+      makeCumulativeData = this.makeTimeBucketData.bind(this);
+    }
+
+    this.state.myChart.data.datasets.forEach(obj => {
+      obj.data = makeCumulativeData(obj.data);
+    });
+    this.state.myChart.update();
+
+    this.setState({
+      cumulative: newCumulative,
+    });
   }
 
   render() {
     return (
-      <div width="500" height="500">
-        <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
+      <div>
+        <div width="500" height="500">
+          <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
+        </div>
+        <button onClick={this.handleClick}>TOGGLE ME</button>
       </div>
     );
   }
