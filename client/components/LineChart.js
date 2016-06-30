@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Chart from 'chart.js';
 
 class LineChart extends React.Component {
@@ -17,7 +17,7 @@ class LineChart extends React.Component {
         responsive: false,
         title: {
           display: true,
-          text: 'Open-AB ChartJS Line Graph',
+          text: this.props.dataset.testName,
         },
         legend: {
           display: true,
@@ -67,75 +67,121 @@ class LineChart extends React.Component {
           }],
         },
       },
+      cumulative: false,
     };
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/chartData')
-      .then(res => res.json())
-      .then(res => {
-        const A = res.A;
-        const B = res.B;
-        const buckets = res.buckets;
+    const A = this.props.dataset.data.aClicks;
+    const B = this.props.dataset.data.bClicks;
+    const buckets = this.props.dataset.data.buckets;
 
-        const visitsA = res.visitsA;
-        const visitsB = res.visitsB;
+    const visitsA = this.props.dataset.data.aVisits;
+    const visitsB = this.props.dataset.data.bVisits;
 
-        const data = {
-          labels: buckets,
+    const data = {
+      labels: buckets,
 
-          datasets: [{
-            label: 'A Visits',
-            backgroundColor: 'rgba(20, 178, 99, 0.5)',
-            borderColor: 'rgba(20, 178, 99, 0.5)',
-            data: visitsA,
-          }, {
-            label: 'A Clicks',
-            backgroundColor: 'rgba(20, 178, 20, 1)',
-            borderColor: 'rgba(20, 178, 20, 1)',
-            data: A,
-          }, {
-            label: 'B Visits',
-            backgroundColor: 'rgba(10, 107, 203, 0.5)',
-            borderColor: 'rgba(10, 107, 203, 0.5)',
-            data: visitsB,
-          }, {
-            label: 'B Clicks',
-            backgroundColor: 'rgba(10, 10, 203, 1)',
-            borderColor: 'rgba(10, 10, 203, 1)',
-            data: B,
-          }],
-        };
+      datasets: [{
+        label: 'A Visits',
+        backgroundColor: 'rgba(20, 178, 99, 0.5)',
+        borderColor: 'rgba(20, 178, 99, 0.5)',
+        data: visitsA,
+      }, {
+        label: 'A Clicks',
+        backgroundColor: 'rgba(20, 178, 20, 1)',
+        borderColor: 'rgba(20, 178, 20, 1)',
+        data: A,
+      }, {
+        label: 'B Visits',
+        backgroundColor: 'rgba(10, 107, 203, 0.5)',
+        borderColor: 'rgba(10, 107, 203, 0.5)',
+        data: visitsB,
+      }, {
+        label: 'B Clicks',
+        backgroundColor: 'rgba(10, 10, 203, 1)',
+        borderColor: 'rgba(10, 10, 203, 1)',
+        data: B,
+      }],
+    };
 
-        this.setState({
-          data,
-          A,
-          B,
-          buckets,
-          visitsA,
-          visitsB,
-        });
-      });
-  }
-
-
-  componentDidUpdate() {
     const chartCanvas = this.refs.chart;
+
     const myChart = new Chart(chartCanvas, {
       type: 'line',
-      data: this.state.data,
+      data,
       options: this.state.options,
     });
-    myChart.update();
+
+    this.setState({
+      myChart,
+      data,
+      A,
+      B,
+      buckets,
+      visitsA,
+      visitsB,
+    });
+  }
+
+  makeCumulativeData(arr) {
+    return arr.reduce((acc, curr, ind) => {
+      if (acc[ind - 1]) {
+        acc.push(curr + acc[ind - 1]);
+      } else {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+  }
+
+  makeTimeBucketData(arr) {
+    return arr.reduce((acc, curr, ind) => {
+      if (acc[ind - 1]) {
+        acc.push(curr - acc.reduce((sum, x) => sum + x, 0));
+      } else {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const newCumulative = !this.state.cumulative;
+    let makeCumulativeData;
+    if (newCumulative) {
+      makeCumulativeData = this.makeCumulativeData.bind(this);
+    } else {
+      makeCumulativeData = this.makeTimeBucketData.bind(this);
+    }
+
+    this.state.myChart.data.datasets.forEach(obj => {
+      obj.data = makeCumulativeData(obj.data);
+    });
+    this.state.myChart.update();
+
+    this.setState({
+      cumulative: newCumulative,
+    });
   }
 
   render() {
     return (
-      <div width="500" height="500">
-        <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
+      <div>
+        <div width="500" height="500">
+          <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
+        </div>
+        <button onClick={this.handleClick}>TOGGLE ME</button>
       </div>
     );
   }
 }
+
+LineChart.propTypes = {
+  dataset: PropTypes.object.isRequired,
+};
 
 export default LineChart;

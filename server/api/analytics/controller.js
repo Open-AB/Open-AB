@@ -54,7 +54,7 @@ exports.getChartData = (req, res, next) => {
 };
 
 exports.getMapClicks = (req, res, next) => {
-  //TO DO: write query
+  // TO DO: write query
   // dbQry.getMapClicks((error, result) => {
   //   if (error) {
   //     return next(error);

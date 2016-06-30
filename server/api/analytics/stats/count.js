@@ -37,7 +37,7 @@ exports.countIntoBuckets = (upperLimitOfBuckets, arr) => {
   }, []);
 };
 
-exports.processDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
+exports.processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
   const TotalVisits = aVisits.concat(bVisits).sort((a, b) => a - b);
 
   const buckets = exports.createBuckets(bucketWidth * 24 * 60 * 60 * 1000, TotalVisits);
@@ -51,13 +51,24 @@ exports.processDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidt
   const totalBucketCount = exports.countIntoBuckets(buckets, TotalVisits);
 
   return {
-    A: aBucketCount,
-    B: bBucketCount,
+    aClicks: aBucketCount,
+    bClicks: bBucketCount,
     Total: totalBucketCount,
     buckets,
-    visitsA: aBucketVisitCount,
-    visitsB: bBucketVisitCount,
+    aVisits: aBucketVisitCount,
+    bVisits: bBucketVisitCount,
   };
 };
 
-exports.results = exports.processDataIntoResults(dummyData[0].data.aClicks, dummyData[0].data.bClicks, dummyData[0].data.aVisits, dummyData[0].data.bVisits);
+exports.results = dummyData.map(testData => {
+  return {
+    testName: testData.testName,
+    testId: testData.testId,
+    data: exports.processSingleTestDataIntoResults(
+                    testData.data.aClicks,
+                    testData.data.bClicks,
+                    testData.data.aVisits,
+                    testData.data.bVisits
+                  ),
+  };
+});

@@ -1,15 +1,15 @@
 import React from 'react';
 import TestResults from './TestResults';
-import LineChart from '../components/LineChart';
 import StartTest from '../components/StartTest';
 import ClickMap from '../components/ClicksMap';
+import LineChartData from './LineChartData';
 
 function Dashboard() {
   return (
     <div>
       <StartTest />
-      <LineChart />
       <ClickMap />
+      <LineChartData />
       <TestResults />
     </div>
   );
