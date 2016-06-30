@@ -23,27 +23,27 @@ module.exports = (app) => {
       req.body.url,
       ['http://code.jquery.com/jquery.js'],
       (err, window) => {
-        const $ = window.jQuery;
-        $('body').append(htmlTag);
-        $('head').append(styleTag);
-        // pass information that our POST request will need, through the window object
-        // is this okay to do?  are there situations where this would fail?
-        $('head').append(`<script>window.openab = {
-          ab: '${req.body.ab}',
-          name: '${req.body.name}',
-          page_id: ${req.body.page_id},
-          url: '${req.body.url}'
-        } </script>`);
-        if (req.body.ab === 'b') {
-          $('head').append(`<script>
-          window.openab.url_a = '${req.body.url_a}';
-          window.openab.dom_a = '${req.body.dom_a}';
-          </script>`);
-        }
-        $('body').append(scriptTag);
         if (err) {
           next(err);
         } else {
+          const $ = window.jQuery;
+          $('body').append(htmlTag);
+          $('head').append(styleTag);
+          // pass information that our POST request will need, through the window object
+          // is this okay to do?  are there situations where this would fail?
+          $('head').append(`<script>window.openab = {
+            ab: '${req.body.ab}',
+            name: '${req.body.name}',
+            page_id: ${req.body.page_id},
+            url: '${req.body.url}'
+          } </script>`);
+          if (req.body.ab === 'b') {
+            $('head').append(`<script>
+            window.openab.url_a = '${req.body.url_a}';
+            window.openab.dom_a = '${req.body.dom_a}';
+            </script>`);
+          }
+          $('body').append(scriptTag);
           res.send(window.document.documentElement.innerHTML);
         }
       }

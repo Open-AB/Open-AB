@@ -20,7 +20,7 @@ exports.createTest = (req, res, next) => {
 
   dbQry.createTest(testName, pageName, clientEmail, (error, result) => {
     if (error) {
-      next(error);
+      return next(error);
     }
     const toSend = {
       testId: (result.rows[0].id).toString(),

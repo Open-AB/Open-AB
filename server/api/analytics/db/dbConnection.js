@@ -7,10 +7,15 @@ const clientLink = `postgres://${cfg.db.host}:${cfg.db.port}/${cfg.db.dbName}`;
 module.exports = {
   query: (text, cb) => {
     pg.connect(clientLink, (err, client, done) => {
-      client.query(text, (error, result) => {
-        done();
-        cb(error, result);
-      });
+      if (client) {
+        client.query(text, (error, result) => {
+          done();
+          cb(error, result);
+        });
+      } else {
+        err.message = 'Database connection refused';
+        cb(err, null);
+      }
     });
   },
 };
