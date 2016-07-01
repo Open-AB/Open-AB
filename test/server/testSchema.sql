@@ -17,7 +17,8 @@ CREATE TABLE tests (
   page_id integer REFERENCES pages (id),
   name VARCHAR(50),
   result_a integer,
-  result_b integer
+  result_b integer,
+  uniqueid VARCHAR(250)
 );
 
 CREATE TABLE versions (
@@ -32,12 +33,12 @@ CREATE TABLE visits (
   id SERIAL PRIMARY KEY,
   version_id integer REFERENCES versions (id),
   ipaddress VARCHAR(50),
-  time VARCHAR(50)
+  time bigint
 );
 
 CREATE TABLE clicks (
   id SERIAL PRIMARY KEY,
   version_id integer REFERENCES versions (id),
   ipaddress VARCHAR(50),
-  time VARCHAR(50)
+  time bigint
 );

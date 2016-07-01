@@ -1,7 +1,3 @@
-const dummy = require('./generateEvents');
-
-const dummyData = dummy.generateTimesForMultipleTestsWithDefaultParams();
-
 exports.countOccurences = (arr) => arr.reduce(
   (acc, curr) => {
     acc[curr] = acc[curr] ? ++acc[curr] : 1;
@@ -37,7 +33,7 @@ exports.countIntoBuckets = (upperLimitOfBuckets, arr) => {
   }, []);
 };
 
-exports.processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
+exports.processSingleTestDataIntoResults = processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
   const TotalVisits = aVisits.concat(bVisits).sort((a, b) => a - b);
 
   const buckets = exports.createBuckets(bucketWidth * 24 * 60 * 60 * 1000, TotalVisits);
@@ -60,15 +56,18 @@ exports.processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits, 
   };
 };
 
-exports.results = dummyData.map(testData => {
-  return {
-    testName: testData.testName,
-    testId: testData.testId,
-    data: exports.processSingleTestDataIntoResults(
+exports.processAllTestsDataIntoResults = testsData => {
+  return testsData.map(testData => {
+    return {
+      testName: testData.testName,
+      testId: testData.testId,
+      data: exports.processSingleTestDataIntoResults(
                     testData.data.aClicks,
                     testData.data.bClicks,
                     testData.data.aVisits,
                     testData.data.bVisits
                   ),
-  };
-});
+    };
+  });
+};
+

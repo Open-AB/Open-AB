@@ -26,8 +26,8 @@ describe('Events generator', () => {
     const test1Data = test1.data;
 
     it('should produce tests with the correct name and id', () => {
-      expect(test.testName).to.equal('Buy Now Button Test');
-      expect(test.testId).to.equal('3874E76');
+      expect(test.testName).to.equal(defaultParamsForAllTests[0].testName);
+      expect(test.testId).to.equal(defaultParamsForAllTests[0].testId);
     });
 
     it('should generate the right number of visits', () => {

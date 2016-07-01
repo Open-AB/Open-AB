@@ -1,6 +1,22 @@
 const dbQry = require('./db/dbQueries');
-const generateEvents = require('./stats/generateEvents.js');
 const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
+const formatChartData = require('./stats/count');
+
+const convertResultsToTimeArrayFormat = (DataFormattedResults) => {
+  return DataFormattedResults.map(test => {
+    const timesByVersionAndType = {};
+    const data = test.data;
+    for (const versionAndType in data) {
+      const mappedTestData = data[versionAndType].map(event => event.time);
+      timesByVersionAndType[versionAndType.slice(0, -4)] = mappedTestData;
+    }
+    return {
+      testName: test.testName,
+      testId: test.testId,
+      data: timesByVersionAndType,
+    };
+  });
+};
 
 exports.getAll = (req, res, next) => {
   dbQry.getAllResults((error, result) => {
@@ -29,29 +45,31 @@ exports.createTest = (req, res, next) => {
   });
 };
 
-// Uncomment below to see stats on client page, comment to pass npm test:errors
-// dbQry.getAllResults = (cb) => {   // dummy version
-//   const tests = generateEvents.generateTimesForMultipleTestsWithDefaultParams();
-//   const result = {};
-//   result.rows = tests;
-//   cb(null, result);
-// };
-
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  dbQry.getAllResults((error, result) => {
+  dbQry.getAllResults((error, results, next) => {
     if (error) {
+      console.log('stats error');
+      console.error(error);
       return next(error);
+    } else {
+      const formattedResults = convertResultsToTimeArrayFormat(results);
+      const testStats = chiSquareAnalysis.computeStatsForAllTests(formattedResults);
+      res.status(200).json(testStats);
     }
-    const testResults = result.rows;
-    const testStats = chiSquareAnalysis.computeStatsForAllTests(testResults);
-    res.status(200).json(testStats);
   });
 };
 
-// test controller func for LineChart
-const count = require('./stats/count');
 exports.getChartData = (req, res, next) => {
-  res.status(200).send(count.results);
+  dbQry.getAllResults((error, results, next) => {
+    if (error) {
+      console.error(error);
+      return next(error);
+    } else {
+      const formattedResults = convertResultsToTimeArrayFormat(results);
+      const count = formatChartData.processAllTestsDataIntoResults(formattedResults);
+      res.status(200).json(count);
+    }
+  });
 };
 
 exports.getMapClicks = (req, res, next) => {
