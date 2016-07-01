@@ -16,7 +16,11 @@ const selectionRoutes = require('./selection/routes.js');
 
 const app = express();
 const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || process.env.PORT_API || 8080;
+
+if (process.env.NODE_ENV === 'errorTest') {
+  console.error = () => {};
+}
 
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
@@ -43,3 +47,5 @@ app.listen(port, (err) => {
   return process.stdout
   .write(`API server online at http://${host}:${port}. Use <ctrl-c> to stop server.\n`);
 });
+
+module.exports = app;

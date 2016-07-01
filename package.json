@@ -20,7 +20,8 @@
     "api:test-server": "NODE_ENV=test PORT=8888 node server/api/index.js",
     "test:count": "mocha --bail test/server/api/countSpec.js",
     "seed-test": "NODE_ENV=test node server/db/seed/dbSeed.js; pkill -n node;",
-    "seed-db": "node server/db/seed/dbSeed.js"
+    "seed-db": "node server/db/seed/dbSeed.js; pkill -n node;",
+    "test:error": "NODE_ENV=testError PORT_ELS=9999 PORT_API=8888 mocha --bail test/server/simpleErrorHandling.js"
   },
   "devDependencies": {
     "concurrently": "^0.1.1",

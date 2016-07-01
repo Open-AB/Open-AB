@@ -20,7 +20,7 @@ exports.createTest = (req, res, next) => {
 
   dbQry.createTest(testName, pageName, clientEmail, (error, result) => {
     if (error) {
-      next(error);
+      return next(error);
     }
     const toSend = {
       testId: (result.rows[0].id).toString(),
@@ -29,12 +29,13 @@ exports.createTest = (req, res, next) => {
   });
 };
 
-dbQry.getAllResults = (cb) => {   // dummy version
-  const tests = generateEvents.generateTimesForMultipleTestsWithDefaultParams();
-  const result = {};
-  result.rows = tests;
-  cb(null, result);
-};
+// Uncomment below to see stats on client page, comment to pass npm test:errors
+// dbQry.getAllResults = (cb) => {   // dummy version
+//   const tests = generateEvents.generateTimesForMultipleTestsWithDefaultParams();
+//   const result = {};
+//   result.rows = tests;
+//   cb(null, result);
+// };
 
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
   dbQry.getAllResults((error, result) => {
