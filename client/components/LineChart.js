@@ -52,17 +52,28 @@ class LineChart extends React.Component {
         scales: {
           xAxes: [{
             gridLines: {
-              display: false,
+              display: true,
+              drawOnChartArea: false,
+              drawTicks: true,
             },
             scaleLabel: {
               display: true,
               labelString: 'HAMMERTIME',
             },
             type: 'time',
-            ticks: {
+            time: {
+              max: Math.max.apply(null, this.props.dataset.data.buckets),
+              // unit: 'day',
               displayFormats: {
                 quarter: 'MMM YYYY',
               },
+            },
+            ticks: {
+              autoSkip: true,
+              // max: Math.max.apply(null, this.props.dataset.data.buckets),
+              // displayFormats: {
+              //   quarter: 'MMM YYYY',
+              // },
             },
           }],
         },
