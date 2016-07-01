@@ -3,7 +3,7 @@ const faker = require('faker');
 
 exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make this data depend on clientData.js
   {
-    testName: 'Buy Now Button Test', // B wins
+    testName: 'Buy-Now Button Test', // B wins
     testId: 1,
     testDetails: {
       startTime: 1450896596001, // Wed Dec 23 2015 10:49:56 GMT-0800 (PST). To convert milliseconds to human-readable date: const date = new Date (1459996596001);
@@ -15,7 +15,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make th
     },
   },
   {
-    testName: 'Try Now Button Test', // A wins
+    testName: 'Try-Now Button Test', // A wins
     testId: 2,
     testDetails: {
       startTime: 1455896596001, // Fri Feb 19 2016 07:43:16 GMT-0800 (PST)
@@ -27,7 +27,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make th
     },
   },
   {
-    testName: 'Subscribe Now Button Test', // Usually inconclusive (with the occasional false positive either way)
+    testName: 'Subscribe-Now Button Test', // Usually inconclusive (with the occasional false positive either way)
     testId: 3,
     testDetails: {
       startTime: 1457896596001, // Sun Mar 13 2016 12:16:36 GMT-0700 (PDT)
@@ -39,7 +39,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make th
     },
   },
   {
-    testName: 'Act Now Button Test', // Not yet enough visits to declare a winner
+    testName: 'Act-Now Button Test', // Not yet enough visits to declare a winner
     testId: 4,
     testDetails: {
       startTime: 1458896596001, // Fri Mar 25 2016 02:03:16 GMT-0700 (PDT)
@@ -51,7 +51,7 @@ exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make th
     },
   },
   {
-    testName: 'Signup Now Button Test', // Hasn't run long enough to declare a winner
+    testName: 'Signup-Now Button Test', // Hasn't run long enough to declare a winner
     testId: 5,
     testDetails: {
       startTime: 1459996596001, // Wed Apr 06 2016 19:36:36 GMT-0700 (PDT)
@@ -155,7 +155,7 @@ exports.generateDataForMultipleTestsWithDefaultParams = generateDataForMultipleT
 //   ...
 // ]
 
-exports.generateTimesForMultipleTestsWithDefaultParams = () => {  //TODO: remove this once it is no longer necessary
+exports.generateTimesForMultipleTestsWithDefaultParams = () => {  // TODO: remove this once the tests are refactored and it is no longer necessary
   const tests = generateDataForMultipleTestsWithDefaultParams();
   return tests.map(test => {
     const timesByVersionAndType = {};

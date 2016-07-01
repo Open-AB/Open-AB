@@ -18,12 +18,14 @@ const formatEventArrays = eventArrays => {
 };
 
 exports.getAllResults = (cb) => {
-
-  dbpgp.query("select * from tests")
+  dbpgp.query('select * from tests')
     .then(tests => {
-      allResults = [];
-      counter = 0;
+
+      const allResults = [];
+      let counter = 0;
+
       return tests.forEach(test => {
+
         dbpgp.task(t1 => {
           return t1.batch([
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['a', test.id]),
@@ -31,7 +33,9 @@ exports.getAllResults = (cb) => {
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
             t1.query('select * from clicks where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
           ]);
+
         })
+
         .then(testData => {
 
           const data = formatEventArrays(testData);
@@ -41,7 +45,9 @@ exports.getAllResults = (cb) => {
             testId: test.id,
             data,
           });
+
           counter++;
+
           if (counter === tests.length) {
             const allResultsFormatted = allResults.map(result => {
               const dataArrays = result.data;
@@ -52,9 +58,11 @@ exports.getAllResults = (cb) => {
               result.data.bClicksData = dataArrays[3];
               return result;
             });
+
             cb(null, allResultsFormatted);
           }
         })
+
         .catch(err => {
           console.log('err', err);
           return cb(err, null);
@@ -71,8 +79,10 @@ exports.createPage = (pageName, clientEmail, cb) => {
 };
 
 exports.createTest = (testData, clientEmail, cb) => {
+
   const { testName, pageId, a, b } = testData;
   const uniqueId = uuid.v4();
+
   dbpgp.tx(t => {
     const addTest = t.query(qry.createTest, [testName, pageId, clientEmail, uniqueId]);
     const addVersionA = t.query(qry.insertVersion, ['a', a.url, a.DOMLocation, uniqueId]);

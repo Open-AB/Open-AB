@@ -58,7 +58,7 @@ describe('DB Queries for Listening Server', () => {
 
     it('should create a visit', (done) => {
       const visitData = {
-        versionId: 1,  // look this up, don't just use it.
+        versionId: 1,
         IPAddress: '127.0.0.1',
         time: 1467249322489,
       };
@@ -79,7 +79,7 @@ describe('DB Queries for Listening Server', () => {
 
     it('should create a click', (done) => {
       const clickData = {
-        versionId: 1,  // look this up, don't just use it.
+        versionId: 1,
         IPAddress: '127.0.0.1',
         time: 1467249322489,
       };

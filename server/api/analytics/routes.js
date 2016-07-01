@@ -6,7 +6,5 @@ module.exports = (app) => {
   app.post('/api/createTest', analyticsController.createTest);
  // app.post('/api/clicksMap', analyticsController.getclicksMap);
 
-  // test routes for LineChart
   app.get('/api/chartData', analyticsController.getChartData);
-  // end test routes for LineChar
 };
