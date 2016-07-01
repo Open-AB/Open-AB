@@ -61,13 +61,11 @@ exports.getAllResults = (cb) => {
 
             cb(null, allResultsFormatted);
           }
-        })
-
-        .catch(err => {
-          console.log('err', err);
-          return cb(err, null);
         });
       });
+    })
+    .catch(err => {
+      return cb(err, null);
     });
 };
 
@@ -93,7 +91,7 @@ exports.createTest = (testData, clientEmail, cb) => {
     cb(null, result);
   })
   .catch(err => {
-    cb(err, null);
+    return cb(err, null);
   });
 };
 

@@ -11,7 +11,7 @@
     "test": "npm run api:test-server & npm run test:backend && npm run test:client; pkill -n node;",
     "example:client": "node exampleClientSite/index.js",
     "test:client": "karma start",
-    "test:backend": "npm run test:stats && npm run test:count && npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server",
+    "test:backend": "npm run test:stats && npm run test:count && npm run test:api-db && npm run test:lstn-db && npm run test:listening && npm run test:server && pkill -n node && npm run test:error",
     "test:stats": "mocha --bail test/server/api/statsSpec.js",
     "test:api-db": "mocha --bail test/server/api/dbQueriesSpec.js",
     "test:lstn-db": "mocha --bail test/server/listening/dbQueriesSpec.js",
@@ -19,10 +19,10 @@
     "test:server": "mocha --bail test/server/api/integrationSpec.js;",
     "api:test-server": "NODE_ENV=test PORT=8888 node server/api/index.js",
     "test:count": "mocha --bail test/server/api/countSpec.js",
-    "seed-db": "node server/db/seed/dbSeed.js; pkill -n node;",
+    "seed-db": "node server/db/seed/seedDb.js; pkill -n node;",
     "test:error": "NODE_ENV=testError PORT_ELS=9999 PORT_API=8888 mocha --bail test/server/simpleErrorHandling.js",
     "test:seeddb": "mocha --bail test/server/api/dbSeedSpec.js",
-    "seed-test": "NODE_ENV=test node server/db/seed/seedTestDb.js; pkill -n node;",
+    "seed-test": "NODE_ENV=test node server/db/seed/seedTestDb.js; pkill -n node;"
   },
   "devDependencies": {
     "concurrently": "^0.1.1",

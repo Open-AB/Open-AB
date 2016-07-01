@@ -202,6 +202,7 @@ describe('DB Queries for API Server', () => {
     const clientEmail = 'userWithTests@asdf.com';
     const password = 'asdfqwerfdsaqwertrewsdfg';
     let testCount = 0;
+  
     before(done => {
       authQry.createClient(clientEmail, password, () => {
         done();

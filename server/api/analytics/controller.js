@@ -48,6 +48,7 @@ exports.createTest = (req, res, next) => {
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
   dbQry.getAllResults((error, results, next) => {
     if (error) {
+      console.log('stats error');
       console.error(error);
       return next(error);
     } else {
