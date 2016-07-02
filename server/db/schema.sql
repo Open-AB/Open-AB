@@ -49,6 +49,7 @@ CREATE TABLE clicks (
   time bigint
 );
 
+
 \c test
 
 CREATE TABLE clients (

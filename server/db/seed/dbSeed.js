@@ -25,12 +25,16 @@ const client = clientHardcodedData[0];
 const insertClientHardcodedData = callback => {
   const page = client.pages[0];
 
-  dbQry.insertClient(client.email, client.password, () => {
-    console.log('inserting client');
-    dbQry.insertPage(page.pageName, client.email, () => {
-      console.log('inserting page');
-      callback();
-    });
+  dbQry.insertClient(client.email, client.password, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('inserting client');
+      dbQry.insertPage(page.pageName, client.email, () => {
+        console.log('inserting page');
+        callback();
+      });
+    }
   });
 };
 

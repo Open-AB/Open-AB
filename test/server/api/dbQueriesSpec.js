@@ -5,7 +5,7 @@ const pg = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-process.env.NODE_ENV = 'test';
+// test environment was set in the npm script to run this file, so process.env.NODE_ENV === 'test';
 
 // dbQueries.js file to test
 const authQry = require('../../../server/api/auth/db/dbQueries');

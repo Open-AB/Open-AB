@@ -21,7 +21,7 @@ class StartTest extends Component {
                   <label>Page A URL<input name="url" type="text" /><br /></label>
                   <input name="ab" type="hidden" value="a" />
                   <input name="page_id" type="hidden" value="2" />
-                  <input className="btn green lighten-0 waves-effect waves-light" type="submit" />
+                  <button className="btn green lighten-0 waves-effect waves-light" type="submit">Submit</button>
                 </form>
               </div>
               <div className="card-action">
