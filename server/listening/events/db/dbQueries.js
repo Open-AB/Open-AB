@@ -1,12 +1,20 @@
 const db = require('./dbConnection');
 const qry = require('./dbQryStrs');
 
-
-// get all results in DB
-exports.hearClick = (testId, cb) => {
+exports.hearVisit = (visitData, cb) => {
+  const { versionId, IPAddress, time } = visitData;
   db.query({
-    text: qry.incrementTest,
-    values: [testId],
+    text: qry.createVisit,
+    values: [versionId, IPAddress, time],
+  },
+  cb);
+};
+
+exports.hearClick = (visitData, cb) => {
+  const { versionId, IPAddress, time } = visitData;
+  db.query({
+    text: qry.createClick,
+    values: [versionId, IPAddress, time],
   },
   cb);
 };

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || 3939;
+const port = process.env.PORT || process.env.PORT_ELS|| 3939;
 
 app.use(cors({
   origin: '*',
@@ -29,3 +29,5 @@ app.listen(port, (err) => {
   return process.stdout
   .write(`Listening server online at http://${host}:${port}. Use <ctrl-c> to stop server.\n`);
 });
+
+module.exports = app;

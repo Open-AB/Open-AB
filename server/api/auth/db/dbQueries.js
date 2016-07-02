@@ -14,6 +14,9 @@ exports.checkEmail = (clientEmail, cb) => {
 // get all results in DB
 exports.createClient = (clientEmail, password, cb) => {
   exports.checkEmail(clientEmail, (err, response) => {
+    if (err) {
+      return cb(err, null);
+    }
     const emailExists = response.rows[0].exists;
     if (emailExists) {
       cb(null, false);
@@ -30,6 +33,9 @@ exports.createClient = (clientEmail, password, cb) => {
 // check if attempted password matches DB password
 exports.signIn = (clientEmail, password, cb) => {
   exports.checkEmail(clientEmail, (error, emailExists) => {
+    if (error) {
+      return cb(error, null);
+    }
     if (!emailExists.rows[0].exists) {
       cb(null, false);
     } else {

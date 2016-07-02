@@ -34,30 +34,70 @@ describe('DB Queries for Listening Server', () => {
       const seedEmail = 'seedEmail@email.com';
       const seedPassword = 'asdfQWERTY4321';
       const seedPageName = 'testPage';
-      const seedTestName = 'eventTest';
+      const seedTest = {
+        testName: 'test1',
+        pageId: 1,
+        a: {
+          url: 'http://mysite.com/a',
+          DOMLocation: '0-1-3-0-1-0',
+        },
+        b: {
+          url: 'http://mysite.com/b',
+          DOMLocation: '0-1-3-3-6-5',
+        },
+      };
+
       authQry.createClient(seedEmail, seedPassword, () => {
         analyticQry.createPage(seedPageName, seedEmail, () => {
-          analyticQry.createTest(seedTestName, seedPageName, seedEmail, () => {
+          analyticQry.createTest(seedTest, seedEmail, () => {
             done();
           });
         });
       });
     });
 
-    it('Should increment JUST result_a for given testId', done => {
-      const testId = 1;
-      // increment result_a of testId
-      eventQry.hearClick(testId, () => {
-        // check if result_a of testId did increment
-        analyticQry.getResultForTestID(testId, (error, result) => {
-          expect(result.rows[0].result_a).to.exist;
-          expect(result.rows[0].result_a).to.equal(1);
+    it('should create a visit', (done) => {
+      const visitData = {
+        versionId: 1,
+        IPAddress: '127.0.0.1',
+        time: 1467249322489,
+      };
+
+      eventQry.hearVisit(visitData, (err, result) => {
+        if (err) {
+          console.error(err);
           done();
-        });
+        } else {
+          expect(result.rows[0].version_id).to.equal(1);
+          expect(result.rows[0].ipaddress).to.equal('127.0.0.1');
+          expect(result.rows[0].time).to.equal('1467249322489');
+          done();
+        }
       });
+
     });
 
-    xit('Should increment JUST result_b for given testId');
+    it('should create a click', (done) => {
+      const clickData = {
+        versionId: 1,
+        IPAddress: '127.0.0.1',
+        time: 1467249322489,
+      };
+
+      eventQry.hearClick(clickData, (err, result) => {
+        if (err) {
+          console.error(err);
+          done();
+        } else {
+          expect(result.rows[0].version_id).to.equal(1);
+          expect(result.rows[0].ipaddress).to.equal('127.0.0.1');
+          expect(result.rows[0].time).to.equal('1467249322489');
+          done();
+        }
+      });
+
+    });
+
   });
 });
 

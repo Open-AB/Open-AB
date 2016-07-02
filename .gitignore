@@ -1,10 +1,9 @@
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 # node_modules/
 
-node_modules/
+node_modules/*
 client/bundle.js
 client/bundle.js.map
-
 
 # Logs
 logs
@@ -13,14 +12,16 @@ logs
 # webpack
 */.DS_Store
 .DS_Store
+/dist
 
 #Testing
-.travis.yml
 
 #Env
 .env
 
 #Dev Testing
 test.js
+
 server/db/queries/
 server/db/queryStrs/
+

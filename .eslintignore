@@ -1,8 +1,17 @@
 # /node_modules and /bower_components ignored by default
 
+#map module
+client/components/ClicksMap.js
+
 client/bundle.js
 client/bundle.js.map
 test/
+dist/*
 
 # Dev testing files
 server/db/queries/
+
+client/containers/Root*
+client/store/configure*
+server/api/analytics/stats/chiSquareTest.js
+server/api/selection/assets/script.js

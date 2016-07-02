@@ -21,8 +21,8 @@ exports.signup = (req, res, next) => {
 
 exports.checkAuthServer = (req, res, next) => {
   if (req.user) {
-    next();
+    return next();
   } else {
-    res.status(401).json({ message: 'not logged in' });
+    return res.status(401).json({ message: 'not logged in' });
   }
 };
