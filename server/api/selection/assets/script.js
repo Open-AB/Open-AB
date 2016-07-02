@@ -38,7 +38,8 @@ var openabStyles = {
     padding: '10px',
     'background-color': '#660066',
     color: 'white',
-    'font-weight': 'normal'
+    'font-weight': 'normal',
+    cursor: 'pointer',
   },
 
   openabLabel: {
