@@ -10,8 +10,8 @@ exports.hearVisit = (visitData, cb) => {
   cb);
 };
 
-exports.hearClick = (visitData, cb) => {
-  const { versionId, IPAddress, time } = visitData;
+exports.hearClick = (clickData, cb) => {
+  const { versionId, IPAddress, time } = clickData;
   db.query({
     text: qry.createClick,
     values: [versionId, IPAddress, time],

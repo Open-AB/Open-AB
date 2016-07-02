@@ -80,6 +80,7 @@
     "express-session": "^1.13.0",
     "faker": "^3.1.0",
     "geoip-lite": "^1.1.8",
+    "jsdom": "^9.3.0",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "node-uuid": "^1.4.7",
@@ -94,6 +95,7 @@
     "react-router-redux": "^4.0.0-rc.1",
     "redux": "^3.2.1",
     "redux-thunk": "^1.0.3",
-    "request": "JRRJ/request"
+    "request": "JRRJ/request",
+    "request-ip": "^1.2.2"
   }
 }

@@ -20,12 +20,10 @@ const formatEventArrays = eventArrays => {
 exports.getAllResults = (cb) => {
   dbpgp.query('select * from tests')
     .then(tests => {
-
       const allResults = [];
       let counter = 0;
 
       return tests.forEach(test => {
-
         dbpgp.task(t1 => {
           return t1.batch([
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['a', test.id]),
@@ -33,11 +31,9 @@ exports.getAllResults = (cb) => {
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
             t1.query('select * from clicks where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
           ]);
-
         })
 
         .then(testData => {
-
           const data = formatEventArrays(testData);
 
           allResults.push({
@@ -77,7 +73,6 @@ exports.createPage = (pageName, clientEmail, cb) => {
 };
 
 exports.createTest = (testData, clientEmail, cb) => {
-
   const { testName, pageId, a, b } = testData;
   const uniqueId = uuid.v4();
 

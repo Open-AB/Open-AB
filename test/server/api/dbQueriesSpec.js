@@ -259,7 +259,7 @@ describe('DB Queries for API Server', () => {
     });
   });
 
-  describe('Queries to get info from DB for Analytics Service for API Server', () => {   
+  describe('Queries to get info from DB for Analytics Service for API Server', () => {
     before(done => {
       // connect to test database
       const connectionString = 'postgres://localhost:5432/test';
