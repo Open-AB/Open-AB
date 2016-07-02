@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const host = process.env.HOST || 'localhost';
-const port = process.env.PORT || process.env.PORT_ELS|| 3939;
+const port = process.env.PORT || process.env.PORT_ELS || 3939;
 
 app.use(cors({
   origin: '*',
@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 
 // test routes for DB
 const controllers = require('./events/controller');
+app.post('/listening/visits', controllers.hearVisit);
 app.post('/listening/clicks', controllers.hearClick);
 // end test route for DB
 
