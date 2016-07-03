@@ -2,15 +2,18 @@ import React from 'react';
 import TestResults from './TestResults';
 import StartTest from '../components/StartTest';
 import ClickMap from '../components/ClicksMap';
-import LineChartData from './LineChartData';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer.js';
+
 
 function Dashboard() {
   return (
-    <div>
+    <div className="center">
+      <NavBar />
       <StartTest />
       <ClickMap />
-      <LineChartData />
       <TestResults />
+      <Footer />
     </div>
   );
 }

@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react';
 import uuid from 'uuid';
+import '../assets/styles/_utils.scss';
 
 function StatsForTest(props) {
   return (
-    <div>
-      <div>
-        <p key={uuid.v4()}>Test name: {props.viewableStatsForTest.testName}</p>
-        <p key={uuid.v4()}>Test result: {props.viewableStatsForTest.viewableAnalysisResults.testResult}</p>
-        <p key={uuid.v4()}>Version A conversion rate: {props.viewableStatsForTest.viewableAnalysisResults.aConversionRate}</p>
-        <p key={uuid.v4()}>Version B conversion rate: {props.viewableStatsForTest.viewableAnalysisResults.bConversionRate}</p>
-        <hr />
-      </div>
-    </div>
+    <div className=".mediumSpace">
+      <ul className="collection grey lighten-4">
+        <table>
+          <tr>
+            <td key={uuid.v4()}><h4>Version A conversion rate:</h4>{props.viewableStatsForTest.viewableAnalysisResults.aConversionRate}</td>
+            <td key={uuid.v4()}><h4>Version B conversion rate:</h4>{props.viewableStatsForTest.viewableAnalysisResults.bConversionRate}</td>
+          </tr>
+        </table>
+      </ul>
+    </div >
   );
 }
 

@@ -2,14 +2,19 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDataIfNeeded } from '../actions/api';
 import uuid from 'uuid';
-
+import LineChart from '../components/LineChart';
+import TestTitle from '../components/TestTitle';
 import formatStats from '../formatStats.js';
-import StatsForTest from '../components/statsForTest.js';
+import StatsForTest from '../components/StatsForTest.js';
+import '../assets/styles/_utils.scss';
 
-
-const statsEndpoint = '/api/stats';
+const statsEndpoint = '/api/dashData';
 
 class TestResults extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { clicked: false };
+  }
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -27,9 +32,18 @@ class TestResults extends Component {
     const { stats } = this.props;
     const viewableStatsForAllTests = formatStats(stats);
 
+    let dashData = viewableStatsForAllTests.map((viewableStatsForTest, i) =>
+      (<div>
+        <TestTitle key={uuid.v4()} viewableStatsForTest={viewableStatsForTest} />
+        <div className="thirdPage">
+          <LineChart key={uuid.v4()} dataset={stats[i]} />
+        </div>
+        <StatsForTest key={uuid.v4()} viewableStatsForTest={viewableStatsForTest} />
+      </div>)
+      );
     return (
       <div>
-        {viewableStatsForAllTests.map(viewableStatsForTest => <StatsForTest key={uuid.v4()} viewableStatsForTest={viewableStatsForTest} />)}
+       {dashData}
       </div>
     );
   }

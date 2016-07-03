@@ -19,10 +19,20 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loaders: ['babel'],
+        test: /.jsx?$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        include: __dirname,
+        query: {
+          presets: ['es2015', 'react']
+        }
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+      },
+      {
+        test: /\.json$/,
+        loaders: ['json']
       },
     ],
   },

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Chart from 'chart.js';
+import '../assets/styles/_utils.scss';
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class LineChart extends React.Component {
         datasets: [],
       },
       options: {
-        responsive: false,
+        responsive: true,
         title: {
           display: true,
           text: this.props.dataset.testName,
@@ -58,7 +59,6 @@ class LineChart extends React.Component {
             },
             scaleLabel: {
               display: true,
-              labelString: 'HAMMERTIME',
             },
             type: 'time',
             time: {
@@ -182,10 +182,10 @@ class LineChart extends React.Component {
   render() {
     return (
       <div>
-        <div width="500" height="500">
+        <div className="thirdPage">
           <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
         </div>
-        <button onClick={this.handleClick}>TOGGLE ME</button>
+        <button className="waves-effect waves-light btn green darken" onClick={this.handleClick}>TOGGLE ME</button>
       </div>
     );
   }

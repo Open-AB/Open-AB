@@ -1,29 +1,18 @@
 const dbQry = require('./db/dbQueries');
 const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
-const formatChartData = require('./stats/count');
+const chartAnalysis = require('./stats/count');
+const dashAnalysis = require('./stats/dashAnalysis');
 
-const convertResultsToTimeArrayFormat = (DataFormattedResults) => {
-  return DataFormattedResults.map(test => {
-    const timesByVersionAndType = {};
-    const data = test.data;
-    for (const versionAndType in data) {
-      const mappedTestData = data[versionAndType].map(event => event.time);
-      timesByVersionAndType[versionAndType.slice(0, -4)] = mappedTestData;
-    }
-    return {
-      testName: test.testName,
-      testId: test.testId,
-      data: timesByVersionAndType,
-    };
-  });
-};
-
-exports.getAll = (req, res, next) => {
+exports.getAllResults = (req, res, next) => {
   dbQry.getAllResults((error, result) => {
     if (error) {
       return next(error);
     }
-    return res.status(200).send(result.rows);
+    const timeArrayData = dashAnalysis.convertResultsToTimeArrayFormat(result);
+    const chartData = chartAnalysis.processAllTestsDataIntoResults(timeArrayData);
+    const statData = chiSquareAnalysis.computeStatsForAllTests(timeArrayData);
+    const dashStats = dashAnalysis.combineDashData(statData, chartData);
+    return res.status(200).send(dashStats);
   });
 };
 
@@ -42,33 +31,6 @@ exports.createTest = (req, res, next) => {
       testId: (result.rows[0].id).toString(),
     };
     return res.status(201).send(toSend);
-  });
-};
-
-exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  dbQry.getAllResults((error, results, next) => {
-    if (error) {
-      console.log('stats error');
-      console.error(error);
-      return next(error);
-    } else {
-      const formattedResults = convertResultsToTimeArrayFormat(results);
-      const testStats = chiSquareAnalysis.computeStatsForAllTests(formattedResults);
-      res.status(200).json(testStats);
-    }
-  });
-};
-
-exports.getChartData = (req, res, next) => {
-  dbQry.getAllResults((error, results, next) => {
-    if (error) {
-      console.error(error);
-      return next(error);
-    } else {
-      const formattedResults = convertResultsToTimeArrayFormat(results);
-      const count = formatChartData.processAllTestsDataIntoResults(formattedResults);
-      res.status(200).json(count);
-    }
   });
 };
 

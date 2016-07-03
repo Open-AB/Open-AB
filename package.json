@@ -83,6 +83,7 @@
     "jsdom": "^9.3.0",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
+    "node-sass": "^3.8.0",
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
@@ -96,6 +97,9 @@
     "redux": "^3.2.1",
     "redux-thunk": "^1.0.3",
     "request": "JRRJ/request",
-    "request-ip": "^1.2.2"
+    "request-ip": "^1.2.2",
+    "resolve-url-loader": "^1.4.4",
+    "sass-loader": "^4.0.0",
+    "url-loader": "^0.5.7"
   }
 }
