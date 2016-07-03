@@ -71,8 +71,6 @@
     "babel-polyfill": "^6.3.14",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
-    "bootstrap-loader": "^1.0.10",
-    "bootstrap-sass": "^3.3.6",
     "chart.js": "^2.1.6",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",

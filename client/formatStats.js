@@ -7,7 +7,7 @@ const formatProportion = (a, b) => {
 
 module.exports = statsForAllTests => {
   return statsForAllTests.map(statsForTest => {
-    const { testName, testId, analysisResults, data } = statsForTest;
+    const { testName, testId, analysisResults } = statsForTest;
     const { sufficientTime, sufficientVisits, eventsConsidered, p } = analysisResults;
     const aConversionRateNumber = formatProportion(eventsConsidered.aClicksConsidered, eventsConsidered.aVisitsConsidered);
     const bConversionRateNumber = formatProportion(eventsConsidered.bClicksConsidered, eventsConsidered.bVisitsConsidered);
@@ -32,6 +32,6 @@ module.exports = statsForAllTests => {
     }
 
     const viewableAnalysisResults = { testResult, aConversionRate, bConversionRate };
-    return { testName, testId, viewableAnalysisResults, data };
+    return { testName, testId, viewableAnalysisResults };
   });
 };
