@@ -77,8 +77,7 @@ const generateVersionData = (startTime, clickRate, totalVisits, timeframe) => {
   let clicksData = [];
   for (let i = 0; i < totalVisits; i++) {
     const time = startTime + Math.floor((Math.random() * timeframe));
-    // const IPAddress = faker.internet.ip();
-    const IPAddress = 999;
+    const IPAddress = faker.internet.ip();
     visitsData.push({ time, IPAddress });
     if (Math.random() < clickRate) {
       const clickTime = time + Math.floor((Math.random() * maxClickDelay));
