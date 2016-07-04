@@ -95,6 +95,35 @@ exports.getClientTests = (req, res, next) => {
   });
 };
 
+exports.getVersions = (req, res, next) => {
+  // set testId to 0 if it is invalid
+  const testId = parseInt(req.query.testid, 10) > 0 ? req.query.testid : 1;
+  dbQry.getTestVersions(testId, (error, result) => {
+    if (error) {
+      console.error(error);
+      return next(error);
+    } else {
+      const rawData = result.rows;
+      if (rawData.length > 0) {
+        const abFormat = (ab) => {
+          const refObj = rawData[0].ab === ab ? rawData[0] : rawData[1];
+          const retObj = {};
+          retObj.url = refObj.url;
+          retObj.DOMLocation = refObj.domlocation;
+          retObj.versionId = refObj.id;
+          return retObj;
+        };
+        const abData = {};
+        abData.a = abFormat('a');
+        abData.b = abFormat('b');
+        res.status(200).json(abData);
+      } else {
+        next();
+      }
+    }
+  });
+};
+
 exports.getAllClientClicks = (req, res, next) => {
   dbQry.getAllClientClicks(req.user.email, (err, result) => {
     if (err) {

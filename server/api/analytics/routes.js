@@ -14,4 +14,6 @@ module.exports = (app) => {
 
   app.get('/api/getAllClientClicks', authController.checkAuthServer, analyticsController.getAllClientClicks);
   app.get('/api/getAllClientVisits', authController.checkAuthServer, analyticsController.getAllClientVisits);
+
+  app.get('/api/getVersions', authController.checkAuthServer, analyticsController.getVersions);
 };
