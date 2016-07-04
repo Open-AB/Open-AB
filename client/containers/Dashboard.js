@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import TestResults from './TestResults';
 import StartTest from '../components/StartTest';
 import ClickMap from '../components/ClicksMap';
