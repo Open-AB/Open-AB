@@ -2,6 +2,7 @@ const dbQry = require('./db/dbQueries');
 const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
 const chartAnalysis = require('./stats/count');
 const dashAnalysis = require('./stats/dashAnalysis');
+const mapAnalysis = require('./stats/mapAnalysis');
 
 exports.getAllResults = (req, res, next) => {
   dbQry.getAllResults(req.user.email, (error, result) => {
@@ -73,15 +74,49 @@ exports.getChartData = (req, res, next) => {
   });
 };
 
-exports.getMapClicks = (req, res, next) => {
-  // TO DO: write query
-  // dbQry.getMapClicks((error, result) => {
-  //   if (error) {
-  //     return next(error);
-  //   }
-  //   const mapClicks = result;
-  //   res.status(200).json(mapClicks);
-  // });
+exports.getmapResults = (req, res, next) => {
+  dbQry.getAllResults(req.user.email, (error, result) => {
+    if (error) {
+      return next(error);
+    }
+    const ipAddresses = mapAnalysis.getAllIpAddresses(result);
+    const countryIds = mapAnalysis.getAllCountryIds(ipAddresses);
+    const ipCountryCount = mapAnalysis.countAllCountriesByName(countryIds);
+    res.status(200).json(ipCountryCount);
+  });
+};
+
+exports.getClientTests = (req, res, next) => {
+  dbQry.getClientTests(req.user.email, (err, results) => {
+    if (err) {
+      console.error('analytics/controller.getClientTests: ', err);
+      next(err);
+    } else {
+      res.status(200).json(results.rows);
+    }
+  });
+};
+
+exports.getAllClientClicks = (req, res, next) => {
+  dbQry.getAllClientClicks(req.user.email, (err, result) => {
+    if (err) {
+      console.error('analytics/controller.getAllClientClicks: ', err);
+      next(err);
+    } else {
+      res.status(200).json(result.rows);
+    }
+  });
+};
+
+exports.getAllClientVisits = (req, res, next) => {
+  dbQry.getAllClientVisits(req.user.email, (err, result) => {
+    if (err) {
+      console.error('analytics/controller.getAllClientVisits: ', err);
+      next(err);
+    } else {
+      res.status(200).json(result.rows);
+    }
+  });
 };
 
 exports.getClientTests = (req, res, next) => {

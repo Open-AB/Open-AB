@@ -1,5 +1,5 @@
 const maxClickDelay = 10000; // maximum amount of time after visit to wait to make a click
-const faker = require('faker');
+const faker = require('Faker');
 
 exports.defaultParamsForAllTests = defaultParamsForAllTests = [ // TODO: make this data depend on clientData.js
   {
@@ -77,7 +77,7 @@ const generateVersionData = (startTime, clickRate, totalVisits, timeframe) => {
   let clicksData = [];
   for (let i = 0; i < totalVisits; i++) {
     const time = startTime + Math.floor((Math.random() * timeframe));
-    const IPAddress = faker.internet.ip();
+    const IPAddress = faker.Internet.ip();
     visitsData.push({ time, IPAddress });
     if (Math.random() < clickRate) {
       const clickTime = time + Math.floor((Math.random() * maxClickDelay));
