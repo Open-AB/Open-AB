@@ -11,4 +11,5 @@ module.exports = {
   getClientPages: 'SELECT * FROM pages WHERE client_id = (SELECT id FROM clients WHERE email = $1)',
   getAllClientClicks: 'SELECT clicks.* FROM clicks INNER JOIN (SELECT versions.* FROM versions INNER JOIN tests on test_id = tests.id AND page_id = (SELECT id FROM pages WHERE client_id = (SELECT id FROM clients WHERE email = $1))) AS ver on version_id = ver.id',
   getAllClientVisits: 'SELECT visits.* FROM visits INNER JOIN (SELECT versions.* FROM versions INNER JOIN tests on test_id = tests.id AND page_id = (SELECT id FROM pages WHERE client_id = (SELECT id FROM clients WHERE email = $1))) AS ver on version_id = ver.id',
+  getTestVersions: 'SELECT * FROM versions WHERE test_id = $1',
 };

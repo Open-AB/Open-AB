@@ -131,3 +131,10 @@ exports.getAllClientVisits = (clientEmail, cb) => {
     values: [clientEmail],
   }, cb);
 };
+
+exports.getTestVersions = (pageId, cb) => {
+  db.query({
+    text: qry.getTestVersions,
+    values: [pageId],
+  }, cb);
+};

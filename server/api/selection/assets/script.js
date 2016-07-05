@@ -148,6 +148,13 @@ $(document).ready(function(){
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
+      success: function (res) {
+        console.log(res.testId);
+        location.href = `/snippet/?= ${res.testId}`;
+      },
+      error: function() {
+        console.log('did not create test');
+      },
     });
   });
 });
