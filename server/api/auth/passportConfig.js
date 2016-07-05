@@ -7,12 +7,12 @@ const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 
 const dbQry = require('./db/dbQueries');
-const cfg = require('./config');
-const clientLink = `postgres://${cfg.db.host}:${cfg.db.port}/${cfg.db.dbName}`;
+const clientLink = require('./config');
 
 module.exports = (app) => {
   app.use(expressSession({
     secret: 'keyboard cat',
+    saveUninitialized: false,
     store: new pgSession({
       pg: pg,
       conString: clientLink,

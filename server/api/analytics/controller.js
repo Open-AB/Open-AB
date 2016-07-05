@@ -25,7 +25,6 @@ exports.createTest = (req, res, next) => {
   console.log(req.body, '>>>>>> req body in createTest controller');
   // end hardcoded test vars
 
-
   dbQry.createTest(req.body, clientEmail, (error, result) => {
     if (error) {
       return next(error);
