@@ -47,6 +47,14 @@ authRoutes(app);
 analyticsRoutes(app);
 selectionRoutes(app);
 
+app.get('*', (req, res) => {
+  if (req.user && req.isAuthenticated()) {
+    res.status(200).json({ loggedIn: true });
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.listen(port, (err) => {
   if (err) {
     return process.stdout

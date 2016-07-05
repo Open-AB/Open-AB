@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -48,7 +49,10 @@ class SignIn extends React.Component {
       type: 'POST',
       data: body,
     }).done(data => {
-      console.log(data, 'data from jquery POST to signing endpoint');
+      if (data && data.loggedIn) {
+        console.log('SHOULD BE BROWSER PUSHING')
+        browserHistory.push('dashboard');
+      }
     });
   }
 

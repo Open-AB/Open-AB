@@ -9,5 +9,7 @@ export default (
     <Route path="/" component={LandingPage} />,
     <Route path="/dashboard" component={Dashboard} />,
     <Route path="/snippet" component={Snippet} />,
+    <Route path="/landing" component={LandingPage} />,
+    <Route path="/dashboard" component={Dashboard} />,
   ]
 );
