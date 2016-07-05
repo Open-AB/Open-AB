@@ -20,10 +20,6 @@ class SignIn extends React.Component {
     this.getClientTests = this.getClientTests.bind(this);
   }
 
-  handleEmailChange(e) {
-    this.setState({ email: e.target.value });
-  }
-
   handlePasswordChange(e) {
     this.setState({ password: e.target.value });
   }
@@ -50,17 +46,10 @@ class SignIn extends React.Component {
     $.ajax({
       url: '/api/signin',
       type: 'POST',
-      xhrFields: {
-        withCredentials: true,
-      },
       data: body,
     }).done(data => {
-      console.log(data, '^*&(^*%*^*%$^%*^^%& data from jquery POST to signing endpoint');
+      console.log(data, 'data from jquery POST to signing endpoint');
     });
-
-    // $.post('/api/signin', body, data => {
-    //   console.log(data, '&*&(*^&*(^(*&^ data from jquery POST to signin endpoint');
-    // });
   }
 
   createAccount(e) {
@@ -83,17 +72,14 @@ class SignIn extends React.Component {
 
   signOut(e) {
     e.preventDefault();
-
-    $.post('/api/signout', '', data => {
-      console.log(data, '&*&(*^&*(^(*&^ data from jquery POST to signin endpoint');
-    });
+    $.post('/api/signout', '');
   }
 
   checkAuth(e) {
     e.preventDefault();
 
     $
-    .post('/api/checkAuthServer', 'POOP', data => {
+    .post('/api/checkAuthServer', '', data => {
       console.log(data, '$$$$$$ data from POST to checkAuthServer');
     }).fail( something => {
       console.log(something, 'in fail of post?!');
@@ -107,10 +93,11 @@ class SignIn extends React.Component {
     $.get('/api/getClientTests')
     .then(data => {
       console.log(data, '$.GET CLIENT TESTS');
-    })
-    // $.get('/api/getClientTests', data => {
-    //   console.log(data, 'YAYAYAYA GOT CLIENT TESTS BACK FROM SERVER');
-    // });
+    });
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
   }
 
   render() {
