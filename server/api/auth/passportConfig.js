@@ -50,7 +50,7 @@ module.exports = (app) => {
     }
   ));
 
-  // Attaches what user info to the req.session.passport.user
+  // Attaches user info to the req.session.passport.user
   // Also gets attached to req.user
   passport.serializeUser((user, done) => {
     const userInfo = {
@@ -58,17 +58,10 @@ module.exports = (app) => {
       email: user.email,
     };
     done(null, userInfo);
-
-    // done(null, user);
   });
 
-  passport.deserializeUser((user, done) => { // TODO: deserialize user if necessary
-    // const userInfo = {
-    //   id: user.id,
-    //   email: user.email,
-    // };
-    // done(null, userInfo);
-    console.log('&&&&&&&&&&&&&&&', user, '&&&&&&& user in passport.deserializeUser');
+  // pulls user from req.session from the client's cookies/session
+  passport.deserializeUser((user, done) => {
     done(null, user);
   });
 };

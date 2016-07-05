@@ -1,6 +1,4 @@
 import React from 'react';
-// import fetch from 'isomorphic-fetch';
-import $ from 'jquery';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -31,7 +29,6 @@ class SignIn extends React.Component {
   }
 
   handleError(err) {
-    // TODO: don't use global
     console.log(err, ':Provided Username and Password do not match');
   }
 

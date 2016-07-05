@@ -2,7 +2,7 @@ const analyticsController = require('./controller');
 const authController = require('../auth/controller');
 
 module.exports = (app) => {
-  app.get('/api/dashData', analyticsController.getAllResults);
+  app.get('/api/dashData', authController.checkAuthServer, analyticsController.getAllResults);
   app.get('/api/results', analyticsController.getAll);
   app.get('/api/stats', authController.checkAuthServer, analyticsController.getAllStats);
   app.post('/api/createTest', authController.checkAuthServer,  analyticsController.createTest);

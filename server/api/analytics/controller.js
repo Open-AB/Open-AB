@@ -4,7 +4,7 @@ const chartAnalysis = require('./stats/count');
 const dashAnalysis = require('./stats/dashAnalysis');
 
 exports.getAllResults = (req, res, next) => {
-  dbQry.getAllResults((error, result) => {
+  dbQry.getAllResults(req.user.email, (error, result) => {
     if (error) {
       return next(error);
     }
@@ -13,6 +13,15 @@ exports.getAllResults = (req, res, next) => {
     const statData = chiSquareAnalysis.computeStatsForAllTests(timeArrayData);
     const dashStats = dashAnalysis.combineDashData(statData, chartData);
     return res.status(200).send(dashStats);
+  });
+};
+
+exports.getAll = (req, res, next) => {
+  dbQry.getAllResults(req.user.email, (error, result) => {
+    if (error) {
+      return next(error);
+    }
+    return res.status(200).send(result.rows);
   });
 };
 

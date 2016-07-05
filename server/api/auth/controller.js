@@ -11,8 +11,6 @@ exports.signin = (req, res, next) => {
       email: user.email,
     };
 
-    console.log(user, '&&&&&&& user for req.login from passport');
-
     req.login(userInfo, error => {
       if (error) {
         console.log(error, '<<<< ERROR TRYING TO ATTACH USER TO REQ');
@@ -51,9 +49,7 @@ exports.signup = (req, res, next) => {
       return res.status(400).json({ message: 'User with this email address already exists' });
     }
     const user = response.rows[0];
-    console.log('>>>>', user, '<<<<<<<< user pulled from response to db ');
     return req.login(user, (error) => {
-      console.log(user, '<<<<< response from dbQry createClient');
       if (error) { return next(error); }
       return res.redirect('/dashboard');
     });
@@ -66,10 +62,8 @@ exports.checkAuthServer = (req, res, next) => {
   } else if (!req.user && !req.isAuthenticated()) {
     req.user = {};
     req.user.email = 'DEMO';
-    console.log(req.user, '@@@@@@@@@@ THIS IS THE DEFAULT req.user demo');
     return next();
   } else {
-    console.log('NO req.user SO 401 in checkAuthServer');
     return res.status(401).send({ message: 'not logged in' });
   }
 };
