@@ -39,7 +39,7 @@ exports.createTest = (req, res, next) => {
       return next(error);
     }
     const toSend = {
-      testId: (result.rows[0].id).toString(),
+      testId: (result[0][0].id).toString(),
     };
     return res.status(201).send(toSend);
   });
