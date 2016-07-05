@@ -7,7 +7,7 @@ import LandingPage from './components/LandingPage';
 export default (
   [
     <Route path="/" component={LandingPage} />,
-    <Route path="/Dashboard" component={Dashboard} />,
+    <Route path="/dashboard" component={Dashboard} />,
     <Route path="/snippet" component={Snippet} />,
   ]
 );
