@@ -76,6 +76,7 @@
     "body-parser": "^1.15.1",
     "chart.js": "^2.1.6",
     "connect-flash": "^0.1.1",
+    "connect-pg-simple": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.7.1",
     "country-list": "0.0.3",

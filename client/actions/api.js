@@ -38,7 +38,7 @@ function receiveData(apiEndpoint, json) {
 function fetchData(apiEndpoint) {
   return dispatch => {
     dispatch(requestData(apiEndpoint));
-    return fetch(apiEndpoint)
+    return fetch(`http://localhost:8080${apiEndpoint}`, { credentials: 'include' }) // TODO: grab the IP address programatically
       .then(response => response.json())
       .then(json => dispatch(receiveData(apiEndpoint, json)));
   };

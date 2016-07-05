@@ -17,8 +17,8 @@ const formatEventArrays = eventArrays => {
   });
 };
 
-exports.getAllResults = (cb) => {
-  dbpgp.query('select * from tests')
+exports.getAllResults = (clientEmail, cb) => {
+  dbpgp.query(qry.getClientTests, clientEmail)
     .then(tests => {
       const allResults = [];
       let counter = 0;
@@ -114,6 +114,20 @@ exports.getClientTests = (clientEmail, cb) => {
 exports.getClientPages = (clientEmail, cb) => {
   db.query({
     text: qry.getClientPages,
+    values: [clientEmail],
+  }, cb);
+};
+
+exports.getAllClientClicks = (clientEmail, cb) => {
+  db.query({
+    text: qry.getAllClientClicks,
+    values: [clientEmail],
+  }, cb);
+};
+
+exports.getAllClientVisits = (clientEmail, cb) => {
+  db.query({
+    text: qry.getAllClientVisits,
     values: [clientEmail],
   }, cb);
 };
