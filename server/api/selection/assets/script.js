@@ -143,11 +143,11 @@ $(document).ready(function(){
       },
     };
     console.log(JSON.stringify(data));
-    // $.ajax({
-    //   url: 'http://localhost:8080/api/createTest',
-    //   type: 'POST',
-    //   contentType: 'application/json',
-    //   data: JSON.stringify(data),
-    // });
+    $.ajax({
+      url: 'http://localhost:8080/api/createTest',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+    });
   });
 });

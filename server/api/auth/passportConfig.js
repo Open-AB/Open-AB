@@ -1,16 +1,31 @@
 const expressSession = require('express-session');
+const pg = require('pg');
+const pgSession = require('connect-pg-simple')(expressSession);
 const passport = require('passport');
 const bcrypt = require('bcrypt-nodejs');
 const flash = require('connect-flash');
 const LocalStrategy = require('passport-local').Strategy;
 
 const dbQry = require('./db/dbQueries');
+const cfg = require('./config');
+const clientLink = `postgres://${cfg.db.host}:${cfg.db.port}/${cfg.db.dbName}`;
 
 module.exports = (app) => {
-  app.use(expressSession({ secret: 'keyboard cat' }));
+  app.use(expressSession({
+    secret: 'keyboard cat',
+    store: new pgSession({
+      pg: pg,
+      conString: clientLink,
+    }),
+    resave: false,
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 7 days in ms
+
+  }));
+
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
+
 
   passport.use(new LocalStrategy(
     {
@@ -29,16 +44,31 @@ module.exports = (app) => {
           console.log('Incorrect password');
           return done(null, false, { message: 'Incorrect password.' }); // TODO: Implement flash
         }
+        delete user.password;
         return done(null, user);
       });
     }
   ));
 
-  passport.serializeUser((user, done) => { // TODO: serialize user if necessary
-    done(null, user);
+  // Attaches what user info to the req.session.passport.user
+  // Also gets attached to req.user
+  passport.serializeUser((user, done) => {
+    const userInfo = {
+      id: user.id,
+      email: user.email,
+    };
+    done(null, userInfo);
+
+    // done(null, user);
   });
 
   passport.deserializeUser((user, done) => { // TODO: deserialize user if necessary
+    // const userInfo = {
+    //   id: user.id,
+    //   email: user.email,
+    // };
+    // done(null, userInfo);
+    console.log('&&&&&&&&&&&&&&&', user, '&&&&&&& user in passport.deserializeUser');
     done(null, user);
   });
 };
