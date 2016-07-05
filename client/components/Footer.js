@@ -7,16 +7,11 @@ import '../assets/styles/_utils.scss';
 class Footer extends Component {
   render() {
     return (
-      <footer className="mainColor">
+      <footer className="mainColor tenth">
         <div className="row">
-          <div className="col s12 m6 l6">
-            <h5 className="white-text left">OpenAB</h5>
-          </div>
           <div className="right">
             <ul>
               <li><a href="#" className="grey-text text-lighten-4 right">Contact</a></li>
-              <li><a href="#" className="grey-text text-lighten-4 right">Privacy and Terms</a></li>
-              <li><a href="#" className="grey-text text-lighten-4 right">User Agreement</a></li>
             </ul>
           </div>
         </div>
@@ -31,4 +26,3 @@ class Footer extends Component {
 }
 
 export default Footer;
-

@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-// import { Link } from 'react-router';
-// import { connect } from 'react-redux';
-// import { push } from 'react-router-redux';
-import '../assets/styles/_nav.scss';
+import React from 'react';
+import { Link } from 'react-router';
+import '../assets/styles/_utils.scss';
 
-class NavBar extends Component {
-
-  render() {
+function LandingPageHeader() {
   return (
     <div className="nav-wrapper tenth">
       <nav>
@@ -14,13 +10,12 @@ class NavBar extends Component {
           <img className="left logo" alt="OpenAB" src="../assets/images/logo.png"></img>
           <a href="#" className="center brand-logo">OpenAB</a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Sign in</a></li>
           </ul>
         </div>
       </nav>
     </div>
   );
-  }
 }
 
-export default NavBar;
+export default LandingPageHeader;
