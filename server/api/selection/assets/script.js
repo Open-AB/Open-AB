@@ -148,6 +148,9 @@ $(document).ready(function(){
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
+      success: function (res) {
+        console.log(res);
+      },
     });
   });
 });
