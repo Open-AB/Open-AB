@@ -9,7 +9,7 @@ function LandingPageCenter() {
       <p className="flow-text">Test your website designs to make data-driven decisions</p>
       <Link to="/dashboard" className="btn-large green lighten-0 waves-effect waves-light">See what Open AB can do!</Link>
       <div className="smallSpace">
-        <a href="https://github.com/Open-AB/Open-AB" to="/Dashboard" className="btn green lighten-0 waves-effect waves-light">View our source code</a>
+        <a href="https://github.com/Open-AB/Open-AB" className="btn green lighten-0 waves-effect waves-light">View our source code</a>
       </div>
     </div>
   );
