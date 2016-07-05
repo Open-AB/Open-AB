@@ -119,7 +119,7 @@ if(!abData[ab].url.match(window.location.pathname)){
         <p>Paste the snippet inside a script tag on both the A and B versions of the page you are testing.</p>
         <textarea className="snippet" value={`var abData=${JSON.stringify(this.state.abData, 2, 2)}${this.state.snippetBody}`} readOnly></textarea>
         <button className="copyButton" onClick={this.copySnippet}>Copy to clipboard</button><br />
-        <a href="/">Continue to dashboard</a>
+        <a href="/dashboard">Continue to dashboard</a>
       </div>
     );
   }
