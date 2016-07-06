@@ -13,7 +13,7 @@ class ClicksMap extends Component {
   map(apiCountData) {
     const apiMock = apiCountData;
 
-    google.charts.load('current', {'packages':['geomap']});
+    google.charts.load('current', { 'packages': ['geomap'] });
     google.charts.setOnLoadCallback(drawMap);
 
     function drawMap() {
@@ -49,11 +49,11 @@ class ClicksMap extends Component {
   }
 
   render() {
-    const { data } = this.props
-     if (data.length > 0) {
-       const countryNames = [['Country', 'Clicks']].concat(data);
-       this.map(countryNames);
-     }
+    const { data } = this.props;
+    if (data.length > 0) {
+      const countryNames = [['Country', 'Clicks']].concat(data);
+      this.map(countryNames);
+    }
     return (
       <div >
         <div className="card">

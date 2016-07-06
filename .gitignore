@@ -25,3 +25,5 @@ test.js
 server/db/queries/
 server/db/queryStrs/
 
+#Faker issue
+server/api/analytics/stats/generateEvents.js

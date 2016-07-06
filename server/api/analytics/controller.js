@@ -47,7 +47,7 @@ exports.createTest = (req, res, next) => {
 };
 
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  console.log(req.user, '************ this is req.user trying to getAllStats')
+  console.log(req.user, '************ this is req.user trying to getAllStats');
   dbQry.getAllResults(req.user.email, (error, results) => {
     if (error) {
       console.log('stats error');
