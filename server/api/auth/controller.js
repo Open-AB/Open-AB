@@ -49,6 +49,12 @@ exports.signup = (req, res, next) => {
       return res.status(400).json({ message: 'User with this email address already exists' });
     }
     const user = response.rows[0];
+    // create initial page for user
+    dbQry.createPage(user.email, (pageErr) => {
+      if (pageErr) {
+        return next(pageErr); // error code 500
+      }
+    });
     return req.login(user, (error) => {
       if (error) { return next(error); }
       return res.redirect('/dashboard');

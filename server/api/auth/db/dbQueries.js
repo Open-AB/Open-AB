@@ -30,6 +30,13 @@ exports.createClient = (clientEmail, password, cb) => {
   });
 };
 
+exports.createPage = (clientEmail, cb) => {
+  db.query({
+    text: qry.createPage,
+    values: [clientEmail],
+  }, cb);
+};
+
 // check if attempted password matches DB password
 exports.signIn = (clientEmail, password, cb) => {
   exports.checkEmail(clientEmail, (error, emailExists) => {
