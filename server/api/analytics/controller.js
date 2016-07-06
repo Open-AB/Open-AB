@@ -2,6 +2,7 @@ const dbQry = require('./db/dbQueries');
 const chiSquareAnalysis = require('./stats/chiSquareAnalysis.js');
 const chartAnalysis = require('./stats/count');
 const dashAnalysis = require('./stats/dashAnalysis');
+const mapAnalysis = require('./stats/mapAnalysis');
 
 exports.getAllResults = (req, res, next) => {
   dbQry.getAllResults(req.user.email, (error, result) => {
@@ -46,7 +47,7 @@ exports.createTest = (req, res, next) => {
 };
 
 exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  console.log(req.user, '************ this is req.user trying to getAllStats')
+  console.log(req.user, '************ this is req.user trying to getAllStats');
   dbQry.getAllResults(req.user.email, (error, results) => {
     if (error) {
       console.log('stats error');
@@ -73,15 +74,16 @@ exports.getChartData = (req, res, next) => {
   });
 };
 
-exports.getMapClicks = (req, res, next) => {
-  // TO DO: write query
-  // dbQry.getMapClicks((error, result) => {
-  //   if (error) {
-  //     return next(error);
-  //   }
-  //   const mapClicks = result;
-  //   res.status(200).json(mapClicks);
-  // });
+exports.getmapResults = (req, res, next) => {
+  dbQry.getAllResults(req.user.email, (error, result) => {
+    if (error) {
+      return next(error);
+    }
+    const ipAddresses = mapAnalysis.getAllIpAddresses(result);
+    const countryIds = mapAnalysis.getAllCountryIds(ipAddresses);
+    const ipCountryCount = mapAnalysis.countAllCountriesByName(countryIds);
+    res.status(200).json(ipCountryCount);
+  });
 };
 
 exports.getClientTests = (req, res, next) => {

@@ -81,7 +81,7 @@ class SignIn extends React.Component {
     $
     .post('/api/checkAuthServer', '', data => {
       console.log(data, '$$$$$$ data from POST to checkAuthServer');
-    }).fail( something => {
+    }).fail(something => {
       console.log(something, 'in fail of post?!');
       console.log(something.responseJSON.message, '<<<< server response JSON.message');
     });

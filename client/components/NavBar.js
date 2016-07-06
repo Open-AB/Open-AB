@@ -7,7 +7,7 @@ import '../assets/styles/_nav.scss';
 class NavBar extends Component {
 
   render() {
-  return (
+    return (
     <div className="nav-wrapper tenth">
       <nav>
         <div className="nav-wrapper mainColor">
