@@ -54,10 +54,10 @@ exports.signup = (req, res, next) => {
       if (pageErr) {
         return next(pageErr); // error code 500
       }
-    });
-    return req.login(user, (error) => {
-      if (error) { return next(error); }
-      return res.redirect('/dashboard');
+      return req.login(user, (error) => {
+        if (error) { return next(error); }
+        return res.redirect('/dashboard');
+      });
     });
   });
 };
