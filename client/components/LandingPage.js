@@ -10,11 +10,11 @@ function LandingPage() {
   return (
     <div className="center fullPage">
       <NavBar />
+      <SignInModal />
       <div className="tenth" />
       <LandingPageCenter />
       <div className="tenth" />
       <Footer />
-      <SignInModal />
     </div>
   );
 }

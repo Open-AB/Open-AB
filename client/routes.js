@@ -12,6 +12,9 @@ const checkAuth = (nextState, replace, next) => {
       replace('/');
       next();
     }
+  }).fail(() => {
+    replace('/');
+    next();
   });
 };
 
@@ -20,14 +23,6 @@ export default (
     <Route path="/" component={LandingPage} />,
     <Route path="/snippet" component={Snippet} onEnter={checkAuth} />,
     <Route path="/landing" component={LandingPage} />,
-    <Route path="/dashboard" component={Dashboard} onEnter={
-      (nextState, replace, next) => {
-        console.log('onEnter of /dashboard');
-        console.log(replace, '<<<<< replace that is passed into onEnter');
-        console.log(nextState, '<<<<< nextState that is passed into onEnter');
-        console.log(next, '<<<<< cb that is passed into onEnter');
-        next();
-      }
-    } />,
+    <Route path="/dashboard" component={Dashboard} />,
   ]
 );

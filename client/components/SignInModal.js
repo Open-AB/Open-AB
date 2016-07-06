@@ -6,7 +6,7 @@ class SignInModal extends React.Component {
     super(props);
 
     this.state = {
-      signin: false,
+      signin: true,
       email: '',
       password: '',
       confirm_password: '',
