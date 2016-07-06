@@ -15,40 +15,37 @@ var openabStyles = {
     display: 'inline-block',
   },
 
-  // currently not in use here, but may need to assign inline
-  openabHeader: {
-    'font-family': 'sans-serif',
-    'border-radius': '10px',
-    'font-size': '30px',
-    position: 'fixed',
-    padding: '10px',
-    top: '50px',
-    left: '50px',
-    color: 'white',
-    'background-color': 'rgba(255,127,255,0.8)',
-    'z-index': 9001,
-  },
-
-  // currently not in use here, but may need to assign inline
-  openabDomTree: {
-    top: '100px',
-  },
-
-  openabComplete: {
-    padding: '10px',
-    'background-color': '#660066',
+  openabButton: {
+    padding: '0px 10px',
+    'background-color': 'rgb(0, 230, 0)',
     color: 'white',
     'font-weight': 'normal',
     cursor: 'pointer',
+    'border-radius': '2px',
+    height: '30px',
+    'font-size': '14px',
+  },  // this is the continue button
+
+  openabLargeButton: {
+    padding: '20px',
+    'background-color': 'rgb(0, 230, 0)',
+    color: 'white',
+    'font-weight': 'normal',
+    cursor: 'pointer',
+    display: 'table-cell',
+    'border-radius': '2px',
+    'font-size': '20px',
+    margin: '8px',
   },
 
   openabLabel: {
     'padding-right': '20px',
-  },
+  },  // this is maybe not working?
 
   openabInput: {
-    'border': '1px solid #999999',
-  },
+    border: '1px solid #999999',
+    width: '400px',
+  }, // what does this do?
 };
 
 $(document).ready(function(){
@@ -57,10 +54,10 @@ $(document).ready(function(){
 
   // set inline styles on overlay elements to overwrite inherited styles
   $('.openab-complete').css(openabStyles.openab);
-  $('.openab-complete').css(openabStyles.openabComplete);
+  $('.openab-complete').css(openabStyles.openabLargeButton);
 
   $('.openab-continue').css(openabStyles.openab);
-  $('.openab-continue').css(openabStyles.openabComplete);
+  $('.openab-continue').css(openabStyles.openabButton);
 
   $('.openab-label').css(openabStyles.openab);
   $('.openab-label').css(openabStyles.openabLabel);
@@ -74,7 +71,6 @@ $(document).ready(function(){
       console.log('DONE');
     }
 
-
     // var beforeTime = performance.now(); //performance logging
     e.preventDefault();
     console.log('a or button has been clicked', $(this));
@@ -87,8 +83,10 @@ $(document).ready(function(){
     // display the correct modal for the page (a or b)
     if (openab.ab === 'a'){
       $('.openab-nav-a').css({ display: 'block' });
+      $('.openab-contain-centered-a').css({ display: 'flex' });
     } else {
       $('.openab-nav-b').css({ display: 'block' });
+      $('.openab-contain-centered-b').css({ display: 'flex' });
     }
 
     var domTree = [$(this).index()];
@@ -96,14 +94,15 @@ $(document).ready(function(){
     while (el.parent().index() > -1) {
       domTree.push(el.parent().index());
       el = el.parent();
-    }
+    } //going up the dom tree, I think
     // console.log(performance.now() - beforeTime);
-    DOMtext = domTree.join('-');
+    DOMtext = 'DOM location to track: ' + domTree.join('-');
     $('.openab-domTree').text(DOMtext);
+    $('.openab-domTree').css('visibility', 'visible');
   });
 
   //
-  $('.openab-b-url').submit(function () {
+  $('.openab-b-url').submit(function () {  // I think this is mostly to pass along the hidden fields
     $('.openab-b-url').append($('<input>')
                .attr('type', 'hidden')
                .attr('name', 'url_a')
