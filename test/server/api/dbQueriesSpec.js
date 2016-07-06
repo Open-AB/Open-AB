@@ -281,21 +281,16 @@ describe('DB Queries for API Server', () => {
       let testCount = 0;
       // populates userWithTests@asdf.com with 2 pages, 2 tests per page, total 4 tests
       authQry.createClient(clientEmail, password, () => {
-        // pageNames.forEach((pageName, pageIdZeroIndex) => {
-          // const pageId = pageIdZeroIndex + 1;
-          // analyticQry.createPage(pageName, clientEmail, () => {
-            testData.forEach(test => {
-              //if (test.pageId === pageId) {
-                analyticQry.createTest(test, clientEmail, () => {
-                  testCount++;
-                  if (testCount >= 4) {
-                    done();
-                  }
-                });
-              //}
+        authQry.createPage(clientEmail, () => {
+          testData.forEach(test => {
+            analyticQry.createTest(test, clientEmail, () => {
+              testCount++;
+              if (testCount >= 4) {
+                done();
+              }
             });
-          // });
-        // });
+          });
+        });
       });
     });
 
@@ -315,10 +310,10 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    xit('Should get all tests, regardless of client email', done => {  //TODO: add more tests here
-      analyticQry.getAllResults((err, result) => {
+    it('Should get all tests for a client', done => {  // TODO: add more tests here
+      const clientEmail = 'userWithTests@asdf.com';
+      analyticQry.getAllResults(clientEmail, (err, result) => {
         const bVisits = result[0].data.bVisitsData;
-
         expect(result).to.exist;
         expect(result.length).to.equal(4);
         expect(result[0].testName).to.be.oneOf(['test1', 'test2', 'test3', 'test4']);
@@ -331,7 +326,6 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-
     it('Should get results given unique test ID', done => {
       const testID = 4;
 
@@ -343,46 +337,5 @@ describe('DB Queries for API Server', () => {
       });
     });
 
-    xit('Should get results given page id and client email', done => {
-      const pageId = 2;
-      const clientEmail = 'userWithTests@asdf.com';
-
-      analyticQry.getPageTests(pageId, clientEmail, (err, result) => {
-        expect(result).to.exist;
-        expect(result.rows.length).to.equal(2);
-
-        // .be.oneOf() is used because order of test insertion not guaranteed
-        expect(result.rows[0].name).to.be.oneOf(['test3', 'test4']);
-        expect(result.rows[1].name).to.be.oneOf(['test3', 'test4']);
-
-        done();
-      });
-    });
-
-    xit('Should get all results for a client', done => {
-      const clientEmail = 'userWithTests@asdf.com';
-
-      analyticQry.getClientTests(clientEmail, (err, result) => {
-        console.log(result);
-        expect(result).to.exist;
-        // 4 tests made before tests
-        expect(result.rows.length).to.equal(4);
-        done();
-      });
-    });
-
-    xit('Should get all pages for a client', done => {
-      const clientEmail = 'userWithTests@asdf.com';
-      const pageNames = ['page1', 'page2', 'aTestPage'];
-
-      analyticQry.getClientPages(clientEmail, (err, result) => {
-        expect(result).to.exist;
-        // 2 pages made before tests
-        expect(result.rows.length).to.equal(2);
-        expect(result.rows[0].name).to.be.oneOf(pageNames);
-        expect(result.rows[1].name).to.be.oneOf(pageNames);
-        done();
-      });
-    });
   });
 });
