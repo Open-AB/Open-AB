@@ -1,7 +1,4 @@
-// This component should later be removed
-// or completely integrated into dashboard
-
-// the hidden form values should be passed in as props
+// TODO: pass in hidden form values as props
 
 import React, { Component } from 'react';
 import '../assets/styles/_utils.scss';

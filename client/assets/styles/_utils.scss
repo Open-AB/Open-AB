@@ -21,6 +21,12 @@ body {
   background-color: rgba(22, 25, 28, 0.01)
 }
 
+shade {
+  background-color: black;
+  opacity: 0.2; 
+  filter: alpha(opacity=20);
+}
+
 //SPACES
 .smallSpace {
   padding: 3em;

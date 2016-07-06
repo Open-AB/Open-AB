@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import Chart from 'chart.js';
 import '../assets/styles/_utils.scss';
-import jQuery from 'jquery';
 
 class LineChart extends React.Component {
   constructor(props) {
