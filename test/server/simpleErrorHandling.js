@@ -131,7 +131,7 @@ describe('Servers to Client: Error Handling', () => {
             // console.log(res.text, '>>>>> res');
             done();
           });
-      });
+      }).timeout(10000);
 
       it('Signin Endpoints: get 500 when DB is disconnected', done => {
         const body = { email: 'asdf', password: 'asdf' };
