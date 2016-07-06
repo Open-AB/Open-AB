@@ -92,11 +92,11 @@ describe('Format stats', () => {
   const viewableStats = formatStats(statsForAllTests);
 
   it('should return correct test results', () => {
-    expect(viewableStats[0].viewableAnalysisResults.testResult).toBe('B wins!');
-    expect(viewableStats[1].viewableAnalysisResults.testResult).toBe('A wins!');
+    expect(viewableStats[0].viewableAnalysisResults.testResult).toBe('Version B wins!');
+    expect(viewableStats[1].viewableAnalysisResults.testResult).toBe('Version A wins!');
     expect(viewableStats[2].viewableAnalysisResults.testResult).toBe('Test was inconclusive');
     expect(viewableStats[3].viewableAnalysisResults.testResult).toBe('Not yet enough visitors');
-    expect(viewableStats[4].viewableAnalysisResults.testResult).toBe('Test has not yet run long enough (must run for at least one week)');
+    expect(viewableStats[4].viewableAnalysisResults.testResult).toBe('Test has not run long enough (must run for at least one week)');
   });
 
   it('should return no conversion rates for incomplete and inconclusive tests', () => {
