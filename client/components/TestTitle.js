@@ -3,15 +3,19 @@ import uuid from 'uuid';
 import '../assets/styles/_utils.scss';
 
 function TestTitle(props) {
+  let color = 'grey lighten-4';
+  if (props.viewableStatsForTest.viewableAnalysisResults.testResult === 'Version A wins!') {
+    color = 'green lighten-5';
+  }
+  if (props.viewableStatsForTest.viewableAnalysisResults.testResult === 'Version B wins!') {
+    color = 'blue lighten-5';
+  }
+  const className = `collection ${color}`;
+
   return (
-    <div>
-      <ul className="collection green lighten-5">
-        <table>
-          <tr>
-            <td key={uuid.v4()}><h3>{props.viewableStatsForTest.testName}</h3>{props.viewableStatsForTest.viewableAnalysisResults.testResult}</td>
-          </tr>
-        </table>
-      </ul>
+    <div className={className}>
+      <h3>{props.viewableStatsForTest.testName}</h3>
+      <h4>{props.viewableStatsForTest.viewableAnalysisResults.testResult}</h4>
     </div>
   );
 }

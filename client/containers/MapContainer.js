@@ -20,15 +20,15 @@ class ClicksMap extends Component {
       const data = google.visualization.arrayToDataTable(apiMock);
       const options = {};
       options.dataMode = 'regions';
-      options.width = window.innerWidth;
-      options.height = window.innerHeight * 0.60;
+      options.width = window.innerWidth * 0.6;
+      options.height = window.innerWidth * 0.39;
       const container = document.getElementById('regions_div');
       const geomap = new google.visualization.GeoMap(container);
       geomap.draw(data, options);
 
       $(window).resize(() => {
-        const responsiveWidth = window.innerWidth;
-        const responsiveHeight = window.innerHeight * 0.60;
+        const responsiveWidth = window.innerWidth * 0.6;
+        const responsiveHeight = window.innerWidth * 0.39;
         options.width = responsiveWidth;
         options.height = responsiveHeight;
         geomap.draw(data, options);
@@ -58,7 +58,7 @@ class ClicksMap extends Component {
       <div >
         <div className="card">
           <div className="card-content black-text">
-            <span className="card-title">Map of Site Visitors by IP Address</span>
+            <span className="card-title">Clicks on your site</span>
             <div  id="regions_div"></div>
           </div>
         </div>

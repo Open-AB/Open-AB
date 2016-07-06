@@ -2,15 +2,29 @@
 
 //COLORS
 .mainColor {
-  background-color: #3E4A61;
+  background-color: #3E4A61 !important;
 }
 
 .mainGradient {
-  background: linear-gradient(to bottom, rgba(62,74,97,0), rgba(62,74,97,0.7), rgba(62,74,97,0.8), rgba(62,74,97,0.7), rgba(62,74,97,0));
+  background: linear-gradient(to bottom, rgba(62,74,97,0), rgba(62,74,97,0.9), rgba(62,74,97,1), rgba(62,74,97,0.8), rgba(62,74,97,0));
 }
 
 .flow-text {
   color: white;
+}
+
+input {
+  color: black;
+}
+
+body {
+  background-color: rgba(22, 25, 28, 0.01)
+}
+
+shade {
+  background-color: black;
+  opacity: 0.2; 
+  filter: alpha(opacity=20);
 }
 
 //SPACES
@@ -37,7 +51,8 @@ a {
 }
 
 .tenth {
-  height: 10%;
+  height: 10vh;
+  min-height: 60px;
 }
 
 .fifth {
@@ -56,12 +71,26 @@ a {
   height: 100vh;
 }
 
-//COLUMN POSITION
-.col-centered{
-    float: none;
-    margin: 0 auto;
+.oneTwentiethOfPage {
+  height: 5vh;
 }
 
+//COLUMN POSITION
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.centered-narrow {
+  width: 50vw;
+  margin: auto;
+}
+
+.centered-very-narrow {
+  width: 35vw;
+  min-width: 400px;
+  margin: auto;
+}
 
 //TEXT SIZE
 h3 {
@@ -74,8 +103,13 @@ h4 {
   font-weight: bold;
 }
 
+//OTHER
+.btn, .btn-large, .mainColor {
+  visibility: visible !important;
+}
 
-
-
+.fixed-width {
+  width: 17em;
+}
 
 
