@@ -18,8 +18,9 @@ exports.signin = (req, res, next) => {
       } else {
         // res.header("Access-Control-Allow-Credentials", true);
         // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
-        // res.json(userInfo);
-        res.redirect('/dashboard');
+        const userLoggedIn = Object.assign(userInfo, { loggedIn: true });
+        res.json(userLoggedIn);
+        // res.redirect('/dashboard');
       }
     });
   })(req, res, next);
@@ -49,6 +50,7 @@ exports.signup = (req, res, next) => {
       return res.status(400).json({ message: 'User with this email address already exists' });
     }
     const user = response.rows[0];
+
     // create initial page for user
     dbQry.createPage(user.email, (pageErr) => {
       if (pageErr) {
@@ -56,7 +58,8 @@ exports.signup = (req, res, next) => {
       }
       return req.login(user, (error) => {
         if (error) { return next(error); }
-        return res.redirect('/dashboard');
+        const userLoggedIn = Object.assign(user, { loggedIn: true });
+        return res.json(userLoggedIn);
       });
     });
   });
@@ -65,16 +68,26 @@ exports.signup = (req, res, next) => {
 exports.checkAuthServer = (req, res, next) => {
   if (req.user && req.isAuthenticated()) {
     return next();
-  } else if (!req.user && !req.isAuthenticated()) {
+  }
+
+  if (!req.user && !req.isAuthenticated()) {
     req.user = {};
     req.user.email = 'DEMO';
     return next();
-  } else {
-    return res.status(401).send({ message: 'not logged in' });
   }
+
+  return res.status(401).send({ message: 'not logged in' });
 };
 
 exports.simpleMsg = (req, res, next) => {
   console.log(req.user, '<<<<< got past checkAuthServer, is there default user?!');
-  res.send('PASSED CHECKAUTHSERVER' + JSON.stringify(req.user));
+  const data = Object.assign({}, req.user);
+  res.send(data);
+};
+
+exports.verify = (req, res, next) => {
+  if (req.user && req.isAuthenticated()) {
+    return res.status(200).send({ loggedIn: true });
+  }
+  return res.status(401).send({ loggedIn: false });
 };
