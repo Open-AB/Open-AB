@@ -97,39 +97,6 @@ exports.getClientTests = (req, res, next) => {
   });
 };
 
-exports.getAllClientClicks = (req, res, next) => {
-  dbQry.getAllClientClicks(req.user.email, (err, result) => {
-    if (err) {
-      console.error('analytics/controller.getAllClientClicks: ', err);
-      next(err);
-    } else {
-      res.status(200).json(result.rows);
-    }
-  });
-};
-
-exports.getAllClientVisits = (req, res, next) => {
-  dbQry.getAllClientVisits(req.user.email, (err, result) => {
-    if (err) {
-      console.error('analytics/controller.getAllClientVisits: ', err);
-      next(err);
-    } else {
-      res.status(200).json(result.rows);
-    }
-  });
-};
-
-exports.getClientTests = (req, res, next) => {
-  dbQry.getClientTests(req.user.email, (err, results) => {
-    if (err) {
-      console.error('analytics/controller.getClientTests: ', err);
-      next(err);
-    } else {
-      res.status(200).json(results.rows);
-    }
-  });
-};
-
 exports.getVersions = (req, res, next) => {
   // set testId to 0 if it is invalid
   const testId = parseInt(req.query.testid, 10) > 0 ? req.query.testid : 1;
