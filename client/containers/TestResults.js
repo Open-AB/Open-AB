@@ -34,8 +34,9 @@ class TestResults extends Component {
 
     let dashData = viewableStatsForAllTests.map((viewableStatsForTest, i) =>
       (<div>
+        <div className="oneTwentiethOfPage" />
         <TestTitle key={uuid.v4()} viewableStatsForTest={viewableStatsForTest} />
-        <div className="thirdPage">
+        <div className="centered-very-narrow">
           <LineChart key={uuid.v4()} dataset={stats[i]} />
         </div>
         <StatsForTest key={uuid.v4()} viewableStatsForTest={viewableStatsForTest} />

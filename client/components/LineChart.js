@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Chart from 'chart.js';
 import '../assets/styles/_utils.scss';
+import jQuery from 'jquery';
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -161,6 +162,11 @@ class LineChart extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
+    if (!this.state.cumulative) {
+      e.target.textContent = 'Show daily data';
+    } else {
+      e.target.textContent = 'Show cumulative data';
+    }
     const newCumulative = !this.state.cumulative;
     let makeCumulativeData;
     if (newCumulative) {
@@ -182,10 +188,8 @@ class LineChart extends React.Component {
   render() {
     return (
       <div>
-        <div className="thirdPage">
-          <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
-        </div>
-        <button className="waves-effect waves-light btn green darken" onClick={this.handleClick}>TOGGLE ME</button>
+        <canvas ref={'chart'} width={'500'} height={'500'} ></canvas>
+        <button className="waves-effect waves-light btn green darken fixed-width" onClick={this.handleClick}>Show cumulative data</button>
       </div>
     );
   }
