@@ -29,7 +29,6 @@ exports.getAll = (req, res, next) => {
 exports.createTest = (req, res, next) => {
   // hardcoded test vars
   const testName = req.body.testName || 'testname';
-  const pageName = 'page1';
   const clientEmail = req.user.email;
   console.log(req.user, '<<<<< req user in createTest controller');
   console.log(req.body, '>>>>>> req body in createTest controller');

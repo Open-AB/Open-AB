@@ -1,4 +1,5 @@
 # Open-AB
+[![Build Status](https://travis-ci.org/Open-AB/Open-AB.svg?branch=develop)](https://travis-ci.org/Open-AB/Open-AB)
 
 # Dev Setup
 ## Database Setup

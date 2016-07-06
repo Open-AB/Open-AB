@@ -114,10 +114,6 @@ $(document).ready(function(){
                .val(DOMtext));
     $('.openab-b-url').append($('<input>')
                .attr('type', 'hidden')
-               .attr('name', 'page_id')
-               .val(openab.page_id));
-    $('.openab-b-url').append($('<input>')
-               .attr('type', 'hidden')
                .attr('name', 'name')
                .val(openab.name));
     $('.openab-b-url').append($('<input>')
@@ -132,7 +128,6 @@ $(document).ready(function(){
     console.log('ajax to submit version a');
     var data = {
       testName: openab.name,
-      pageId: openab.page_id,
       a: {
         url: openab.url_a,
         DOMLocation: openab.dom_a,

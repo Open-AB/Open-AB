@@ -73,11 +73,11 @@ exports.createPage = (pageName, clientEmail, cb) => {
 };
 
 exports.createTest = (testData, clientEmail, cb) => {
-  const { testName, pageId, a, b } = testData;
+  const { testName, a, b } = testData;
   const uniqueId = uuid.v4();
 
   dbpgp.tx(t => {
-    const addTest = t.query(qry.createTest, [testName, pageId, clientEmail, uniqueId]);
+    const addTest = t.query(qry.createTest, [testName, clientEmail, uniqueId]);
     const addVersionA = t.query(qry.insertVersion, ['a', a.url, a.DOMLocation, uniqueId]);
     const addVersionB = t.query(qry.insertVersion, ['b', b.url, b.DOMLocation, uniqueId]);
     return t.batch([addTest, addVersionA, addVersionB]);
@@ -138,4 +138,3 @@ exports.getTestVersions = (pageId, cb) => {
     values: [pageId],
   }, cb);
 };
-

@@ -33,7 +33,6 @@ module.exports = (app) => {
           $('head').append(`<script>window.openab = {
             ab: '${req.body.ab}',
             name: '${req.body.name}',
-            page_id: ${req.body.page_id},
             url: '${req.body.url}'
           } </script>`);
           if (req.body.ab === 'b') {

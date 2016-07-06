@@ -1,7 +1,6 @@
-const env = require('../../../.env');
-
 module.exports = (() => {
   if (process.env.SERVER === 'deployed') {
+  const env = require('../../../.env');
     return {
       user: 'openab',
       database: 'openab',
