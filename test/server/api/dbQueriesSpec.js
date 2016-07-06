@@ -4,6 +4,7 @@ const expect = require('chai').expect;
 const pg = require('pg');
 const fs = require('fs');
 const path = require('path');
+const blanket = require('blanket');
 
 // test environment was set in the npm script to run this file, so process.env.NODE_ENV === 'test';
 
