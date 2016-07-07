@@ -199,7 +199,7 @@ class SignInModal extends React.Component {
 }
 
 SignInModal.propTypes = {
-  createAccount: PropTypes.Boolean.isRequired,
+  createAccount: PropTypes.bool.isRequired,
 };
 
 export default SignInModal;
