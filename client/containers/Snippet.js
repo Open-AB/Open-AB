@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import '../assets/styles/_utils.scss';
 
 export default class Root extends Component {
   constructor() {
@@ -112,14 +113,35 @@ if(!abData[ab].url.match(window.location.pathname)){
   }
 
   render() {
+    $('#snippet').openModal({
+      dismissible: false, // Modal can be dismissed by clicking outside of the modal
+      opacity: 0.5, // Opacity of modal background
+      in_duration: 300, // Transition in duration
+      out_duration: 200, // Transition out duration
+    });
+
     return (
-      <div>
-        <h2>Snippet</h2>
-        <p>Instructions: Click the button to copy the code snippet.</p>
-        <p>Paste the snippet inside a script tag on both the A and B versions of the page you are testing.</p>
-        <textarea className="snippet" value={`var abData=${JSON.stringify(this.state.abData, 2, 2)}${this.state.snippetBody}`} readOnly></textarea>
-        <button className="copyButton" onClick={this.copySnippet}>Copy to clipboard</button><br />
-        <a href="/dashboard">Continue to dashboard</a>
+      <div className="bigSpace">
+        <div id="snippet" className="modal">
+          <div className="modal-content">
+            <div className="row centered-big-narrow">
+              <div className="card-content black-text">
+                <span><h3>Snippet</h3></span>
+                <p>Instructions: Click the button to copy the code snippet.</p>
+                <p>Paste the snippet inside a script tag on both the A and B versions of the page you are testing.</p>
+              </div>
+              <div className="center">
+                <div className="card-action">
+                  <textarea className="twoFifths" value={`var abData=${JSON.stringify(this.state.abData, 2, 2)}${this.state.snippetBody}`} readOnly></textarea>
+                  <div className="miniSpace">
+                    <button button className="waves-effect waves-light btn green darken fixed-width copyButton" onClick={this.copySnippet}>Copy to clipboard</button><br />
+                  </div>
+                  <a href="/dashboard">Continue to dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
