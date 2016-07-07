@@ -8,7 +8,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      <nav className="tenth mainColor" style={{visibility: 'hidden'}}>
+      <nav className="tenth mainColor" style={{ visibility: 'hidden' }}>
         <div className="nav-wrapper">
           <img className="left logo" alt="OpenAB" src="../assets/images/logo.png"></img>
           <a href="#" className="center brand-logo">OpenA/B</a>
