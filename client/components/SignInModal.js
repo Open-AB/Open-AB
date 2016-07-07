@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 
 class SignInModal extends React.Component {
@@ -6,7 +6,7 @@ class SignInModal extends React.Component {
     super(props);
 
     this.state = {
-      signin: true,
+      signin: !this.props.createAccount,
       email: '',
       password: '',
       confirm_password: '',
@@ -199,6 +199,7 @@ class SignInModal extends React.Component {
 }
 
 SignInModal.propTypes = {
+  createAccount: PropTypes.bool.isRequired,
 };
 
 export default SignInModal;

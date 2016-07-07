@@ -139,13 +139,19 @@ $(document).ready(function(){
     };
     console.log(JSON.stringify(data));
     $.ajax({
-      url: 'http://localhost:8080/api/createTest',
+      url: '/api/createTest',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
       success: function (res) {
         console.log(res.testId);
-        location.href = `/snippet/?= ${res.testId}`;
+        // test created, proceed to snippet
+        if (!res.demo && res.testId) {
+          location.href = `/snippet/?= ${res.testId}`;
+        } else {
+        // test not created because DEMO account, redirect to landing to createAccount
+          location.href = '/?=createAccount';
+        }
       },
       error: function() {
         console.log('did not create test');

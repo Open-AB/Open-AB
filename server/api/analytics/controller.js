@@ -27,12 +27,16 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.createTest = (req, res, next) => {
-  // hardcoded test vars
-  const testName = req.body.testName || 'testname';
   const clientEmail = req.user.email;
-  console.log(req.user, '<<<<< req user in createTest controller');
-  console.log(req.body, '>>>>>> req body in createTest controller');
-  // end hardcoded test vars
+  // not looged in nor authenticated
+  if (req.user.email === 'DEMO') {
+    res.cookie('snippet', JSON.stringify(req.body), { signed: true });
+    return res.json({ demo: true });
+  }
+
+  if (req.signedCookies.snippet) {
+    req.body = JSON.parse(req.signedCookies.snippet);
+  }
 
   dbQry.createTest(req.body, clientEmail, (error, result) => {
     if (error) {
@@ -40,7 +44,9 @@ exports.createTest = (req, res, next) => {
     }
     const toSend = {
       testId: (result[0][0].id).toString(),
+      loggedIn: true,
     };
+    res.clearCookie('snippet');
     return res.status(201).send(toSend);
   });
 };
