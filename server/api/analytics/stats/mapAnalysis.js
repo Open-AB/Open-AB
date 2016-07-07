@@ -24,19 +24,41 @@ exports.getAllCountryIds = (ipAddresses) => {
   return allCountryIds;
 };
 
-exports.countAllCountriesByName = (ipData) => {
+exports.objectCounter = (ipData) => {
   const countryCount = {};
-  const countryCountArray = [];
   _.forEach(ipData, (ipObject) => {
     if (ipObject !== null) {
       const countryName = countries.getName(ipObject.country);
       countryCount[countryName] = countryCount[countryName] + 1 || 1;
     }
   });
-  _.forEach(countryCount, (count, country) => {
-    if (count > 100) {
+  return countryCount;
+};
+
+exports.scaledCount = (countObject) => {
+  let scaledMax = 0;
+  _.forEach(countObject, (count) => {
+    if (count > scaledMax) {
+      scaledMax = count;
+    }
+  });
+  return scaledMax * 0.05;
+};
+
+exports.countAllCountriesByName = (objectCount, scaledMax) => {
+  const countryCountArray = [];
+  _.forEach(objectCount, (count, country) => {
+    if (count > scaledMax) {
       countryCountArray.push([country, count]);
     }
   });
   return countryCountArray;
+};
+
+exports.countryCountToDisplay = (result) => {
+  const IpAddresses = exports.getAllIpAddresses(result);
+  const countryIds = exports.getAllCountryIds(IpAddresses);
+  const objectCount = exports.objectCounter(countryIds);
+  const scaled = exports.scaledCount(objectCount);
+  return exports.countAllCountriesByName(objectCount, scaled);
 };

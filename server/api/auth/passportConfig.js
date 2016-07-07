@@ -14,7 +14,7 @@ module.exports = (app) => {
     secret: 'keyboard cat',
     saveUninitialized: false,
     store: new pgSession({
-      pg: pg,
+      pg,
       conString: clientLink,
     }),
     resave: false,

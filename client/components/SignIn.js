@@ -50,7 +50,7 @@ class SignIn extends React.Component {
       data: body,
     }).done(data => {
       if (data && data.loggedIn) {
-        console.log('SHOULD BE BROWSER PUSHING')
+        console.log('SHOULD BE BROWSER PUSHING');
         browserHistory.push('dashboard');
       }
     });
