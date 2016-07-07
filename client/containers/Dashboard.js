@@ -6,11 +6,12 @@ import Footer from '../components/Footer.js';
 import SignIn from '../components/SignIn';
 import MapContainer from './MapContainer';
 import SignInModal from '../components/SignInModal';
+import NavBarAuth from './NavBarAuth';
 
 function Dashboard() {
   return (
     <div className="center">
-      <NavBar />
+      <NavBarAuth />
       <SignInModal />
       <div className="container">
         <SignIn />

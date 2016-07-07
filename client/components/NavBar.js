@@ -5,6 +5,10 @@ import React, { Component } from 'react';
 import '../assets/styles/_nav.scss';
 
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props, '====== props from NavBarAuth');
+  }
 
   render() {
     return (
