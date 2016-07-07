@@ -54,6 +54,9 @@ exports.signup = (req, res, next) => {
       }
       return req.login(user, (error) => {
         if (error) { return next(error); }
+        if (req.signedCookies.snippet) {
+          return next();
+        }
         const userLoggedIn = Object.assign(user, { loggedIn: true });
         return res.json(userLoggedIn);
       });
