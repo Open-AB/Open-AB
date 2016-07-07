@@ -59,7 +59,7 @@ exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing p
       console.error(error);
       return next(error);
     } else {
-      const formattedResults = convertResultsToTimeArrayFormat(results);
+      const formattedResults = chiSquareAnalysis.convertResultsToTimeArrayFormat(results);
       const testStats = chiSquareAnalysis.computeStatsForAllTests(formattedResults);
       res.status(200).json(testStats);
     }
@@ -84,10 +84,7 @@ exports.getmapResults = (req, res, next) => {
     if (error) {
       return next(error);
     }
-    const ipAddresses = mapAnalysis.getAllIpAddresses(result);
-    const countryIds = mapAnalysis.getAllCountryIds(ipAddresses);
-    const ipCountryCount = mapAnalysis.countAllCountriesByName(countryIds);
-    res.status(200).json(ipCountryCount);
+    res.status(200).json(mapAnalysis.countryCountToDisplay(result));
   });
 };
 
