@@ -49,12 +49,6 @@ analyticsRoutes(app);
 selectionRoutes(app);
 
 app.get('*', (req, res) => {
-  // if (req.user && req.isAuthenticated()) {
-  //   res.status(200).json({ loggedIn: true });
-  // } else {
-    // res.redirect('/');
-  // }
-  console.log(path.resolve(__dirname, '../../client/index.html'));
   res.sendFile(path.resolve(__dirname, '../../client/index.html'));
 });
 

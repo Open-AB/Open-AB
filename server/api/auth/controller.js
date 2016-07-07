@@ -13,14 +13,10 @@ exports.signin = (req, res, next) => {
 
     req.login(userInfo, error => {
       if (error) {
-        console.log(error, '<<<< ERROR TRYING TO ATTACH USER TO REQ');
         res.status(401).send(error);
       } else {
-        // res.header("Access-Control-Allow-Credentials", true);
-        // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8080");
         const userLoggedIn = Object.assign(userInfo, { loggedIn: true });
         res.json(userLoggedIn);
-        // res.redirect('/dashboard');
       }
     });
   })(req, res, next);
