@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import NavBar from './NavBar';
+import NavBarAuth from '../containers/NavBarAuth';
 import LandingPageCenter from './LandingPageCenter';
 import Footer from './Footer.js';
 import SignInModal from '../components/SignInModal';
@@ -23,7 +23,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <div className="center fullPage">
-        <NavBar />
+        <NavBarAuth />
         <SignInModal createAccount={this.state.createAccount} />
         <div className="tenth" />
         <LandingPageCenter />

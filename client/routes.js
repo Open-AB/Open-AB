@@ -3,17 +3,20 @@ import { Route } from 'react-router';
 import Dashboard from './containers/Dashboard';
 import Snippet from './containers/Snippet';
 import LandingPage from './components/LandingPage';
+import { store } from './index.js';
+import { storeUser } from './actions/api';
 
-const checkAuth = (nextState, replace, next) => {
+const verifyLogin = (nextState, replace, next) => {
   $.get('/api/verify', data => {
     if (data.loggedIn) {
-      next();
-    } else {
-      replace('/');
-      next();
+      store.dispatch(storeUser(data));
     }
+    next();
   }).fail(() => {
-    replace('/');
+    store.dispatch(storeUser({ loggedIn: false }));
+    if (nextState.routes[0].path === '/snippet') {
+      replace('/');
+    }
     next();
   });
 };
@@ -21,8 +24,8 @@ const checkAuth = (nextState, replace, next) => {
 export default (
   [
     <Route path="/" component={LandingPage} />,
-    <Route path="/snippet" component={Snippet} onEnter={checkAuth} />,
+    <Route path="/snippet" component={Snippet} onEnter={verifyLogin} />,
     <Route path="/landing" component={LandingPage} />,
-    <Route path="/dashboard" component={Dashboard} />,
+    <Route path="/dashboard" component={Dashboard} onEnter={verifyLogin} />,
   ]
 );

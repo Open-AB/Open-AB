@@ -1,56 +1,36 @@
 import React, { PropTypes, Component } from 'react';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { fetchDataIfNeeded } from '../actions/api';
-
+import { cancelAuth } from '../actions/api';
 import NavBar from '../components/NavBar';
 
-const userDataEndPoint = '/api/verify';
-
 class NavBarAuth extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchDataIfNeeded(userDataEndPoint));
+  constructor(props) {
+    super(props);
+
+    this.signOut = this.signOut.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.userDataEndPoint !== this.props.userDataEndPoint) {
-      const { dispatch } = nextProps;
-      dispatch(fetchDataIfNeeded(userDataEndPoint));
-    }
+  signOut(e) {
+    e.preventDefault();
+    this.props.dispatch(cancelAuth());
+    browserHistory.push('/');
+    window.location.reload();
   }
 
   render() {
-    return <NavBar user={this.props.data} />;
+    return <NavBar user={this.props.user} signOut={this.signOut} />;
   }
 }
 
-
 NavBarAuth.propTypes = {
-  userDataEndPoint: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
-  isFetching: PropTypes.bool.isRequired,
-  lastUpdated: PropTypes.number,
+  user: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
-
 function mapStateToProps(state) {
-  const { dataByapiEndpoint } = state;
-  const {
-    isFetching,
-    lastUpdated,
-    items: data,
-  } = dataByapiEndpoint[userDataEndPoint] || {
-    isFetching: true,
-    items: [],
-  };
-
-  return {
-    userDataEndPoint,
-    data,
-    isFetching,
-    lastUpdated,
-  };
+  const { user } = state;
+  return { user };
 }
 
 export default connect(mapStateToProps)(NavBarAuth);

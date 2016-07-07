@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+import { storeUser } from '../actions/api';
 
 class SignInModal extends React.Component {
   constructor(props) {
@@ -53,7 +55,7 @@ class SignInModal extends React.Component {
 
   signIn(e) {
     e.preventDefault();
-
+    const { dispatch } = this.props;
     const body = {
       email: this.refs.email.value.trim(),
       password: this.refs.password.value.trim(),
@@ -67,8 +69,10 @@ class SignInModal extends React.Component {
       data: body,
     }).done(data => {
       if (data && data.loggedIn) {
+        dispatch(storeUser(data));
         $('#modal-signin').closeModal();
         browserHistory.push('/dashboard');
+        window.location.reload();
       }
     });
   }
@@ -91,6 +95,7 @@ class SignInModal extends React.Component {
         if (data && data.loggedIn) {
           $('#modal-signin').closeModal();
           browserHistory.push('/dashboard');
+          window.location.reload();
         }
       }).fail(err => {
         console.log(err, 'fail signup');
@@ -200,7 +205,13 @@ class SignInModal extends React.Component {
 
 SignInModal.propTypes = {
   createAccount: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func,
+  user: PropTypes.object,
 };
 
-export default SignInModal;
+function mapStateToProps(state) {
+  const { user } = state;
+  return { user };
+}
 
+export default connect(mapStateToProps)(SignInModal);
