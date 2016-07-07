@@ -62,13 +62,13 @@ if(!abData[ab].url.match(window.location.pathname)){
       visitData.time = Date.now();
       console.log(visitData);
       $.ajax({
-        url: 'http://localhost:3939/listening/visits',
+        url: 'https://localhost:3939/listening/visits',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(visitData)
       });
-      
-      //log click
+
+      // log click
       // DOM selector logic
       $('a, button').on('click', function (e) {
         var domTree = [$(this).index()];
@@ -85,7 +85,7 @@ if(!abData[ab].url.match(window.location.pathname)){
           clickData.time = Date.now();
 
           $.ajax({
-            url: 'http://localhost:3939/listening/clicks',
+            url: 'https://localhost:3939/listening/clicks',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(clickData)
