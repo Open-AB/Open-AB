@@ -24,7 +24,7 @@ var openabStyles = {
     'border-radius': '2px',
     height: '30px',
     'font-size': '14px',
-  },  // this is the continue button
+  },
 
   openabLargeButton: {
     padding: '20px',
@@ -40,12 +40,12 @@ var openabStyles = {
 
   openabLabel: {
     'padding-right': '20px',
-  },  // this is maybe not working?
+  },
 
   openabInput: {
     border: '1px solid #999999',
     width: '400px',
-  }, // what does this do?
+  },
 };
 
 $(document).ready(function(){
@@ -94,7 +94,7 @@ $(document).ready(function(){
     while (el.parent().index() > -1) {
       domTree.push(el.parent().index());
       el = el.parent();
-    } //going up the dom tree, I think
+    }
     // console.log(performance.now() - beforeTime);
     DOMtext = 'DOM location to track: ' + domTree.join('-');
     $('.openab-domTree').text(DOMtext);
@@ -102,7 +102,7 @@ $(document).ready(function(){
   });
 
   //
-  $('.openab-b-url').submit(function () {  // I think this is mostly to pass along the hidden fields
+  $('.openab-b-url').submit(function () {
     $('.openab-b-url').append($('<input>')
                .attr('type', 'hidden')
                .attr('name', 'url_a')
@@ -122,7 +122,6 @@ $(document).ready(function(){
     return true;
   });
 
-  //
   $('.openab-complete').on('click', function () {
     console.log('ajax to submit version a');
     var data = {
