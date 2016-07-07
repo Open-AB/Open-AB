@@ -36,7 +36,7 @@ class LandingPage extends React.Component {
 
 LandingPage.propTypes = {
   // prop passed in from react router
-  location: PropTypes.Object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default LandingPage;
