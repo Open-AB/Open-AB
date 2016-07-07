@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import routes from '../routes';
 import DevTools from './DevTools';
 import { Router } from 'react-router';
-import Dashboard from './Dashboard';
 
 export default class Root extends Component {
   render() {
@@ -11,7 +10,7 @@ export default class Root extends Component {
     return (
       <Provider store={store}>
         <div>
-          <Router history={history} routes={routes} />
+          <Router history={history} routes={routes} store={store} />
           <DevTools />
         </div>
       </Provider>

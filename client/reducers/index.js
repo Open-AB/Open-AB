@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import {
   SELECT_API, INVALIDATE_API,
   REQUEST_DATA, RECEIVE_DATA,
+  SIGN_IN, SIGN_OUT,
 } from '../actions/api';
 
 function selectedapiEndpoint(state = 'reactjs', action) {
@@ -54,10 +55,22 @@ function dataByapiEndpoint(state = { }, action) {
   }
 }
 
+function user(state = { loggedIn: false }, action) {
+  switch (action.type) {
+    case SIGN_IN:
+      return Object.assign({}, state, action.data) || state;
+    case SIGN_OUT:
+      return { loggedIn: false };
+    default:
+      return state || {};
+  }
+}
+
 const rootReducer = combineReducers({
   dataByapiEndpoint,
   selectedapiEndpoint,
   routing,
+  user,
 });
 
 export default rootReducer;

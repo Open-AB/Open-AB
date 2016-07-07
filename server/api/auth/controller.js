@@ -80,13 +80,15 @@ exports.checkAuthServer = (req, res, next) => {
 
 exports.simpleMsg = (req, res, next) => {
   console.log(req.user, '<<<<< got past checkAuthServer, is there default user?!');
-  const data = Object.assign({}, req.user);
+  const loggedIn = req.user.email !== 'DEMO';
+  const data = Object.assign({ loggedIn }, req.user);
   res.send(data);
 };
 
-exports.verify = (req, res, next) => {
+exports.verify = (req, res) => {
   if (req.user && req.isAuthenticated()) {
-    return res.status(200).send({ loggedIn: true });
+    const data = Object.assign({ loggedIn: true }, req.user);
+    return res.status(200).send(data);
   }
   return res.status(401).send({ loggedIn: false });
 };
