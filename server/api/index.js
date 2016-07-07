@@ -8,6 +8,7 @@ const config = require('../../webpack.config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 // Passport Configuration
 const authConfig = require('./auth/passportConfig.js');
@@ -46,6 +47,10 @@ authConfig(app);
 authRoutes(app);
 analyticsRoutes(app);
 selectionRoutes(app);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/index.html'));
+});
 
 app.listen(port, (err) => {
   if (err) {

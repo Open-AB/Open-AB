@@ -12,7 +12,7 @@ class NavBar extends Component {
         <div className="nav-wrapper">
           <img className="left logo" alt="OpenAB" src="../assets/images/logo.png"></img>
           <a href="#" className="center brand-logo">OpenA/B</a>
-          <a href="#" className="right">Sign in</a>
+          <a href="#" className="right" onClick={() => { $('#modal-signin').openModal(); }}>Sign in</a>
         </div>
       </nav>
     );
