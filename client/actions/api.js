@@ -67,7 +67,7 @@ function shouldfetchData(state, apiEndpoint) {
   const data = state.dataByapiEndpoint[apiEndpoint];
   if (!data) {
     return true;
-  }  if (data.isFetching) {
+  } if (data.isFetching) {
     return false;
   }
   return data.didInvalidate;
@@ -78,5 +78,6 @@ export function fetchDataIfNeeded(apiEndpoint) {
     if (shouldfetchData(getState(), apiEndpoint)) {
       return dispatch(fetchData(apiEndpoint));
     }
+    return undefined;
   };
 }

@@ -7,7 +7,7 @@ const uuid = require('uuid');
 
 const formatEventArrays = eventArrays => {
   return eventArrays.map(eventArray => {
-    const mappedArray =  eventArray.map(event => {
+    const mappedArray = eventArray.map(event => {
       return {
         IPAddress: event.ipaddress,
         time: Number(event.time),
