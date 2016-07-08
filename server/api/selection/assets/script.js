@@ -51,6 +51,7 @@ var openabStyles = {
 $(document).ready(function(){
   var testElement = null;
   var DOMtext = '';
+  var DOMloc = '';
 
   // set inline styles on overlay elements to overwrite inherited styles
   $('.openab-complete').css(openabStyles.openab);
@@ -97,6 +98,7 @@ $(document).ready(function(){
     }
     // console.log(performance.now() - beforeTime);
     DOMtext = 'DOM location to track: ' + domTree.join('-');
+    DOMloc = domTree.join('-');
     $('.openab-domTree').text(DOMtext);
     $('.openab-domTree').css('visibility', 'visible');
   });
@@ -110,7 +112,7 @@ $(document).ready(function(){
     $('.openab-b-url').append($('<input>')
                .attr('type', 'hidden')
                .attr('name', 'dom_a')
-               .val(DOMtext));
+               .val(DOMloc));
     $('.openab-b-url').append($('<input>')
                .attr('type', 'hidden')
                .attr('name', 'name')
@@ -132,7 +134,7 @@ $(document).ready(function(){
       },
       b: {
         url: openab.url,
-        DOMLocation: DOMtext,
+        DOMLocation: DOMloc,
       },
     };
     console.log(JSON.stringify(data));

@@ -33,10 +33,10 @@ if(storageAvailable('localStorage') && !ab){
 // check if we're on the right page;
 // note that if client's server does any redirects here,
 // we could get an endless loop of redirects
-console.log(abData[ab].url, window.location.pathname);
-if(!abData[ab].url.match(window.location.pathname)){
+var url = new URL(abData[ab].url);
+console.log(url.pathname, window.location.pathname);
+if(url.pathname !== window.location.pathname){
   //if not, get right path
-  var url = new URL(abData[ab].url);
   window.location = url.pathname;
 } else {
   //check for jQuery
@@ -59,7 +59,7 @@ if(!abData[ab].url.match(window.location.pathname)){
       visitData.time = Date.now();
       console.log(visitData);
       $.ajax({
-        url: 'http://localhost:3939/listening/visits',
+        url: 'http://50.112.70.234/listening/visits',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(visitData)
@@ -82,7 +82,7 @@ if(!abData[ab].url.match(window.location.pathname)){
           clickData.time = Date.now();
 
           $.ajax({
-            url: 'http://localhost:3939/listening/clicks',
+            url: 'http://50.112.70.234/listening/clicks',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(clickData)
