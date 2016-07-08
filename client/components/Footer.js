@@ -11,7 +11,7 @@ class Footer extends Component {
         <div>
           <div className="right">
             <ul>
-              <li><a href="mailto:openab42@gmail.com" className="grey-text text-lighten-4 right">Contact</a></li>
+              <li><a href="mailto:openab42@gmail.com" className="white-text text-lighten-4 right">Contact</a></li>
             </ul>
           </div>
         </div>

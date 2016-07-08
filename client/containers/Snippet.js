@@ -132,7 +132,7 @@ if(url.pathname !== window.location.pathname){
               </div>
               <div className="center">
                 <div className="card-action">
-                  <textarea className="twoFifths" value={`var abData=${JSON.stringify(this.state.abData, 2, 2)}${this.state.snippetBody}`} readOnly></textarea>
+                  <textarea className="textBox" value={`var abData=${JSON.stringify(this.state.abData, 2, 2)}${this.state.snippetBody}`} readOnly></textarea>
                   <div className="miniSpace">
                     <button button className="waves-effect waves-light btn green darken fixed-width copyButton" onClick={this.copySnippet}>Copy to clipboard</button><br />
                   </div>

@@ -6,9 +6,10 @@ const NavBar = ({ user, signOut }) => {
     return (
       <nav className="tenth mainColor" style={{ visibility: 'hidden' }}>
         <div className="nav-wrapper">
-          <img className="left logo" alt="OpenAB" src="../assets/images/logo.png"></img>
-          <a href="#" className="center brand-logo">OpenA/B</a>
-          <a href="#" className="right" onClick={signOut}>Sign Out</a>
+          <a href="/dashboard">
+            <img className="left  fourFifths smallMarginLeft smallMarginTop" alt="OpenAB" src="../assets/images/logoTextWhite.png"></img>
+          </a>
+          <a href="#" className="right smallMarginRight" onClick={signOut}>Sign Out</a>
         </div>
       </nav>
     );
@@ -17,9 +18,10 @@ const NavBar = ({ user, signOut }) => {
   return (
     <nav className="tenth mainColor" style={{ visibility: 'hidden' }}>
       <div className="nav-wrapper">
-        <img className="left logo" alt="OpenAB" src="../assets/images/logo.png"></img>
-        <a href="#" className="center brand-logo">OpenA/B</a>
-        <a href="#" className="right" onClick={() => { $('#modal-signin').openModal(); }}>Sign in</a>
+        <a href="/dashboard">
+          <img className="left  fourFifths smallMarginLeft smallMarginTop" alt="OpenAB" src="../assets/images/logoTextWhite.png"></img>
+        </a>
+        <a href="#" className="right smallMarginRight" onClick={() => { $('#modal-signin').openModal(); }}>Sign in</a>
       </div>
     </nav>
   );

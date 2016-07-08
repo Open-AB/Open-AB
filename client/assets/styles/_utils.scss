@@ -28,6 +28,11 @@ shade {
 }
 
 //SPACES
+
+.tinyMiniSpace {
+  padding: 0.2em;
+}
+
 .miniSpace {
   padding: 1em;
 }
@@ -42,6 +47,18 @@ shade {
 
 .bigSpace {
   padding: 12em;
+}
+
+.smallMarginLeft {
+  margin-left: 1em;
+}
+
+.smallMarginRight {
+  margin-right: 1em;
+}
+
+.smallMarginTop {
+  margin-top: 0.25em;
 }
 
 //MARGIN
@@ -73,6 +90,10 @@ a {
   min-height: 60px;
 }
 
+.fourth {
+  height: 10%;
+}
+
 .fifth {
   height: 20%;
 }
@@ -83,6 +104,10 @@ a {
 
 .threeFifths {
   height: 60%;
+}
+
+.fourFifths {
+  height: 90%;
 }
 
 .fullPage {
@@ -133,5 +158,14 @@ h4 {
 
 .fixed-width {
   width: 17em;
+}
+
+.logo {
+  width: 50%;
+  height: 50%;
+}
+
+.textBox {
+  height: 140px;
 }
 
