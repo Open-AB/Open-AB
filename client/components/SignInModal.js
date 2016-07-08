@@ -92,10 +92,17 @@ class SignInModal extends React.Component {
       this.clearForm();
 
       $.post('/api/signup', body, data => {
+        $('#modal-signin').closeModal();
+        // if data.testId exists, a test was created on a new account, show snippet for test
+        if (data && data.testId) {
+          browserHistory.push(`/snippet?=${data.testId}`);
+          return;
+        }
+
         if (data && data.loggedIn) {
-          $('#modal-signin').closeModal();
           browserHistory.push('/dashboard');
           window.location.reload();
+          return;
         }
       }).fail(err => {
         console.log(err, 'fail signup');
@@ -204,7 +211,7 @@ class SignInModal extends React.Component {
 }
 
 SignInModal.propTypes = {
-  createAccount: PropTypes.bool.isRequired,
+  createAccount: PropTypes.bool,
   dispatch: PropTypes.func,
   user: PropTypes.object,
 };

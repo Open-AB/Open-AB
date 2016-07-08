@@ -28,12 +28,12 @@ exports.getAll = (req, res, next) => {
 
 exports.createTest = (req, res, next) => {
   const clientEmail = req.user.email;
-  // not looged in nor authenticated
+  // not looged in nor authenticated, tell client to create account
   if (req.user.email === 'DEMO') {
     res.cookie('snippet', JSON.stringify(req.body), { signed: true });
     return res.json({ demo: true });
   }
-
+  // if cookie exists, client was newly created, create test for new client
   if (req.signedCookies.snippet) {
     req.body = JSON.parse(req.signedCookies.snippet);
   }
