@@ -24,7 +24,7 @@ const verifyLogin = (nextState, replace, next) => {
 export default (
   [
     <Route path="/" component={LandingPage} />,
-    <Route path="/snippet" component={Snippet} onEnter={verifyLogin} />,
+    <Route path="/snippet" component={Snippet} onEnter={verifyLogin} onChange={() => { window.location.reload(); }} />,
     <Route path="/landing" component={LandingPage} />,
     <Route path="/dashboard" component={Dashboard} onEnter={verifyLogin} />,
   ]
