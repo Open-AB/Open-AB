@@ -1,7 +1,7 @@
 
-# Open-AB <img src="https://github.com/Open-AB/Open-AB/blob/develop/client/assets/images/logo.png" height=100> [![Build Status](https://travis-ci.org/Open-AB/Open-AB.svg?branch=develop)](https://travis-ci.org/Open-AB/Open-AB)
+# OpenA/B <img src="https://github.com/Open-AB/Open-AB/blob/develop/client/assets/images/logo.png" height=100> [![Build Status](https://travis-ci.org/Open-AB/Open-AB.svg?branch=develop)](https://travis-ci.org/Open-AB/Open-AB)
 
-Start testing your website today at http://50.112.197.243/ !
+OpenA/B lets you test one version of a webpage against another to determine which one produces more conversions. OpenA/B is easy to use and open-source. Start testing your website today at http://50.112.197.243/ !
 
 
 ![](https://github.com/brachbach/Open-AB/blob/readme/readmeImages/createTestScreenshot.png)
@@ -10,9 +10,9 @@ Start testing your website today at http://50.112.197.243/ !
 
 #Tech
 ##Tech stack
-- Frontend: [React](https://facebook.github.io/react/), [Redux](https://github.com/reactjs/redux), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery/intensitymap?csw=1), and [Chart.js](http://www.chartjs.org/)
-- Backend: [Node.js](https://nodejs.org/en/), [Express](http://expressjs.com/), [Passport](http://passportjs.org/), and [Postgres](http://www.postgresql.org/)
-- Testing: [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/), [Karma](https://karma-runner.github.io/1.0/index.html), [SuperTest](https://github.com/visionmedia/supertest), and [Travis CI](https://travis-ci.org/)
+- Frontend: [React](https://facebook.github.io/react/), [React Router](https://github.com/reactjs/react-router), [Redux](https://github.com/reactjs/redux), [Google Charts](https://developers.google.com/chart/interactive/docs/gallery/intensitymap?csw=1), [Chart.js](http://www.chartjs.org/), [jsdom](https://github.com/tmpvar/jsdom), [Materialize](http://materializecss.com/)
+- Backend: [Node.js](https://nodejs.org/en/), [Express](http://expressjs.com/), [Passport](http://passportjs.org/), and [PostgreSQL](http://www.postgresql.org/)
+- Testing: [Mocha](https://mochajs.org/), [Chai](http://chaijs.com/), [Karma](https://karma-runner.github.io/1.0/index.html), [Enzyme](http://airbnb.io/enzyme/), [SuperTest](https://github.com/visionmedia/supertest), [Istanbul](https://gotwarlost.github.io/istanbul/) and [Travis CI](https://travis-ci.org/)
 - DevOps: [Amazon Web Services](https://aws.amazon.com/), [Webpack](https://webpack.github.io/), and [Babel](https://babeljs.io/)
 
 ##System architecture
@@ -66,3 +66,6 @@ Seed the database with example data:
 - [John Jenson](https://github.com/JRRJ)
 - [Ben Rachbach](https://github.com/brachbach)
 - [Jen Wong](https://github.com/jenjwong)
+
+#License
+This project is licensed under the terms of the MIT license.
