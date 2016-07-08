@@ -28,6 +28,10 @@ shade {
 }
 
 //SPACES
+.miniSpace {
+  padding: 1em;
+}
+
 .smallSpace {
   padding: 3em;
 }
@@ -39,6 +43,20 @@ shade {
 .bigSpace {
   padding: 12em;
 }
+
+//MARGIN
+.smallMargin {
+  margin: 3em;
+}
+
+.mediumMargin {
+  margin: 6em;
+}
+
+.bigMargin {
+  margin: 12em;
+}
+
 
 a {
   padding-right: 1em;
@@ -81,6 +99,11 @@ a {
   margin: 0 auto;
 }
 
+.centered-big-narrow {
+  width: 52vw;
+  margin: auto;
+}
+
 .centered-narrow {
   width: 50vw;
   margin: auto;
@@ -111,5 +134,4 @@ h4 {
 .fixed-width {
   width: 17em;
 }
-
 
