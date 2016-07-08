@@ -33,8 +33,10 @@ exports.countIntoBuckets = (upperLimitOfBuckets, arr) => {
   }, []);
 };
 
-exports.processSingleTestDataIntoResults = processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits, bucketWidth = 1) => {
+exports.processSingleTestDataIntoResults = processSingleTestDataIntoResults = (aClicks, bClicks, aVisits, bVisits) => {
   const TotalVisits = aVisits.concat(bVisits).sort((a, b) => a - b);
+
+  const bucketWidth = determineBucketWidth(TotalVisits);
 
   const buckets = exports.createBuckets(bucketWidth * 24 * 60 * 60 * 1000, TotalVisits);
 
@@ -71,3 +73,30 @@ exports.processAllTestsDataIntoResults = testsData => {
   });
 };
 
+function determineBucketWidth(visitData) { // visitData is assumed to be sorted oldest -> newest
+  const earliest = visitData[0];
+  const latest = visitData[visitData.length - 1];
+  const maxDiff = latest - earliest; // in milliseconds
+
+  const days = maxDiff / 1000 / 60 / 60 / 24;
+  if (days > 1) {
+    return 1; // bucketWidth is 1 day
+  }
+
+  const hours = maxDiff / 1000 / 60 / 60;
+  if (hours > 1) {
+    return 1 / 24; // bucketWidth is 1 hour
+  }
+
+  const mins = maxDiff / 1000 / 60;
+  if (mins > 1) {
+    return 1 / 24 / 60; // bucketWidth is 1 min
+  }
+
+  const sec = maxDiff / 1000;
+  if (sec > 1) {
+    return 1 / 24 / 60 / 60; // bucketWidth is 1 sec
+  }
+
+  return 1; // default bucketWidth is 1 day bu
+}
