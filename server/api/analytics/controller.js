@@ -28,7 +28,7 @@ exports.getAll = (req, res, next) => {
 
 exports.createTest = (req, res, next) => {
   const clientEmail = req.user.email;
-  // not looged in nor authenticated, tell client to create account
+  // not logged in nor authenticated, tell client to create account
   if (req.user.email === 'DEMO') {
     res.cookie('snippet', JSON.stringify(req.body), { signed: true });
     return res.json({ demo: true });
@@ -48,34 +48,6 @@ exports.createTest = (req, res, next) => {
     };
     res.clearCookie('snippet');
     return res.status(201).send(toSend);
-  });
-};
-
-exports.getAllStats = (req, res, next) => { // use dbQry as an arg for testing purposes?
-  dbQry.getAllResults(req.user.email, (error, results) => {
-    if (error) {
-      console.log('stats error');
-      console.error(error);
-      return next(error);
-    } else {
-      const formattedResults = chiSquareAnalysis.convertResultsToTimeArrayFormat(results);
-      const testStats = chiSquareAnalysis.computeStatsForAllTests(formattedResults);
-      res.status(200).json(testStats);
-    }
-  });
-};
-
-// zombie code?
-exports.getChartData = (req, res, next) => {
-  dbQry.getAllResults(req.user.email, (error, results) => {
-    if (error) {
-      console.error(error);
-      return next(error);
-    } else {
-      const formattedResults = convertResultsToTimeArrayFormat(results);
-      const count = formatChartData.processAllTestsDataIntoResults(formattedResults);
-      res.status(200).json(count);
-    }
   });
 };
 
