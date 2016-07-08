@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import '../assets/styles/_utils.scss';
 
 export default class Root extends Component {
@@ -91,7 +90,7 @@ if(url.pathname !== window.location.pathname){
       });
     });
   }
-}`  };
+}` };
     this.copySnippet = this.copySnippet.bind(this);
   }
 

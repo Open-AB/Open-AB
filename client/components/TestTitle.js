@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import uuid from 'uuid';
 import '../assets/styles/_utils.scss';
 
 function TestTitle(props) {
@@ -10,12 +9,18 @@ function TestTitle(props) {
   if (props.viewableStatsForTest.viewableAnalysisResults.testResult === 'Version B wins!') {
     color = 'blue lighten-5';
   }
-  const className = `collection ${color}`;
+  const className = `collection ${color} test-title`;
 
   return (
     <div className={className}>
       <h3>{props.viewableStatsForTest.testName}</h3>
       <h4>{props.viewableStatsForTest.viewableAnalysisResults.testResult}</h4>
+      <button
+        className="test-snippet btn green lighten-0 waves-effect waves-light"
+        onClick={() => {
+          window.location.href = `/snippet/?= ${props.viewableStatsForTest.testId}`;
+        }}
+      >SNIPPET</button>
     </div>
   );
 }
