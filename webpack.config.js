@@ -1,29 +1,62 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+
+const PROD = (process.env.NODE_ENV === 'production');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './client/index',
-  ],
+  entry: PROD ? ['./client/index'] : ['webpack-hot-middleware/client', './client/index'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/static/',
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  devtool: PROD ? '' : 'source-map',
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loaders: ['babel'],
+        test: /.jsx?$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        include: __dirname,
+        query: {
+          presets: ['es2015', 'react'],
+        },
       },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+      },
+      {
+        test: /\.json$/,
+        loaders: ['json'],
+      },
+      {
+        test: /\.png$/,
+        loader: 'url-loader',
+      },
+      {
+        test: /\.jpeg$/,
+        loader: 'url-loader',
+      },
+      { test: /\.(woff2?|svg)$/, loader: 'url?limit=10000' },
+      { test: /\.(ttf|eot)$/, loader: 'file' },
     ],
   },
+  externals: {
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': 'window',
+    'react/addons': true,
+  },
+  plugins: PROD ? [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+    }),
+  ] : [new webpack.HotModuleReplacementPlugin()],
 };
+

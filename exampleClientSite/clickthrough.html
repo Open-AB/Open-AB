@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Open A/B Example</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+    var clearAB = function() {
+      storage.removeItem('openab');
+    }
+  </script>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">
+         <img class="left logo" alt="OpenAB" src="logo.png"></img>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="https://github.com/Open-AB/Open-AB">GitHub</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="https://github.com/Open-AB/Open-AB">GitHub</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center"></h2>
+            <h5 class="center">Get started with Open A/B</h5>
+
+            <p class="light">This site uses Open A/B on its splash page, redirecting users to one of the two versions shown on the right.  You can see the results on the Open A/B demo dashboard page, or log in to create tests on your own sites.</p>
+            <div class="row center">
+              <a href="clickthrough.html" id="download-button" class="btn-large waves-effect waves-light blue">Open A/B</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m8">
+          <div class="icon-block">
+            <h4 class="center">Example A/B Test</h4>
+            <h5 class="center">Version A</h5>
+            <a href="index.html" onclick="clearAB"><img src="versionA.png" alt="Page version A" class="responsive-img"></a>
+            <h5 class="center">Version B</h5>
+            <a href="index2.html" onclick="clearAB"><img src="versionB.png" alt="Page version B" class="responsive-img"></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>

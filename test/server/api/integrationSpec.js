@@ -28,13 +28,13 @@ describe('API Server: End point Testing', () => {
   });
 
   describe('Signup:', () => {
-    it('signs up user and redirects them to the dashboard', done => {
+    it('signs up user and responds with userinfo and loggedIn true', done => {
       const body = { email: 'test@gmail.com', password: 'abc123' };
       request
         .post('/api/signup')
         .send(body)
-        .expect('Location', '/dashboard', done);
-    });
+        .expect(200, { id: 1, email: 'test@gmail.com', loggedIn: true }, done);
+    }).timeout(5000);
 
     it('saves user info to the database on signup', done => {
       authQry.checkEmail('test@gmail.com', (err, result) => {
@@ -44,7 +44,7 @@ describe('API Server: End point Testing', () => {
         expect(result.rows.length).to.equal(1);
         done();
       });
-    });
+    }).timeout(5000);
 
     it('rejects signup if email already in database', done => {
       const body = { email: 'test@gmail.com', password: 'abc123' };
@@ -52,7 +52,7 @@ describe('API Server: End point Testing', () => {
         .post('/api/signup')
         .send(body)
         .expect(400, done);
-    });
+    }).timeout(5000);
     // TODO: add email validation/password validation and test it
   });
 
@@ -66,13 +66,13 @@ describe('API Server: End point Testing', () => {
       });
     });
 
-    it('signs in user with valid username and password and redirects them to dashboard', done => {
+    it('signs in user with valid username and password and respond with userinfo and loggedIn true', done => {
       const body = { email: 'test2@gmail.com', password: 'abcd123' };
       request
         .post('/api/signin')
         .send(body)
-        .expect('Location', '/dashboard', done);
-    });
+        .expect(200, { id: 2, email: 'test2@gmail.com', loggedIn: true }, done);
+    }).timeout(5000);
 
     it('rejects user with invalid username', done => {
       const body = { email: 'wrong@gmail.com', password: 'abcd123' };
@@ -80,7 +80,7 @@ describe('API Server: End point Testing', () => {
         .post('/api/signin')
         .send(body)
         .expect(401, done);
-    });
+    }).timeout(5000);
 
     it('rejects user with invalid password', done => {
       const body = { email: 'test2@gmail.com', password: 'wrong' };
@@ -89,6 +89,6 @@ describe('API Server: End point Testing', () => {
         .send(body)
         .expect(401, done);
     });
-  });
+  }).timeout(5000);
 });
 

@@ -1,7 +1,7 @@
 # /node_modules and /bower_components ignored by default
 
 #map module
-client/components/ClicksMap.js
+client/containers/MapContainer.js
 
 client/bundle.js
 client/bundle.js.map

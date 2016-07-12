@@ -7,7 +7,7 @@ const uuid = require('uuid');
 
 const formatEventArrays = eventArrays => {
   return eventArrays.map(eventArray => {
-    const mappedArray =  eventArray.map(event => {
+    const mappedArray = eventArray.map(event => {
       return {
         IPAddress: event.ipaddress,
         time: Number(event.time),
@@ -17,15 +17,13 @@ const formatEventArrays = eventArrays => {
   });
 };
 
-exports.getAllResults = (cb) => {
-  dbpgp.query('select * from tests')
+exports.getAllResults = (clientEmail, cb) => {
+  dbpgp.query(qry.getClientTests, clientEmail)
     .then(tests => {
-
       const allResults = [];
       let counter = 0;
 
       return tests.forEach(test => {
-
         dbpgp.task(t1 => {
           return t1.batch([
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['a', test.id]),
@@ -33,11 +31,9 @@ exports.getAllResults = (cb) => {
             t1.query('select * from visits where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
             t1.query('select * from clicks where version_id = (select id from versions where ab = $1 and test_id = $2)', ['b', test.id]),
           ]);
-
         })
 
         .then(testData => {
-
           const data = formatEventArrays(testData);
 
           allResults.push({
@@ -77,12 +73,11 @@ exports.createPage = (pageName, clientEmail, cb) => {
 };
 
 exports.createTest = (testData, clientEmail, cb) => {
-
-  const { testName, pageId, a, b } = testData;
+  const { testName, a, b } = testData;
   const uniqueId = uuid.v4();
 
   dbpgp.tx(t => {
-    const addTest = t.query(qry.createTest, [testName, pageId, clientEmail, uniqueId]);
+    const addTest = t.query(qry.createTest, [testName, clientEmail, uniqueId]);
     const addVersionA = t.query(qry.insertVersion, ['a', a.url, a.DOMLocation, uniqueId]);
     const addVersionB = t.query(qry.insertVersion, ['b', b.url, b.DOMLocation, uniqueId]);
     return t.batch([addTest, addVersionA, addVersionB]);
@@ -120,5 +115,26 @@ exports.getClientPages = (clientEmail, cb) => {
   db.query({
     text: qry.getClientPages,
     values: [clientEmail],
+  }, cb);
+};
+
+exports.getAllClientClicks = (clientEmail, cb) => {
+  db.query({
+    text: qry.getAllClientClicks,
+    values: [clientEmail],
+  }, cb);
+};
+
+exports.getAllClientVisits = (clientEmail, cb) => {
+  db.query({
+    text: qry.getAllClientVisits,
+    values: [clientEmail],
+  }, cb);
+};
+
+exports.getTestVersions = (pageId, cb) => {
+  db.query({
+    text: qry.getTestVersions,
+    values: [pageId],
   }, cb);
 };

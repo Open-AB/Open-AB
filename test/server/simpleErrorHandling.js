@@ -131,7 +131,7 @@ describe('Servers to Client: Error Handling', () => {
             // console.log(res.text, '>>>>> res');
             done();
           });
-      });
+      }).timeout(10000);
 
       it('Signin Endpoints: get 500 when DB is disconnected', done => {
         const body = { email: 'asdf', password: 'asdf' };
@@ -149,6 +149,15 @@ describe('Servers to Client: Error Handling', () => {
 
     describe('ANALYTIC endpoints: respond with 500', () => {
 
+      it('Dash Data Endpoint: 500 when DB is disconnected', done => {
+        API
+          .get('/api/dashData')
+          .expect(500)
+          .end((err, res) => {
+            done();
+          });
+      });
+
       xit('Create Test Endpoint: 500 when DB is disconnected', done => {
         const body = {
           testName: 'asdf',
@@ -162,27 +171,6 @@ describe('Servers to Client: Error Handling', () => {
           .expect(500, done);
       });
 
-      it('Results Endpoint: 500 when DB is disconnected', done => {
-        API
-          .get('/api/results')
-          .expect(500)
-          .end((err, res) => {
-            // console.log(res, '<<<<< ERR');
-            // console.log(res, '&&&&&&&&&&&&*&^&*(^*^*&^&*(^( res');
-            done();
-          });
-      });
-
-      it('Stats Endpoint: 500 when DB is disconnected', done => {
-        API
-          .get('/api/results')
-          .expect(500)
-          .end((err, res) => {
-            // console.log(res, '<<<<< ERR');
-            // console.log(res, '&&&&&&&&&&&&*&^&*(^*^*&^&*(^( res');
-            done();
-          });
-      });
 
       xit('Get Chart Data Test Endpoint: 500 when DB is disconnected', done => {
         API

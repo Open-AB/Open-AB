@@ -1,14 +1,21 @@
-<h1 class="openab openab-header">Select links or buttons to test</h1>
+<h1 class="openab openab-header">Select link or button to track clicks on</h1>
 <h1 class="openab openab-header openab-domTree"></h1>
 
-<div class="openab openab-modal openab-nav-a openab-select">
-  <form class="openab-b-url" action="/selection/addtest" method="post">
-    <label class="openab-label">URL for Page B<input class="openab-input" name="url" type="url"/></label>
-    <input class="openab-continue" type="submit"/>
+<div class="openab openab-modal openab-nav-a">
+  <div class="openab-spacer" />
+  <form class="openab-b-url openab-contain-centered-a" action="/selection/addtest" method="post">
+    <div class='openab-centered'>
+      <label class="openab-label">URL for Version B:
+        <input class="openab-input" name="url" type="url"/>
+      </label>
+      <input class="openab-continue" type="submit"/>
+    </div>
   </form>
 </div>
 
-<div class="openab openab-modal openab-nav-b openab-select">
-  <button class="openab-complete">Continue</button>
+<div class="openab openab-modal openab-nav-b openab-contain-centered-b">
+  <div class="openab-spacer" />
+  <div class='openab-centered'>
+    <div class="openab-complete">Continue</div>
   </form>
 </div>

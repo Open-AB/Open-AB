@@ -30,7 +30,7 @@ class LineChartData extends Component {
       display = (
         // conditional rendering of Line Chart
         // if there are not two data points, do not render a Line Chart for dataset
-        data.map((dataObj, ind) => dataObj.data.buckets.length > 1 ? <LineChart key={dataObj.testId} dataset={dataObj} /> : null)
+        data.map(dataObj => dataObj.data.buckets.length > 1 ? <LineChart key={dataObj.testId} dataset={dataObj} /> : null)
       );
     }
 

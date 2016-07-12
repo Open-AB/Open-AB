@@ -1,44 +1,140 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Open A/B Example</title>
 
-    <title>OpenAB Example Client Site</title>
-    <!-- jQuery is required -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    
-    <!-- Script snippet to give client -->
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">
+         <img class="left logo" alt="OpenAB" src="logo.png"></img>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="https://github.com/Open-AB/Open-AB">GitHub</a></li>
+      </ul>
 
-    <!-- only the list of classes needs to change on different pages -->
-    <!-- classes are given as openab-x, where x is the id of the test in database -->
-    <script>
-    $(document).ready(function(){
-      $('.openab-1, .openab-2, .openab-3').on('click', function(e){
-        var testId = parseInt(this.className.match(/openab-\d+/)[0].match(/\d+/)[0]);
-        $.ajax({
-          url: 'http://localhost:3939/listening/clicks',
-          type: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({testId: testId})
-        });
-      });
-    });
-    </script>
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="https://github.com/Open-AB/Open-AB">GitHub</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
 
-  </head>
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center text-lighten-2">Open A/B</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">An easy-to-use, open-source solution for A/B testing</h5>
+        </div>
+        <div class="row center">
+          <a href="clickthrough.html" id="download-button" class="btn-large waves-effect waves-light green lighten-1">Learn More</a>
+        </div>
+        <br><br>
 
-  <body>
-    <h1>OpenAB Example Client Site</h1>
-    <h3>This site demonstrates OpenAB's conversion tracking.</h3>
-    <p>Certain elements have been given html classes that let OpenAB know to keep track of when users click on them.</p>
-    <p>Add more elements to track</p>
-    <div><button class="otherclasses lots of them openab-1">Click Me (test 1)</button></div>
-    <a href="anotherPage.html" class="openab-2">Click Me (test 2)</a>
-    <form action="anotherPage.html">
-      <input type="text"/>
-      <input class="formButton openab-3" value="submit (test 3)" type="submit"/>
-    </form>
-    <button class="noTracking">This button is not being tested.</button>
+      </div>
+    </div>
+    <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center">1</h2>
+            <h5 class="center">Create Alternate Page</h5>
+
+            <p class="light">Start by making a copy of the page you want to A/B test, or build a completely different alternate version. The difference can be as slight as a change of color - or an entirely redesigned splash page. As long as both versions have the same target link, Open A/B can help you improve CTR.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center">2</h2>
+            <h5 class="center">Set Up Test</h5>
+
+            <p class="light">When both versions of a page are online, you are ready to set up a new test on Open A/B. From the dashboard, create a new test, entering your original page as the url. On the next screen, select the target link or button you want users to click.  Then enter the url of the alternate version, and select the equivalent target link on this page.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center">3</h2>
+            <h5 class="center">Add Code Snippet</h5>
+
+            <p class="light">After you create a test, Open A/B will create a code snippet for you to put on both versions of the page you want to test. When you include this code, Open A/B will redirect 50% of your users to the alternate page and track views and conversions on both pages.  The resulting statistics are displayed on the dashboard.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">A/B Testing for Everybody</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="background2.jpg" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <footer class="page-footer green">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Company Bio</h5>
+          <p class="grey-text text-lighten-4"></p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Template from <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
   </body>
 </html>

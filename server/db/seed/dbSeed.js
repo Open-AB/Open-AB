@@ -2,17 +2,17 @@ const async = require('async');
 
 const generateEvents = require('../../api/analytics/stats/generateEvents.js');
 const allClientData = require('../../api/clientData.js');
-const dbQry = require('./db/dbQueries');
+const authQry = require('../../api/auth/db/dbQueries.js');
 const analyticsQry = require('../../api/analytics/db/dbQueries.js');
 const listeningQry = require('../../../server/listening/events/db/dbQueries.js');
 
 const clientHardcodedData = [
   {
-    email: 'abcd@abcd.com',
-    password: 'qwerasdfzxcv1234',
+    email: 'DEMO',
+    password: 'asdfasdf',
     pages: [
       {
-        pageName: 'Homepage',
+        pageName: 'Homepage_DEMO',
       },
     ],
   },
@@ -24,10 +24,9 @@ const client = clientHardcodedData[0];
 
 const insertClientHardcodedData = callback => {
   const page = client.pages[0];
-
-  dbQry.insertClient(client.email, client.password, () => {
+  authQry.createClient(client.email, client.password, () => {
     console.log('inserting client');
-    dbQry.insertPage(page.pageName, client.email, () => {
+    analyticsQry.createPage(page.pageName, client.email, () => {
       console.log('inserting page');
       callback();
     });

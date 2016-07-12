@@ -16,7 +16,7 @@ module.exports = statsForAllTests => {
     let bConversionRate = '--';
 
     if (!sufficientTime) {
-      testResult = 'Test has not yet run long enough (must run for at least one week)';
+      testResult = 'Test has not run long enough (must run for at least one week)';
     } else if (!sufficientVisits) {
       testResult = 'Not yet enough visitors';
     } else if (p > 0.05) {
@@ -25,9 +25,9 @@ module.exports = statsForAllTests => {
       aConversionRate = `${String(aConversionRateNumber)}%`;
       bConversionRate = `${String(bConversionRateNumber)}%`;
       if (aConversionRateNumber > bConversionRateNumber) {
-        testResult = 'A wins!';
+        testResult = 'Version A wins!';
       } else {
-        testResult = 'B wins!';
+        testResult = 'Version B wins!';
       }
     }
 
