@@ -1,7 +1,7 @@
 
 # OpenA/B <img src="https://github.com/Open-AB/Open-AB/blob/develop/client/assets/images/logo.png" height=100> [![Build Status](https://travis-ci.org/Open-AB/Open-AB.svg?branch=develop)](https://travis-ci.org/Open-AB/Open-AB)
 
-OpenA/B lets you test one version of a webpage against another to determine which one produces more conversions. OpenA/B is easy to use and open-source. Start testing your website today at http://50.112.197.243/ !
+OpenA/B lets you test one version of a webpage against another to determine which one produces more conversions. OpenA/B is easy to use and open-source. Start testing your website today at http://35.163.186.217/ !
 
 
 ![](https://github.com/brachbach/Open-AB/blob/readme/readmeImages/createTestScreenshot.png)
